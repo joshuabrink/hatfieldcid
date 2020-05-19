@@ -1,0 +1,132 @@
+<%- include ('./partials/navbar.ejs') %>
+
+<div class="d-flex flex-column" id="content-wrapper">
+    <div class="d-flex align-items-center" id="content">
+        <div class="container-fluid">
+            <div class="row d-flex">
+                <!-- <div class="col-12">
+                            <main>
+                            <p>Separate your tags with a comma</p>
+                            <div class="tags-input"></div>
+                            <h1><span>Tags</span> Input</h1>
+                          </main></div> -->
+                <div class="col-lg-6">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="mb-4 text-danger"><i class="fa fa-envelope"></i>&nbsp; Send SMS</h4>
+                        </div>
+                        <form class="user">
+                            <div class="form-group">
+                                <div id="numbers" class="tags-input"></div>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="msg" class="form-control" placeholder=" Body:" rows="7" spellcheck="true"
+                                    style="border-radius: 20px;font-size: 14px;"></textarea>
+                            </div>
+                            <a id="send" class="btn btn-primary btn-block text-white btn-user btn-danger"
+                                role="button"><i class="far fa-paper-plane"></i>&nbsp; Send</a>
+                            <hr>
+                            <div class="response"></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="mb-4 text-primary"><i class="fa fa-address-book"></i>&nbsp; Contact List</h4>
+                        </div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <div class="row">
+                                    <div class="col">
+                                        <h6 style="margin-bottom: 0px;">Add to SMS</h6>
+                                    </div>
+                                    <div class="col-3 text-center">
+                                        <h6 style="margin-bottom: 0px;">Details</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul id="contact-list" class="list-group list-group-flush" style="overflow-y: scroll;height: 350px;">
+                                <% if (typeof contacts != 'undefined') { %>
+                                    <% for( let index = 0; index < contacts.length; index++ ) { %>
+                                    <li class="list-group-item">
+                                        <div class="row align-items-center no-gutters">
+                                            <div class="col-1 text-right">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input class="custom-control-input" type="checkbox" id="<%=contacts[index].number %>">
+                                                    <label class="custom-control-label" for="<%= contacts[index].number %>"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col text-right mr-2">
+                                                <h6 class="mb-0"><strong><%= contacts[index].name %> </strong></h6>
+                                                <span class="text-xs"><%= contacts[index].number %></span>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <% } %>
+                                <% } %>
+
+
+                                <!-- <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>John Smith</strong></h6><span class="text-xs">082 234 6767</span></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>Jane Smith</strong></h6><span class="text-xs">092 372 2342</span></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row align-items-center no-gutters">
+                                                <div class="col-1 text-right">
+                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
+                                                </div>
+                                                <div class="col text-right mr-2">
+                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
+                                            </div>
+                                        </li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include ('./partials/footer.ejs') %>

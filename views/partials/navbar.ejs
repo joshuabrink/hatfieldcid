@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <% if(typeof title != 'undefined') { %> 
+        <title><%= title %></title>
+    <% } else {%> 
+        <title>SMS Bulk</title>
+    <% } %> 
+    
+    <title>SMS Bulk</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="css/untitled.css">
+</head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#"><img class="img-fluid" src="img/logo-image-small.png"></a>
+                <hr class="sidebar-divider my-0">
+                <ul class="nav navbar-nav text-light" id="accordionSidebar">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Send SMS' ? 'active' : '' %>" href="/">
+                         <i class="far fa-paper-plane"></i><span>Send SMS</span></a>
+                        </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Messages' ? 'active' : '' %>" href="/messages">
+                        <i class="far fa-envelope"></i><span>Messages</span></a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Contacts' ? 'active' : '' %>" href="/contacts">
+                            <i class="fas fa-table"></i><span>Contacts</span>
+                        </a>
+                        </li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" href="/login"><i class="fas fa-external-link-alt"></i><span>Logout</span></a></li>
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
