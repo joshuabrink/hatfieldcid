@@ -20,7 +20,7 @@ async function start() {
    const {Users} = require('./lib/mongoUtil');
 
    //Body parser to get dat from forms
-    // app.use(bodyParser.json());
+   app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
     // Passport Config
