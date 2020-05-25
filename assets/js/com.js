@@ -9,24 +9,31 @@ button.addEventListener('click', send, false);
 
 const socket = io();
 socket.on('smsStatus', function(data){
+  numberInput.innerHTML = '';
+
+  const textInput = document.getElementById('msg')
+  textInput.value = '';
+
+
+var contactInput = document.querySelectorAll('#contact-list .custom-control-input');
+
+for (let i = 0; i < contactInput.length; i++) {
+  contactInput[i].checked = false;
+}
+
   if(data.error){
-    response.innerHTML = '<h5>Text message sent to ' + data.error + '</h5>';
+    response.innerHTML = '<h5>' + data.error + '</h5>';
   }else{
-    response.innerHTML = '<h5>Text message sent to ' + data.number + '</h5>';
+    response.innerHTML = '<h5>Text message sent to: ';
+    data.numbers.forEach(number => {
+      response.innerHTML += number + ' '
+    });
+    response.innerHTML += '</h5>';
   }
 });
 
-// let timeOut;
-// const getTimeSchedule = ({ time, number, text }) => {
-//   if(timeOut) clearTimeout(timeOut);
-//   timeOut = setTimeout(() => {
-//     fetchServer({ number, text });
-//   }, time * 60 * 1000);
-// };
-
 
 const fetchServer = ({ numbers, message }) => {
-  console.log('send');
   fetch('/sendSMS', {
     method: 'post',
     headers: {

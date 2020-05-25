@@ -4,7 +4,6 @@ async function start() {
     const app = express();
     const PORT = process.env.PORT || 2000;
     const path = require('path');
-    const SMS = require('./lib/twilio');
     const bodyParser = require('body-parser');
     const socketio = require('socket.io');
     const mongo = require('./lib/mongoUtil');
@@ -18,6 +17,9 @@ async function start() {
    //require contacts api for getting data from db
    const {Contacts} = require('./lib/mongoUtil');
    const {Users} = require('./lib/mongoUtil');
+
+
+   const SMS = require('./lib/twilio');
 
    //Body parser to get dat from forms
    app.use(bodyParser.json());
@@ -51,15 +53,21 @@ async function start() {
         
     })
     
-    app.post('/sendSMS',ensureAuthenticated, (req, res)=> {
+    app.post('/sendSMS',ensureAuthenticated, async (req, res) => {
     
         const {numbers, message} = req.body;
-        SMS.sendBulk(numbers, message);
+         await SMS.sendBulk(numbers, message).then(response => {
+          io.emit('smsStatus', response);
+        });   
+       
     })
     
-    app.get('/messages', ensureAuthenticated, (req, res) => {
-        res.render('messages', {title: 'Messages'})
-    })
+    // app.get('/messages', ensureAuthenticated, (req, res) => {
+    //   Messages.findContacts({}).then((contacts) => {
+    //       res.render('contacts', {title: 'Contacts', contacts: contacts})
+    //   }).catch(err => console.log(err))
+    //     res.render('messages', {title: 'Messages'})
+    // })
 
     app.post('/register', (req, res) => {
         const { email, number, password } = req.body;
@@ -107,6 +115,7 @@ async function start() {
     
     
     app.use('/', require('./routes/contacts.js'));
+    app.use('/', require('./routes/messages.js'));
     
     
     const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));

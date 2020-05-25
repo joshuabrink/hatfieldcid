@@ -25,7 +25,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <% if (typeof messages != 'undefined') { %>
+                                            <% for( let index = 0; index < messages.length; index++ ) { %>
+                                                <tr>
+                                                    <% if (typeof messages[index] != 'undefined') { %>
+                                                    <td><%= messages[index].name %> </td>
+                                                    <td><%= messages[index].number %> </td>
+                                                    <td><%= messages[index].message %> </td>
+                                                    <td class="d-flex justify-content-around">
+                                                        <a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a>
+                                                    </td>
+                                                    <% } %>
+                                                </tr>
+                                                <% } %>
+                                        <% } %>
+                                        <!-- <tr>
                                             <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar1.jpeg">Airi Satou</td>
                                             <td>098 546 5455</td>
                                             <td>Accountant</td>
@@ -104,12 +118,14 @@
                                             <td class="justify-content-around">
                                                 <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td><strong>Name</strong></td>
-                                            <td><strong>Position</strong></td>
+                                            <td><strong>Contact</strong></td>
+                                            <td><strong>Number</strong></td>
+                                            <td><strong>Message</strong></td>
+                                            <td></td>
                                         </tr>
                                     </tfoot>
                                 </table>
