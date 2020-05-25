@@ -69,29 +69,29 @@ async function start() {
     //     res.render('messages', {title: 'Messages'})
     // })
 
-    app.post('/register', (req, res) => {
-        const { email, number, password } = req.body;
+    // app.post('/register', (req, res) => {
+    //     const { email, number, password } = req.body;
       
-        const newUser = {
-          email,
-          number,
-          password
-        };
+    //     const newUser = {
+    //       email,
+    //       number,
+    //       password
+    //     };
       
-        bcrypt.genSalt(10, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            Users.addUser(newUser)
-              .then(user => {
+    //     bcrypt.genSalt(10, (err, salt) => {
+    //       bcrypt.hash(newUser.password, salt, (err, hash) => {
+    //         if (err) throw err;
+    //         newUser.password = hash;
+    //         Users.addUser(newUser)
+    //           .then(user => {
       
-                console.log(user);
-                console.log("added");
-              })
-              .catch(err => console.log(err));
-          });
-        });
-      })
+    //             console.log(user);
+    //             console.log("added");
+    //           })
+    //           .catch(err => console.log(err));
+    //       });
+    //     });
+    //   })
 
       app.post('/login', (req, res, next) => {
         passport.authenticate('local', function (err, user, info) {
@@ -112,6 +112,13 @@ async function start() {
     app.get('/login', (req, res) => {
         res.render('login', {title: 'Login'})
     })
+
+    // Logout
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
     
     
     app.use('/', require('./routes/contacts.js'));
