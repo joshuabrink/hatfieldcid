@@ -7,9 +7,20 @@
 <script src="js/jquery.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-<script src="js/theme.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="js/com.js"></script>
+<script src="js/global.js"></script>
+<% if (title) { %>
+    <% if (title == 'Send SMS') { %>
+        <script src="js/sendSMS.js"></script>
+    <% } %>
+    <%  if(title == 'messages') { %>
+        <script src="js/fitText.js"></script>
+        <script src="js/messages.js"></script>
+    <% } %>
+    <%  if(title == 'contacts') { %>
+        <script src="js/fitText.js"></script>
+        <script src="js/contacts.js"></script>
+    <% } %>
+    <% } %>
 </body>
 
 </html>

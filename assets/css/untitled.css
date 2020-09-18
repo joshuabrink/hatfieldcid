@@ -13,7 +13,23 @@
             justify-content: center;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
   }
-  
+
+  .w-45 {
+    width: 45%;
+  }
+  .w-30 {
+    width: 30%;
+  }
+  .w-20 {
+    width: 20%;
+  }
+  .w-10 {
+    width: 10%;
+  }
+  .w-5 {
+    width: 5%;
+  }
+/*   
   h1 {
     margin-bottom: 20px;
     font-size: 20px;
@@ -28,7 +44,7 @@
     padding: 3px 2px 3px 7px;
     border-radius: 6px;
     font-weight: 400;
-  }
+  } */
   
   p {
     margin-top: 10px;
@@ -39,12 +55,107 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+
+  .table td {
+    vertical-align: middle;
+  }
+
+  .flex {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+  }
+
+  .flex-wrap {
+    -ms-flex-wrap: wrap;
+    -moz-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+
+  .start-left {
+    -webkit-box-pack: start;
+    -moz-box-pack: start;
+    -ms-flex-pack: start;
+    -webkit-justify-content: start;
+    justify-content: start;
+  }
+
+  .pt-0 {
+    padding-top: 0;
+  }
+
+  .flex .c-tag {
+    margin-top: 0.75rem;
+  }
+
+
+  .c-tag {
+    width: fit-content;
+    min-width: 120px;
+    background: #5a7cde;
+    color: white;
+    padding: 5px 20px;
+    border-radius: 16px;
+    text-align: center;
+    cursor: pointer;
+    margin-right: 6px;
+    -moz-filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    -ms-filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
+  }
+
+  .c-tag .top {
+    font-size: 12px;
+  }
+
+  .c-tag .under {
+    top: 6px;
+    font-size: 13px;
+  }
+
+
+
+  .cross-fade {
+    position: relative;
+  }
+
+  .cross-fade:hover .under {
+    opacity: 1;
+  }
+  .cross-fade:hover .top {
+    opacity: 0;
+  }
+  .top {
+    width: 100%;
+    position: relative;
+    transition: opacity 0.2s ease;
+  }
+
+  .under {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .delete {
+    text-align: center;
+  }
   
   .tags-input {
     border: 2px solid #dfdfdf;
-    border-radius: 40px;
+    border-radius: 20px;
     min-height: 40px;
     padding: 0 11px;
+    padding-bottom: 7px;
     font-size: 14px;
     display: -webkit-box;
     display: flex;
@@ -57,6 +168,7 @@
   .tags-input span {
     background: #4e73df;
     margin-right: 7px;
+    margin-top: 7px;
     color: #fff;
     padding: 4px 7px;
     border-radius: 20px;
@@ -91,4 +203,85 @@
   }
   .tags-input:focus + h1 span {
     border-color: #71ccd5;
+  }
+
+  .response {
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate3d(0, 0, 1, 360deg);
+    }
+  }
+
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .fadeIn {
+    animation-name: fade;
+    animation-direction: normal;
+    animation-fill-mode:forwards;
+    animation-duration: 1s;
+
+  }
+  .fadeOut {
+    animation-name: fade;
+    animation-direction: reverse;
+    animation-fill-mode:forwards;
+    animation-duration: 1s;
+
+  }
+
+
+  svg {
+    transform: rotate3d(0, 0, 1, -90deg);
+  }
+  svg circle {
+    fill: none;
+    stroke: #e74a3b;
+    stroke-width: 2px;
+    stroke-linecap: round;
+    will-change: transform;
+    transform-origin: center center;
+    animation-name: rotate;
+    animation-timing-function: ease-out;
+    animation-iteration-count: infinite;
+  }
+  svg .inner {
+    stroke: #e74a3b;
+  
+    stroke-dasharray: 200.96;
+    stroke-dashoffset: 160.96;
+    animation-delay: 200ms;
+    animation-duration: 1s;
+  }
+  svg .middle {
+    stroke: #e74a3b;
+
+    stroke-dasharray: 238.64;
+    stroke-dashoffset: 178.64;
+    animation-delay: 100ms;
+    animation-duration: 1.5s;
+  }
+  svg .outer {
+    stroke: #e74a3b;
+    stroke-dasharray: 276.32;
+    stroke-dashoffset: 176.32;
+    animation-delay: 300ms;
+    animation-duration: 2s;
+  }
+
+  /* Contact page */
+
+  .new-contact-header { 
+    background-color: #4e73df;
   }

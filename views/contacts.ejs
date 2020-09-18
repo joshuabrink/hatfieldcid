@@ -1,109 +1,187 @@
-<%- include ('./partials/navbar.ejs') %> 
+<%- include ('./partials/navbar.ejs') %>
 
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <div class="container-fluid">
-                    <h3 class="text-center text-primary mb-5 mt-5"><i class="fa fa-address-book"></i>&nbsp; Contact List</h3>
-                    <div class="card shadow">
-                        <div class="card-header py-3">
-                            <div role="tablist" id="accordion-1">
-                                <div class="card">
-                                    <div class="card-header" role="tab">
-                                        <h5 class="mb-0"><a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1"><i class="fa fa-plus"></i>&nbsp;Add Contacts</a></h5>
-                                    </div>
-                                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
-                                        <div class="card-body">
-                                            <form class="d-flex" method="POST" action="/addContact">
-                                                <div class="form-group flex-grow-1 mr-3">
-                                                    <input class="form-control" type="text" placeholder="Name" name="name"></div>
-                                                <div class="form-group flex-grow-1 mr-3">
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+            <h1 class="text-center text-primary mb-5 mt-5"><i class="fa fa-address-book"></i>&nbsp; Contact List</h1>
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <div role="tablist" id="accordion-1">
+                        <div class="card">
+                            <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-1"
+                                href="#accordion-1 .item-1" class="card-header new-contact-header btn btn-primary" role="tab">
+                                <h5 class="mb-0"><i class="fa fa-user"></i>&nbsp;New Contact</h5>
+                            </a>
+                            <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
+                                <div class="card-body">
+                                    <form method="POST" action="/addContact" id='contact-form'>
+
+                                        <div class="row">
+                                            <div class="col-6 mb-3">
+
+                                                <input class="form-control" type="text" placeholder="Name" name="name"
+                                                    required>
+
+                                            </div>
+                                            <div class="col-6  mb-3">
+
+                                                <input class="form-control" type="number" placeholder="Phone Number"
+                                                    name="number" required>
+
+                                            </div>
+                                       
+                                            <div class="col-6">
+                                                <input class="form-control mb-3" type="email" placeholder="Email"
+                                                    name="email">
+
+                                            </div>
+                                            <div class="col-6">
+
+                                                <input class="form-control mb-3" type="text" placeholder="Group"
+                                                    name="group">
+                                            </div>
+                                            <div class="col-12">
+
+                                                <input class="form-control mb-3" type="text" placeholder="Company"
+                                                    name="company">
+
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+
+                                            <div class="form-group text-center">
+                                                <button class="btn btn-primary" type="submit"><i
+                                                        class="fas fa-plus"></i>&nbsp;Add Contact</button>
+                                            </div>
+                                        </div>
+                                </div>
+
+                                <!-- <div class="form-group flex-grow-1 mr-3">
                                                     <select name="position" class="form-control">
                                                         <optgroup label="Position">
                                                             <option value="Student" selected="">Student</option>
                                                             <option value="Employee">Employee</option>
                                                             <option value="Client">Client</option></optgroup>
                                                         </select>
-                                                    </div>
-                                                <div class="form-group flex-grow-1  mr-3">
-                                                    <input class="form-control" type="number" placeholder="Phone Number" name="number">
-                                                </div>
-                                                <div class="form-group">
-                                                    <button class="btn btn-primary" type="submit" ><i class="fas fa-plus"></i></button>
-                                                </div>
-                                                    
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6 text-nowrap">
-                                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="text-md-right dataTables_filter" id="dataTable_filter"><label class="d-flex"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"><button class="btn btn-primary d-inline py-0" type="button"><i class="fas fa-search"></i></button></label></div>
-                            </div>
-                        </div>
-                        <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                            <table class="table dataTable my-0" id="dataTable">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Number</th>
-                                        <th>Date Added</th>
-                                    </tr>
-                                </thead>
-      
-                            
-                                <tbody>
-                                    <% if (typeof contacts != 'undefined') { %>
-                                        <% for( let index = 0; index < contacts.length; index++ ) { %>
-                                            <tr>
-                                                <td><%= contacts[index].name %> </td>
-                                                <td><%= contacts[index].position %> </td>
-                                                <td><%= contacts[index].number %> </td>
-                                                <td><%= contacts[index].date %> </td>
-                                                <td class="justify-content-around">
-                                                    <div class="d-flex justify-content-around">
-                                                        <a href="#"><i class="fa fa-edit"></i></a>
-                                                        <a href="#"><i class="fa fa-trash"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <% } %>
-                                    <% } %>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td><strong>Name</strong></td>
-                                        <td><strong>Position</strong></td>
-                                        <td><strong>Office</strong></td>
-                                        <td><strong>Age</strong></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 align-self-center">
-                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                            </div>
-                            <div class="col-md-6">
-                                <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                    </ul>
-                                </nav>
+                                                    </div> -->
+
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-1 text-center">
+                        <form id="all" action="/contactsFilter" method="post">
+                            <input type="hidden" name="limit" value="0">
+                            <button type="submit"  class="btn btn-primary btn-sm">All</button>
+                        </form>
+                     
+                    </div>
+                    <div class="col-md-2 text-nowrap">
+                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                            <label>Show&nbsp;<select id="filterAmount"
+                                    class="form-control form-control-sm custom-select custom-select-sm">
+                                    <option value="10" selected="">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>&nbsp;</label></div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                            <form action="/searchContacts" method="POST" id="search" class="d-flex">
+                            <input type="search" name="term" class="form-control form-control-sm"
+                            aria-controls="dataTable" placeholder="Search">
+                            <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                class="fas fa-search"></i></button>
+                      
+                      
+                        </form>
+                    </div>
+                </div>
+                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                    <table class="table dataTable my-0" id="dataTable">
+                        <thead>
+                            <tr>
+                                <th class="w-20">Name <a id="name-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                <th class="w-20">Company <a id="company-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                <th class="w-30">Email <a id="email-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                <th class="w-10">Opt-In <a id="optin-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                            </tr>
+                        </thead>
+
+
+                        <tbody>
+                            <% if (typeof contacts != 'undefined') { %>
+                            <% for( let index = 0; index < contacts.length; index++ ) { %>
+                            <tr>
+                                <td><%= contacts[index].name %> </td>
+                                <td><%= contacts[index].company %> </td>
+                                <td><%= contacts[index].number %> </td>
+                                <td style="width: 20%"><%= contacts[index].email %> </td>
+                                <td><input type="checkbox" name="optIn" id=""
+                                        <%= contacts[index].optIn ? 'checked disabled' : '' %> readonly>
+                                </td>
+                                <td class="editDelete d-flex justify-content-around">
+                                
+                          
+                                 
+                                        <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>
+                                        <!-- <form action="/deleteContact" method="post" class="delete">  
+                                            <input type="hidden" name="_id" value="<%= contacts[index]._id %>">
+                                            <input type="hidden" name="async" value="false">
+                                            <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
+                                        </form> -->
+
+                                        <form action="/deleteContact" method="post" class="right">  
+                                            <input type="hidden" name="_id" value="<%= contacts[index]._id %>">
+                                            <input type="hidden" name="async" value="false">
+                                            <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    
+                                </td>
+                            </tr>
+                            <% } %>
+                            <% } %>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><strong>Position</strong></td>
+                                <td><strong>Office</strong></td>
+                                <td><strong>Age</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 align-self-center">
+                        <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to
+                            10 of 27</p>
+                    </div>
+                    <div class="col-md-6">
+                        <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                            <ul class="pagination">
+                                <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span
+                                            aria-hidden="true">«</span></a></li>
+                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span
+                                            aria-hidden="true">»</span></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
-        <%- include ('./partials/footer.ejs') %> 
+    </div>
+
+<%- include ('./partials/footer.ejs') %>
