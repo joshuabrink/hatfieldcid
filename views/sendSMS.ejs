@@ -86,10 +86,28 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="row">
+                                    <div class="col-md-4 text-nowrap">
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label>Show&nbsp;<select id="filterAmount" style="width: 80%;"
+                                                    class="form-control form-control-sm custom-select custom-select-sm">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>&nbsp;</label></div>
+                                    </div>
+                                    <div class="col-8 mb-4">
+                                        <form action="/searchContacts" method="POST" id="search" class="d-flex">
+                                            <input type="search" name="term" class="form-control form-control-sm"
+                                            aria-controls="dataTable" placeholder="Search">
+                                            <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                                class="fas fa-search"></i></button>
+                                        </form>
+                                    </div>
                                     <div class="col">
                                         <h6 style="margin-bottom: 0px;">Add to SMS</h6>
                                     </div>
-                                    <div class="col-3 text-center">
+                                    <div class="col text-center">
                                         <h6 style="margin-bottom: 0px;">Details</h6>
                                     </div>
                                 </div>

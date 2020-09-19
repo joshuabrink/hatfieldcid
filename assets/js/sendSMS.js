@@ -96,7 +96,7 @@ let input = new TagsInput('#numbers-input');
 let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
 
 for (let i = 0; i < contactItems.length; i++) {
-    contactItems[i].addEventListener("change", function () {
+    contactItems[i].addEventListener("click", function () {
         if (this.checked) {
             input.add(this.id)
         } else {
@@ -110,10 +110,20 @@ for (let i = 0; i < contactItems.length; i++) {
 
 //ELEMENTS
 
+
 //Select the numbers input, send button, response div
 const numberInput = document.getElementById('numbers-input'),
     button = document.getElementById('send'),
     response = document.querySelector('.response');
+
+const filterBody = document.querySelector('#contact-list');
+const title = document.title;
+let f = new Filter("contacts")
+
+
+f.setFilter();
+f.startListen();
+
 
 
 //HELPER FUNCTIONS
