@@ -132,7 +132,18 @@ function showResponse(data) {
       row += '<td>' + data[m].company + '</td>';
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
-      row += '<td>' + data[m].optIn + '</td>';
+      row += '<td><input type="checkbox" name="optIn" checked= '
+      +data[m].optIn+
+      ' disabled="" readonly=""></input></td>';
+      
+      row+= '<td class="editDelete d-flex justify-content-around">\
+              <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
+              <form action="/deleteContact" method="post" class="right">  \
+                  <input type="hidden" name="_id" value="'+data[m].id+'">\
+                  <input type="hidden" name="async" value="false">\
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
+              </form>\
+      </td>';
       row += '</tr>';
 
     } else if (title == 'messages') {
@@ -192,9 +203,17 @@ function showResponse(data) {
 
   
   let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
+  let numberInputs = document.querySelectorAll('#numbers-input span');
 
   for (let i = 0; i < contactItems.length; i++) {
-      contactItems[i].addEventListener("click", function () {
+    //Check if number is already tagged
+    for (let j = 0; j < numberInputs.length; j++) {
+      if(contactItems[i].id == numberInputs[j].innerText) {
+        contactItems[i].checked = true; //checks input if already selected
+      }
+      
+    }   
+     contactItems[i].addEventListener("click", function () {
           if (this.checked) {
               input.add(this.id)
           } else {

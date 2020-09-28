@@ -56,6 +56,11 @@
     letter-spacing: 1px;
   }
 
+  .dropShadow {
+    filter: drop-shadow(2px 2px 1px rgba(0,0,0,0.5));
+
+  }
+
   .table td {
     vertical-align: middle;
   }
