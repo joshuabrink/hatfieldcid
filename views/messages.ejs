@@ -1,45 +1,116 @@
-       <%- include ('./partials/navbar.ejs') %> 
+<%- include ('./partials/navbar.ejs') %>
 
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="content">
-                <div class="container-fluid">
-                    <h3 class="text-center text-danger mb-5 mt-5"><i class="fa fa-envelope"></i>&nbsp; Messages</h3>
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm"><option value="10" selected="">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>&nbsp;</label></div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="text-md-right dataTables_filter" id="dataTable_filter"><label class="d-flex"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"><button class="btn btn-primary d-inline py-0" type="button"><i class="fas fa-search"></i></button></label></div>
-                                </div>
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+            <h3 class="text-center text-danger mb-5 mt-5"><i class="fa fa-envelope"></i>&nbsp; Messages</h3>
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-1 text-center">
+                            <form id="all" action="/messagesFilter" method="post">
+                                <input type="hidden" name="limit" value="0">
+                                <button type="submit"  class="btn btn-primary btn-sm">All</button>
+                            </form>
+                         
+                        </div>
+                        <div class="col-md-2 text-nowrap">
+                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+
+                                <label>Show&nbsp;<select
+                                        class="form-control form-control-sm custom-select custom-select-sm"
+                                        id="filterAmount">
+                                        <option value="1">1</option>
+                                        <option value="10">10</option>
+                                        <option value="25" selected>25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>&nbsp;</label>
+
+
                             </div>
-                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
-                                <table class="table dataTable my-0" id="dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Contact</th>
-                                            <th>Number</th>
-                                            <th>Message</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <% if (typeof messages != 'undefined') { %>
-                                            <% for( let index = 0; index < messages.length; index++ ) { %>
-                                                <tr>
-                                                    <% if (typeof messages[index] != 'undefined') { %>
-                                                    <td><%= messages[index].name %> </td>
-                                                    <td><%= messages[index].number %> </td>
-                                                    <td><%= messages[index].message %> </td>
-                                                    <td class="d-flex justify-content-around">
-                                                        <a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a>
-                                                    </td>
-                                                    <% } %>
-                                                </tr>
-                                                <% } %>
+                        </div>
+                       
+             
+                        <div class="col-md-8">
+                            <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                                <form action="/searchMessages" method="POST" id="search" class="d-flex">
+                               
+                                    
+                                        <input type="search" name="term" class="form-control form-control-sm"
+                                        aria-controls="dataTable" placeholder="Search">
+                                        <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                            class="fas fa-search"></i></button>
+                                  
+                                  
+                                    </form>
+                                    </div>
+                        </div>
+                      
+                    </div>
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                        aria-describedby="dataTable_info">
+                        <table class="table dataTable my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th class="w-45">Contact </th>
+                                    <th class="w-30">Message <a id="message-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                    <th class="w-20">Date <a id="date-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                    <th class="w-5"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if (typeof messages != 'undefined') { %>
+                                <% for( let index = 0; index < messages.length; index++ ) { %>
+                                    
+                                <tr>
+                                    <% if (typeof messages[index] != 'undefined') { %>
+
+                                    <% if (typeof messages[index].contact != 'undefined') { %>
+                                    <td class="flex start-left flex-wrap pt-0">
+                                        <% for( let c = 0; c <  messages[index].contact.length; c++ ) { %>
+                                        <% if (messages[index].contact[c]) { %>
+                                        <div class='cross-fade c-tag'>
+                                            <div class="top">
+                                                <%= messages[index].contact[c].name ? messages[index].contact[c].name : '' %>
+                                            </div>
+                                            <div class="under"> <%= messages[index].contact[c].number %> </div>
+                                        </div>
                                         <% } %>
-                                        <!-- <tr>
+                                        <% } %>
+
+                                        <% } %>
+                                    </td>
+
+                                    <td><%= messages[index].message %> </td>
+                                    <td><%= messages[index].date %></td>
+                                    <td>
+                                    <form action="/deleteMessage" method="post" class="delete">  
+                                        <input type="hidden" name="_id" value="<%= messages[index]._id %>">
+                                        <input type="hidden" name="async" value="false">
+                                        <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
+                                    </form>
+                                        
+                                    </td>
+                                
+                                    <% } %>
+                              
+                                </tr>
+                                <% } %>
+                                <% } %>
+                                <!-- <tr>
+                                            <td colspan="5">  
+                                                <div id="preload">
+                                            <div class="sk-folding-cube">
+                                            <div class="sk-cube1 sk-cube"></div>
+                                            <div class="sk-cube2 sk-cube"></div>
+                                            <div class="sk-cube4 sk-cube"></div>
+                                            <div class="sk-cube3 sk-cube"></div>
+                                            </div> </div> 
+                                        </td>
+                                    </tr> -->
+
+                                <!-- <tr>
                                             <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar1.jpeg">Airi Satou</td>
                                             <td>098 546 5455</td>
                                             <td>Accountant</td>
@@ -119,36 +190,39 @@
                                                 <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
                                             </td>
                                         </tr> -->
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td><strong>Contact</strong></td>
-                                            <td><strong>Number</strong></td>
-                                            <td><strong>Message</strong></td>
-                                            <td></td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Contact</strong></td>
+                                    <td><strong>Number</strong></td>
+                                    <td><strong>Message</strong></td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 align-self-center">
+                            <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to
+                                10 of 27</p>
+                        </div>
+                        <div class="col-md-6">
+                            <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    <li class="page-item disabled"><a class="page-link" href="#"
+                                            aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span
+                                                aria-hidden="true">»</span></a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <%- include ('./partials/footer.ejs') %> 
+    <%- include ('./partials/footer.ejs') %>

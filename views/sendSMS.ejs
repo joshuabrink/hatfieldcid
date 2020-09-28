@@ -17,16 +17,64 @@
                         </div>
                         <form class="user">
                             <div class="form-group">
-                                <div id="numbers" class="tags-input"></div>
+                                <div id="numbers-input" class="tags-input"></div>
                             </div>
                             <div class="form-group">
                                 <textarea id="msg" class="form-control" placeholder=" Body:" rows="7" spellcheck="true"
-                                    style="border-radius: 20px;font-size: 14px;"></textarea>
+                                    style="border-radius: 20px;font-size: 14px;" required></textarea>
                             </div>
-                            <a id="send" class="btn btn-primary btn-block text-white btn-user btn-danger"
-                                role="button"><i class="far fa-paper-plane"></i>&nbsp; Send</a>
+                            <div class="form-group" role="tablist" id="confirm-dropdown">
+                                <a data-toggle="collapse" aria-expanded="false"
+                                aria-controls="confirm-dropdown .confirm" href="#confirm-dropdown .confirm"
+                                class=" btn-block text-white btn-user btn-danger btn btn-primary" role="tab">
+                                 <h5 class="mb-0"><i class="far fa-paper-plane"></i>&nbsp;Send</h5>
+                                </a>
+                                <div class="collapse confirm" role="tabpanel" data-parent="#confirm-dropdown">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12 mt-4 text-center">
+                                                <h5>Are you sure?</h5>
+                                            </div>
+                                            <div class="col-4 offset-2">
+                                                <a id="send" class=" btn-block text-white btn-user btn-danger btn btn-primary" data-toggle="collapse" aria-expanded="false"
+                                                aria-controls="confirm-dropdown .confirm" href="#confirm-dropdown .confirm"><i class="fa fa-check"></i>&nbsp;YES</a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a class=" btn-block btn-secondary btn btn-user" data-toggle="collapse" aria-expanded="false"
+                                                aria-controls="confirm-dropdown .confirm" href="#confirm-dropdown .confirm"><i class="fa fa-times"></i>&nbsp;NO</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                   
+                                   
+                                </div>
+                            </div>
+                     
+                            <!-- <a id="send" class="btn btn-primary btn-block text-white btn-user btn-danger"
+                                role="button"><i class="far fa-paper-plane"></i>&nbsp; Send</a> -->
                             <hr>
-                            <div class="response"></div>
+                            <!-- <div id="preload" class="preloader">
+                                <div class="sk-folding-cube">
+                                <div class="sk-cube1 sk-cube"></div>
+                                <div class="sk-cube2 sk-cube"></div>
+                                <div class="sk-cube4 sk-cube"></div>
+                                <div class="sk-cube3 sk-cube"></div>
+                                </div> </div> -->
+                            <div class="response">
+                                <!-- <svg id='preloader' viewBox="0 0 120 120" width="120px" height="120px">
+                                    <circle class="inner" cx="60" cy="60" r="32"/>
+                                    <circle class="middle" cx="60" cy="60" r="38"/>
+                                    <circle class="outer" cx="60" cy="60" r="44"/>
+                                </svg> -->
+                                <!-- <div id='preloader' class="preloader loading">
+                                    <span class="slice"></span>
+                                    <span class="slice"></span>
+                                    <span class="slice"></span>
+                                    <span class="slice"></span>
+                                    <span class="slice"></span>
+                                    <span class="slice"></span>
+                                  </div> -->
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -38,33 +86,54 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="row">
-                                    <div class="col">
+                                    <div class="col-md-4 text-nowrap">
+                                        <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                                            <label>Show&nbsp;<select id="filterAmount" style="width: 80%;"
+                                                    class="form-control form-control-sm custom-select custom-select-sm">
+                                                    <option value="10" selected="">10</option>
+                                                    <option value="25">25</option>
+                                                    <option value="50">50</option>
+                                                    <option value="100">100</option>
+                                                </select>&nbsp;</label></div>
+                                    </div>
+                                    <div class="col-8 mb-4">
+                                        <form action="/searchContacts" method="POST" id="search" class="d-flex">
+                                            <input type="search" name="term" class="form-control form-control-sm"
+                                            aria-controls="dataTable" placeholder="Search">
+                                            <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                                class="fas fa-search"></i></button>
+                                        </form>
+                                    </div>
+                                    <div class="col-8">
                                         <h6 style="margin-bottom: 0px;">Add to SMS</h6>
                                     </div>
-                                    <div class="col-3 text-center">
+                                    <div class="col text-center">
                                         <h6 style="margin-bottom: 0px;">Details</h6>
                                     </div>
                                 </div>
                             </div>
-                            <ul id="contact-list" class="list-group list-group-flush" style="overflow-y: scroll;height: 350px;">
+                            <ul id="contact-list" class="list-group list-group-flush"
+                                style="overflow-y: scroll;height: 350px;">
                                 <% if (typeof contacts != 'undefined') { %>
-                                    <% for( let index = 0; index < contacts.length; index++ ) { %>
-                                    <li class="list-group-item">
-                                        <div class="row align-items-center no-gutters">
-                                            <div class="col-1 text-right">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input class="custom-control-input" type="checkbox" id="<%=contacts[index].number %>">
-                                                    <label class="custom-control-label" for="<%= contacts[index].number %>"></label>
-                                                </div>
-                                            </div>
-                                            <div class="col text-right mr-2">
-                                                <h6 class="mb-0"><strong><%= contacts[index].name %> </strong></h6>
-                                                <span class="text-xs"><%= contacts[index].number %></span>
+                                <% for( let index = 0; index < contacts.length; index++ ) { %>
+                                <li class="list-group-item">
+                                    <div class="row align-items-center no-gutters">
+                                        <div class="col-1 text-right">
+                                            <div class="custom-control custom-checkbox">
+                                                <input class="custom-control-input" type="checkbox"
+                                                    id="<%=contacts[index].number %>">
+                                                <label class="custom-control-label"
+                                                    for="<%= contacts[index].number %>"></label>
                                             </div>
                                         </div>
-                                    </li>
+                                        <div class="col text-right mr-2">
+                                            <h6 class="mb-0"><strong><%= contacts[index].name %> </strong></h6>
+                                            <span class="text-xs"><%= contacts[index].number %></span>
+                                        </div>
+                                    </div>
+                                </li>
 
-                                    <% } %>
+                                <% } %>
                                 <% } %>
 
 

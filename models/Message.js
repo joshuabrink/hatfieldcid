@@ -8,7 +8,7 @@ class Message {
     const newMessage = await this.collection.insertOne(message);
     return newMessage;
   }
-  async updateMessage(id, update) {
+  async updateEntity(id, update) {
     const objId = new ObjectID(id);
     const updatedMessage = await this.collection.updateOne({_id: objId}, update);
     return updatedMessage;
@@ -18,10 +18,24 @@ class Message {
     return foundMessage;
   }
 
-  async findMessages(filter) {
-
-    const foundMessages = await this.collection.find(filter).toArray();
+  async findMessages(filter, lim, sort) {
+    // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
+    const foundMessages = await this.collection.find(filter).limit(lim).sort(sort).toArray();
     return foundMessages;
+
+  }
+
+  async find(filter, lim, sort) {
+    // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
+    const foundMessages = await this.collection.find(filter).limit(lim).sort(sort).toArray();
+    return foundMessages;
+
+  }
+  async deleteEntity(id) {
+    const objId = new ObjectID(id)
+    // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
+    const delMessage = await this.collection.deleteOne({_id: objId});
+    return delMessage;
 
   }
 
