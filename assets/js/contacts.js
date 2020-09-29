@@ -17,10 +17,6 @@ class Update {
     this.headers = Array.from(document.querySelectorAll('thead tr th'))
   }
 
-  startListen() {
-
-  }
-
   editListen(row) {
     let editBtn = row.querySelector('.left');
     let delBtn = row.querySelector('.right');
@@ -202,8 +198,6 @@ class Update {
       }) 
 
   }
-
-
 
 }
 
