@@ -118,8 +118,6 @@ function showResponse(data) {
 
   removePreloader();
 
-  // setTimeout(() => {
-
   filterBody.classList.remove('fadeIn')
   void filterBody.offsetWidth;
 
@@ -132,7 +130,7 @@ function showResponse(data) {
       row += '<td>' + data[m].company + '</td>';
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
-      row += '<td><input type="checkbox" name="optIn" checked= '
+      row += '<td style="padding-left: 32px;"><input type="checkbox" name="optIn" checked= '
       +data[m].optIn+
       ' disabled="" readonly=""></input></td>';
       
@@ -183,23 +181,15 @@ function showResponse(data) {
         </div>\
     </li>';
 
-
-      // filterBody.innerHTML += row;
-
-      // let checkBox = document.getElementById(data[m].number)
-      // checkBox.addEventListener("click", function () {
-      //   if (this.checked) {
-      //     input.add(this.id)
-      //   } else {
-      //     input.remove(this.id);
-      //   }
-      // });
-      // continue;
     }
   
 
     filterBody.innerHTML += row;
   }
+
+  let u = new Update();
+
+  u.editAllListen();
 
   
   let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
@@ -224,7 +214,7 @@ function showResponse(data) {
 
 
   filterBody.classList.add('fadeIn')
-  // }, 1000);
+  
 }
 
 
@@ -279,6 +269,7 @@ class Filter {
         this.filter.limit = parseInt(limit);
         this.filter.async = true;
 
+        showPreloader(filterBody);
         asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
 
       })
