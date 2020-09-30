@@ -138,6 +138,17 @@ async function start() {
   //     });
   //   })
 
+  // (opt-in/opt-out) POST watch request
+  app.post('/getMessage', (res,req) =>{
+      var reqBody = "" + req.body.Body;
+      if(reqBody.match(/STOP/i)){
+          //TODO do mongo opt-out
+      }
+      else if(reqBody.match(/START/i)){
+         //TODO do mongo opt-in
+      }
+  });
+
   app.post('/login', (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
       if (err) { return next(err); }
