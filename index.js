@@ -139,13 +139,24 @@ async function start() {
   //   })
 
   // (opt-in/opt-out) POST watch request
-  app.post('/getMessage', (res,req) =>{
-      var reqBody = "" + req.body.Body;
-      if(reqBody.match(/STOP/i)){
-          //TODO do mongo opt-out
-      }
-      else if(reqBody.match(/START/i)){
-         //TODO do mongo opt-in
+    app.post('/getMessage', (res,req) =>{
+
+        let reqBody = "" + req.body.Body;
+        let num = req.body.From;
+        const number = num.replace(/^\+?27/, '0');
+        
+        // Find contact by number:
+        let sender = Contacts.findContact({ number: number }).then(c => {
+            contact.name = c.name;
+            return contact;
+        }).catch(err => console.log(err))
+
+        // Toggle opt-in/out:
+        if(reqBody.match(/STOP/i)){
+            //TODO do mongo opt-out on sender
+        }
+        else if(reqBody.match(/START/i)){
+            //TODO do mongo opt-in on sender
       }
   });
 
