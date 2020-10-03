@@ -14,25 +14,7 @@
                             </form>
                          
                         </div>
-                        <div class="col-md-2 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-
-                                <label>Show&nbsp;<select
-                                        class="form-control form-control-sm custom-select custom-select-sm"
-                                        id="filterAmount">
-                                        <!-- <option value="1">1</option> -->
-                                        <option value="10">10</option>
-                                        <option value="25" selected>25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>&nbsp;</label>
-
-
-                            </div>
-                        </div>
-                       
-             
-                        <div class="col-md-8">
+                        <div class="col-md-9">
                             <div class="text-md-right dataTables_filter" id="dataTable_filter">
                                 <form action="/searchMessages" method="POST" id="search" class="d-flex">
                                
@@ -46,6 +28,25 @@
                                     </form>
                                     </div>
                         </div>
+                        <div class="col-md-2 text-nowrap">
+                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+
+                                <select
+                                        class="form-control form-control-sm custom-select custom-select-sm"
+                                        id="filterAmount">
+                                        <!-- <option value="1">1</option> -->
+                                        <option value="10">10</option>
+                                        <option value="25" selected>25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select>
+
+
+                            </div>
+                        </div>
+                       
+             
+                  
                       
                     </div>
                     <div class="table-responsive table mt-2" id="dataTable" role="grid"
@@ -98,104 +99,13 @@
                                 </tr>
                                 <% } %>
                                 <% } %>
-                                <!-- <tr>
-                                            <td colspan="5">  
-                                                <div id="preload">
-                                            <div class="sk-folding-cube">
-                                            <div class="sk-cube1 sk-cube"></div>
-                                            <div class="sk-cube2 sk-cube"></div>
-                                            <div class="sk-cube4 sk-cube"></div>
-                                            <div class="sk-cube3 sk-cube"></div>
-                                            </div> </div> 
-                                        </td>
-                                    </tr> -->
-
-                                <!-- <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar1.jpeg">Airi Satou</td>
-                                            <td>098 546 5455</td>
-                                            <td>Accountant</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar2.jpeg">Angelica Ramos</td>
-                                            <td>098 546 5455</td>
-                                            <td>Chief Executive Officer(CEO)</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar3.jpeg">Ashton Cox</td>
-                                            <td>098 546 5455</td>
-                                            <td>Junior Technical Author</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar4.jpeg">Bradley Greer</td>
-                                            <td>098 546 5455</td>
-                                            <td>Software Engineer</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar5.jpeg">Brenden Wagner</td>
-                                            <td>098 546 5455</td>
-                                            <td>Software Engineer</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar1.jpeg">Brielle Williamson</td>
-                                            <td>098 546 5455</td>
-                                            <td>Integration Specialist</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar2.jpeg">Bruno Nash<br></td>
-                                            <td>098 546 5455</td>
-                                            <td>Software Engineer</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar3.jpeg">Caesar Vance</td>
-                                            <td>098 546 5455</td>
-                                            <td>Pre-Sales Support</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar4.jpeg">Cara Stevens</td>
-                                            <td>098 546 5455</td>
-                                            <td>Sales Assistant</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><img class="rounded-circle mr-2" width="30" height="30" src="img/avatars/avatar5.jpeg">Cedric Kelly</td>
-                                            <td>098 546 5455</td>
-                                            <td>Senior JavaScript Developer</td>
-                                            <td class="justify-content-around">
-                                                <div class="d-flex justify-content-around"><a href="#"><i class="fa fa-send"></i></a><a href="#"><i class="fa fa-trash"></i></a></div>
-                                            </td>
-                                        </tr> -->
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <td><strong>Contact</strong></td>
-                                    <td><strong>Number</strong></td>
                                     <td><strong>Message</strong></td>
+                                    <td><strong>Number</strong></td>
+                                   
                                     <td></td>
                                 </tr>
                             </tfoot>

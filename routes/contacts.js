@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {Contacts} = require('../lib/mongoUtil');
 const routeUtil = require('../lib/routeUtility')
-const {get, filter, deleteEntity, updateEntity} = new routeUtil(Contacts);
+const {get, filter, deleteEntity, updateEntity, addEntity} = new routeUtil(Contacts);
 
 const { ensureAuthenticated } = require('../lib/auth');
 
@@ -14,7 +14,7 @@ router.get('/contacts', ensureAuthenticated, get)
 
 router.post('/searchContacts', ensureAuthenticated, filter, get)
 
-router.post('/deleteContact', ensureAuthenticated, deleteEntity)
+router.post('/deleteContact', ensureAuthenticated, deleteEntity,get)
 
 router.post('/contactsFilter', ensureAuthenticated, filter, get)
 
@@ -26,30 +26,29 @@ router.post('/updateContact', ensureAuthenticated, updateEntity, get)
 //     }).catch(err => console.log(err))
     
 // })
+router.post('/addContact',  ensureAuthenticated, addEntity, get);
+// router.post('/addContact',  ensureAuthenticated, (req,res) => {
+//     const {name, number, email, group, company} = req.body;
 
-router.post('/addContact',  ensureAuthenticated, (req,res) => {
-    const {name, number, email, group, company} = req.body;
+//      const current_datetime = new Date();
+//     const date = current_datetime.toLocaleString();
 
-     const current_datetime = new Date();
-    const date = current_datetime.toLocaleString();
+//     const newContact = {
+//         name,
+//         number,
+//         email, 
+//         group, 
+//         company
+//     }
 
-    const newContact = {
-        name,
-        number,
-        email, 
-        group, 
-        company
-    }
+//     Contacts.addContact(newContact).then((contact) => {
+//         // res.redirect('/contacts');
+//         res.send('success')
+//     })
+//     .catch(err => 
+//        res.send('error')
+//         );
 
-    Contacts.addContact(newContact).then((contact) => {
-        console.log(contact + " added")
-        // res.redirect('/contacts');
-        res.send('Successfully added contact.')
-    })
-    .catch(err => 
-       res.send('Error adding contact.')
-        );
-
-})
+// })
 
 module.exports = router;

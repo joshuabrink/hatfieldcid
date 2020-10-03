@@ -4,7 +4,7 @@ class Message {
   constructor(db) {
     this.collection = db.collection('messages');
   }
-  async addMessage(message) {
+  async addEntity(message) {
     const newMessage = await this.collection.insertOne(message);
     return newMessage;
   }

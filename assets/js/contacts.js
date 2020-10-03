@@ -17,9 +17,6 @@ class Update {
     this.headers = Array.from(document.querySelectorAll('thead tr th'))
   }
 
-  startListen() {
-
-  }
 
   editListen(row) {
     let editBtn = row.querySelector('.left');
@@ -57,7 +54,7 @@ class Update {
           // rowArr[j].innerHTML = rowArr[j].innerHTML.replace(/fa-edit/g, 'fa-check');
           // rowArr[j].innerHTML = rowArr[j].innerHTML.replace(/fa-trash/g, 'fa-times');
           // this.confirmListen(row);
-          _this.changeBtns(row, true)
+          _this.changeBtns(row, true, "edit")
 
           continue;
         }
@@ -134,6 +131,7 @@ class Update {
     }
 
     contact.id = row.querySelector('input[name="_id"]').value
+    contact.async = true;
     // let contact = {
     //    name : row.querySelector('input[name="name"]'),
     //    email : row.querySelector('input[name="email"]'),
@@ -159,11 +157,12 @@ class Update {
 
           if (type == 'edit') {
             _this.updateContact(row);
+            _this.revertRow(row);
           } else {
-            _this.deleteListen(row);
+            _this.deleteContact(row);
           }
 
-          _this.revertRow(row);
+         
           e.currentTarget.removeEventListener(e.type, handler);
           _this.editListen(row);
         })
@@ -184,26 +183,15 @@ class Update {
 
   }
 
-  deleteListen(row) {
-
-    let delForm = row.querySelector('right');
-    // let _this = this;
-
-      delForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let id = delForm.querySelector('input[name="_id"]').value
-        // _this.confirmListen(row, 'delete');
-
-        asyncReq('/deleteContact', 'post', { _id: id, async: true }, (data) => {
-          if (data.msg == "success") {
-            rows[i].remove();
-          }
-        })
-      }) 
-
+  deleteContact(row) {
+    let delForm = row.querySelector('.right');
+    let id = delForm.querySelector('input[name="_id"]').value
+    asyncReq('/deleteContact', 'post', { _id: id, async: true }, (data) => {
+      if (data.msg != "error") {
+        row.remove();
+      }
+    })
   }
-
-
 
 }
 
@@ -212,152 +200,55 @@ let u = new Update();
 u.editAllListen();
 
 
+function contactAdd(inputArr) {
+  let contact = {};
+  let key = "";
+  let value = "";
 
-// let rows = Array.from(document.querySelectorAll('tbody tr'))
-// let headers = Array.from(document.querySelectorAll('thead tr th'))
-// let editBtn = Array.from(document.querySelectorAll('.edit'));
+  for (let i = 0; i < inputArr.length; i++) {
 
-
-// function editListen(row) {
-//   let editBtn = row.find(el => el.firstChild.classList.contains('edit'));
-
-//   // for (let i = 0; i < editBtn.length; i++) {
-//     editBtn[i].addEventListener('click', (e) => {
-//       e.preventDefault();
-
-//       let row = Array.from(rows[i].querySelectorAll('td'));
-//       let inputType = "text";
-
-//       for (let j = 0; j < row.length; j++) {
-
-//         if(numberFormat.test(row[j].innerText)) {
-//           inputType = "number";
-//         } 
-//         else if(emailFormat.test(row[j].innerText.toLowerCase())) {
-//           inputType="email";
-//         } 
-//         else if(checkFormat.test(row[j].innerHTML)) {
-//           row[j].innerHTML = row[j].innerHTML.replace(/disabled/g, '');
-//           continue;
-//         }
-//         else if(row[j].classList.contains('editDelete')) {
-//           row[j].querySelector('.edit').style = "background: green;";
-//           row[j].querySelector('.delete button').style = "background: red;";
-//           row[j].innerHTML =row[j].innerHTML.replace(/fa-edit/g, 'fa-check');
-//           row[j].innerHTML =row[j].innerHTML.replace(/fa-trash/g, 'fa-times');
-//           confirmListen(row);
-
-//           continue;
-//         }
-//         row[j].innerHTML = "<input class='form-control form-control-sm' \
-//         type='"+inputType+"' \
-//         name='"+ headers[j].innerText.toLowerCase() +"' \
-//         value='"+ row[j].innerText +"'>";
-
-//         inputType = "text";
-//       }
-
-
-//     })
-
-//   // }
-// }
-
-// editListen()
-
-// function confirmListen(row) {
-//   let linksContainer = row.find(el => el.classList.contains('editDelete'));
-//   let links = linksContainer.querySelectorAll('a, button');
-//   for (let i = 0; i < links.length; i++) {
-//     if(links[i].classList.contains('edit')) {
-//      links[i].addEventListener('click',function handler(e) {
-//         e.preventDefault()
-
-//         updateContact(row);
-//         revertRow(row);     
-//         e.currentTarget.removeEventListener(e.type, handler);
-//       })
-//     } else {
-//       links[i].addEventListener('click', function handler(e) {
-//         e.preventDefault()
-
-//         revertRow(row);
-//         e.currentTarget.removeEventListener(e.type, handler);
-
-//       })
-//     }   
-//   }
-
-// }
-
-// function revertRow(row) {
-//   for (let c = 0; c < row.length; c++) {
-
-
-//     if(row[c].classList.contains('editDelete')) {
-//       row[c].querySelector('.edit').style = "";
-//       row[c].querySelector('.delete button').style = "";
-//        row[c].innerHTML = row[c].innerHTML.replace(/fa-check/g, 'fa-edit');
-//        row[c].innerHTML = row[c].innerHTML.replace(/fa-times/g, 'fa-trash');
-//     } else if(checkFormat.test(row[c].innerHTML)) {
-//       row[c].querySelector('input').disabled = true;
-//     }  
-//     else {
-//       let val = row[c].querySelector('input').value;
-//       row[c].innerHTML = val;
-//     }
-
-//   }
-// }
-
-// function updateContact(row) {
-
-
-//   let contact = {};
-//   let key = "";
-//   let value = "";
-
-//   for (let i = 0; i < row.length; i++) {
-
-//     key = row[i].firstChild.name
-//     value = row[i].firstChild.value
-//     contact = {...contact, [key]: value}
-
-//   }
-
-//   contact._id = row.querySelector('input[name="_id"]').value
-//   // let contact = {
-//   //    name : row.querySelector('input[name="name"]'),
-//   //    email : row.querySelector('input[name="email"]'),
-//   //    number : row.querySelector('input[name="number"]'),
-//   //    company : row.querySelector('input[name="company"]'),
-//   //    optIn : row.querySelector('input[name="optIn"]')
-//   // }
-
-//   asyncReq('/updateContact', 'post', contact, showResponse)
-
-
-// }
-
-function deleteListen(type) {
-
-  let delForms = Array.from(document.querySelectorAll('right'));
-
-
-  for (let i = 0; i < delForms.length; i++) {
-    delForms[i].addEventListener('submit', (e) => {
-      e.preventDefault();
-      let id = delForms[i].querySelector('input[name="_id"]').value
-
-      asyncReq('/delete' + type, 'post', { _id: id, async: true }, (data) => {
-        if (data.msg == "success") {
-          rows[i].remove();
-        }
-      })
-    })
+    key = inputArr[i].name
+    value = inputArr[i].value
+    if (key && value) {
+      contact = { ...contact, [key.trim()]: value }
+    }
 
   }
+  contact.async = true;
+
+  asyncReq('/addContact', 'post', contact, (data)=> {
+
+   let row = '<tr><td>' + data.name + '</td>'
+    row += '<td>' + data.company + '</td>';
+    row += '<td>' + data.number + '</td>';
+    row += '<td>' + data.email + '</td>';
+    row += '<td><input type="checkbox" name="optIn" checked="true" disabled="" readonly=""></input></td>';
+    row+= '<td class="editDelete d-flex justify-content-around">\
+              <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
+              <form action="/deleteContact" method="post" class="right">  \
+                  <input type="hidden" name="_id" value="'+data._id+'">\
+                  <input type="hidden" name="async" value="false">\
+                  <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
+              </form>\
+      </td>';
+      row += '</tr>';
+    
+    filterBody.innerHTML = row + filterBody.innerHTML;
+    let u = new Update()
+     row = filterBody.firstChild;
+
+    u.editListen(row);
+  })
 
 }
 
-  // deleteListen("Contact");
+let contactFrom = document.getElementById('contact-form');
+
+let inputs = contactFrom.querySelectorAll('input');
+
+contactFrom.addEventListener('submit', e => {
+  e.preventDefault();
+  contactAdd(inputs);
+})
+
+

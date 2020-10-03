@@ -116,6 +116,10 @@ const removePreloader = () => {
 
 function showResponse(data) {
 
+  if(data === true) {
+    return;
+  }
+
   removePreloader();
 
   // setTimeout(() => {
@@ -128,7 +132,8 @@ function showResponse(data) {
 
   for (let m = 0; m < data.length; m++) {
     if (title == 'contacts') {
-      row = '<tr><td>' + data[m].name + '</td>'
+      row = '<tr><td>' + data[m].group + '</td>'
+      row += '<td>' + data[m].name + '</td>'
       row += '<td>' + data[m].company + '</td>';
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
@@ -139,7 +144,7 @@ function showResponse(data) {
       row+= '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
               <form action="/deleteContact" method="post" class="right">  \
-                  <input type="hidden" name="_id" value="'+data[m].id+'">\
+                  <input type="hidden" name="_id" value="'+data[m]._id+'">\
                   <input type="hidden" name="async" value="false">\
                   <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
               </form>\
@@ -201,6 +206,10 @@ function showResponse(data) {
     filterBody.innerHTML += row;
   }
 
+  let u = new Update()
+
+  u.editAllListen();
+
   
   let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
   let numberInputs = document.querySelectorAll('#numbers-input span');
@@ -252,6 +261,7 @@ class Filter {
       this.order[index] = this.order[index] == -1 ? 1 : -1;
     }
 
+    this.filter.term = search.querySelector('input[type="search"]').value;
     this.filter.limit = parseInt(this.amount.value);
     this.filter.async = true;
   }
@@ -278,6 +288,9 @@ class Filter {
         let limit = all.querySelector('input[type="hidden"]').value;
         this.filter.limit = parseInt(limit);
         this.filter.async = true;
+        this.filter.term = '';
+        search.querySelector('input[type="search"]').value = '';
+
 
         asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
 
@@ -292,9 +305,10 @@ class Filter {
     search.addEventListener('submit', e => {
       e.preventDefault();
       showPreloader(filterBody)
-      let searchTerm = search.querySelector('input[type="search"]').value;
+      this.setFilter();
+      // let searchTerm = search.querySelector('input[type="search"]').value;
 
-      asyncReq('/search' + this.type, 'post', { term: searchTerm, async: true }, showResponse)
+      asyncReq('/search' + this.type, 'post', this.filter, showResponse)
 
     })
 
