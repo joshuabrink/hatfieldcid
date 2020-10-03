@@ -1,3 +1,4 @@
+const { resolve } = require('path');
 
 async function start() {
   const express = require('express');
@@ -139,25 +140,31 @@ async function start() {
   //   })
 
   // (opt-in/opt-out) POST watch request
-    app.post('/getMessage', (res,req) =>{
+    app.post('/getMessage', (req,res) =>{
 
-        let reqBody = "" + req.body.Body;
-        let num = req.body.From;
-        const number = num.replace(/^\+?27/, '0');
+          let number = req.body.From;
+          number.replace(/^\+?27/g, '0');
         
         // Find contact by number:
-        let sender = Contacts.findContact({ number: number }).then(c => {
-            contact.name = c.name;
-            return contact;
+        let sender = {name: '', id:'', number: number};
+        let promise = Contacts.findContact({number: number}).then(c => {
+          sender.name = c.name;
+          sender.id = c._id;
+          return sender;
         }).catch(err => console.log(err))
 
-        // Toggle opt-in/out:
-        if(reqBody.match(/STOP/i)){
-            //TODO do mongo opt-out on sender
-        }
-        else if(reqBody.match(/START/i)){
-            //TODO do mongo opt-in on sender
-      }
+        //! FIX ABOVE ^ (Not finding contact)
+
+        // // Toggle opt-in/out:
+        // if(reqBody.match(/STOP/i)){
+        //     //TODO do mongo opt-out on sender
+            // Contacts.updateEntity(sender._id, "\"optin\": \"false\"")
+        //   }
+        //   else if(reqBody.match(/START/i)){
+        //     //TODO do mongo opt-in on sender
+        //     Contacts.updateEntity(sender._id, "\"optin\": \"true\"")
+        // }
+        Promise.resolve(promise).then(res.send({sender}));
   });
 
   app.post('/login', (req, res, next) => {
