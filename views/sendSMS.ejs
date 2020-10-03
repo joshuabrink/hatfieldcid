@@ -86,7 +86,7 @@
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="row">
-                                    <div class="col-md-4 text-nowrap">
+                                    <!-- <div class="col-md-4 text-nowrap">
                                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                             <label>Show&nbsp;<select id="filterAmount" style="width: 80%;"
                                                     class="form-control form-control-sm custom-select custom-select-sm">
@@ -95,8 +95,8 @@
                                                     <option value="50">50</option>
                                                     <option value="100">100</option>
                                                 </select>&nbsp;</label></div>
-                                    </div>
-                                    <div class="col-8 mb-4">
+                                    </div> -->
+                                    <div class="col-12 mb-4">
                                         <form action="/searchContacts" method="POST" id="search" class="d-flex">
                                             <input type="search" name="term" class="form-control form-control-sm"
                                             aria-controls="dataTable" placeholder="Search">
@@ -112,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul id="contact-list" class="list-group list-group-flush"
+                            <ul id="contact-list" class="list-group list-group-flush customScroll"
                                 style="overflow-y: scroll;height: 350px;">
                                 <% if (typeof contacts != 'undefined') { %>
                                 <% for( let index = 0; index < contacts.length; index++ ) { %>
@@ -136,61 +136,6 @@
                                 <% } %>
                                 <% } %>
 
-
-                                <!-- <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>John Smith</strong></h6><span class="text-xs">082 234 6767</span></div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>Jane Smith</strong></h6><span class="text-xs">092 372 2342</span></div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="row align-items-center no-gutters">
-                                                <div class="col-1 text-right">
-                                                    <div class="custom-control custom-checkbox"><input class="custom-control-input" type="checkbox" id="formCheck-1"><label class="custom-control-label" for="formCheck-1"></label></div>
-                                                </div>
-                                                <div class="col text-right mr-2">
-                                                    <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span></div>
-                                            </div>
-                                        </li> -->
                             </ul>
                         </div>
                     </div>
