@@ -4,7 +4,7 @@ class Contact {
   constructor(db) {
     this.collection = db.collection('contacts');
   }
-  async addContact(contact) {
+  async addEntity(contact) {
     const newContact = await this.collection.insertOne(contact);
     return newContact;
   }
