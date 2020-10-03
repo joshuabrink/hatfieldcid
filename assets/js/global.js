@@ -116,7 +116,13 @@ const removePreloader = () => {
 
 function showResponse(data) {
 
+  if(data === true) {
+    return;
+  }
+
   removePreloader();
+
+  // setTimeout(() => {
 
   filterBody.classList.remove('fadeIn')
   void filterBody.offsetWidth;
@@ -126,18 +132,19 @@ function showResponse(data) {
 
   for (let m = 0; m < data.length; m++) {
     if (title == 'contacts') {
-      row = '<tr><td>' + data[m].name + '</td>'
+      row = '<tr><td>' + data[m].group + '</td>'
+      row += '<td>' + data[m].name + '</td>'
       row += '<td>' + data[m].company + '</td>';
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
-      row += '<td style="padding-left: 32px;"><input type="checkbox" name="optIn" checked= '
+      row += '<td><input type="checkbox" name="optIn" checked= '
       +data[m].optIn+
       ' disabled="" readonly=""></input></td>';
       
       row+= '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
               <form action="/deleteContact" method="post" class="right">  \
-                  <input type="hidden" name="_id" value="'+data[m].id+'">\
+                  <input type="hidden" name="_id" value="'+data[m]._id+'">\
                   <input type="hidden" name="async" value="false">\
                   <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
               </form>\
@@ -181,13 +188,25 @@ function showResponse(data) {
         </div>\
     </li>';
 
+
+      // filterBody.innerHTML += row;
+
+      // let checkBox = document.getElementById(data[m].number)
+      // checkBox.addEventListener("click", function () {
+      //   if (this.checked) {
+      //     input.add(this.id)
+      //   } else {
+      //     input.remove(this.id);
+      //   }
+      // });
+      // continue;
     }
   
 
     filterBody.innerHTML += row;
   }
 
-  let u = new Update();
+  let u = new Update()
 
   u.editAllListen();
 
@@ -214,7 +233,7 @@ function showResponse(data) {
 
 
   filterBody.classList.add('fadeIn')
-  
+  // }, 1000);
 }
 
 
@@ -242,6 +261,7 @@ class Filter {
       this.order[index] = this.order[index] == -1 ? 1 : -1;
     }
 
+    this.filter.term = search.querySelector('input[type="search"]').value;
     this.filter.limit = parseInt(this.amount.value);
     this.filter.async = true;
   }
@@ -268,8 +288,10 @@ class Filter {
         let limit = all.querySelector('input[type="hidden"]').value;
         this.filter.limit = parseInt(limit);
         this.filter.async = true;
+        this.filter.term = '';
+        search.querySelector('input[type="search"]').value = '';
 
-        showPreloader(filterBody);
+
         asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
 
       })
@@ -283,9 +305,10 @@ class Filter {
     search.addEventListener('submit', e => {
       e.preventDefault();
       showPreloader(filterBody)
-      let searchTerm = search.querySelector('input[type="search"]').value;
+      this.setFilter();
+      // let searchTerm = search.querySelector('input[type="search"]').value;
 
-      asyncReq('/search' + this.type, 'post', { term: searchTerm, async: true }, showResponse)
+      asyncReq('/search' + this.type, 'post', this.filter, showResponse)
 
     })
 
