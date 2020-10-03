@@ -1,5 +1,39 @@
 
-  
+
+.customScroll::-webkit-scrollbar {
+	width: 14px;
+}
+.customScroll::-webkit-scrollbar-thumb {
+	background-clip: content-box;
+	border: 4px solid transparent;
+	border-radius: 7px;
+	box-shadow: inset 0 0 0 10px;
+}
+.customScroll::-webkit-scrollbar-button {
+	width: 0;
+	height: 0;
+	display: none;
+}
+.customScroll::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+.customScroll {
+	overflow: auto;
+	color: #00000000;
+	transition: color 0.3s;
+}
+.customScroll:hover {
+  color: #4e73df;
+}
+
+.customScroll .list-group-item {
+  color: #888;
+}
+
+.customScroll::-webkit-scrollbar-thumb:hover {
+  color: #4e73df;
+}
+
   main {
     max-width: 500px;
     margin: 0 auto;
@@ -100,6 +134,37 @@
     margin-top: 0.75rem;
   }
 
+  #contact-list {
+    border-radius: 20px;
+  }
+
+  .card {
+    background-color: transparent;
+    border: none;
+    border-radius: 20px;
+  }
+
+  .card-header {
+    border-radius: 20px;
+  }
+
+  .head-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .head-container h1 {
+    margin: 0;
+  }
+  .btn.new-contact-btn {
+    border-radius: 53px;
+    padding: 12px 15px;
+  }
+  .new-contact-btn h4 {
+    line-height: 0;
+    
+  }
 
   .c-tag {
     width: fit-content;
@@ -124,8 +189,6 @@
     top: 6px;
     font-size: 13px;
   }
-
-
 
   .cross-fade {
     position: relative;
@@ -154,6 +217,25 @@
   .delete {
     text-align: center;
   }
+
+
+  #filterAmount {
+    border-radius: 20px;
+    width: 80%;
+  }
+
+  .btn {
+    border-radius: 20px;
+  }
+
+    input[name="term"] {
+      border-radius: 20px;
+    }
+    
+    input[name="term"] + .btn {
+      border-radius: 0 20px 20px 0;
+      margin-left: -42px;
+    }
   
   .tags-input {
     border: 2px solid #dfdfdf;
