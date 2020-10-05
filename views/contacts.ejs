@@ -19,8 +19,7 @@
         
                     <div role="tablist" id="accordion-1">
                         <div class="card">
-                     
-                         
+                                       
                             <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
                                 <div class="card-body">
                                     <form method="POST" action="/addContact" id='contact-form'>
@@ -84,18 +83,18 @@
           
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-1 text-center">
+                    <div class="col-md-2 d-flex justify-content-md-around">
                         <form id="all" action="/contactsFilter" method="post">
                             <input type="hidden" name="limit" value="0">
-                            <button type="submit"  class="btn btn-primary btn-sm">All</button>
+                            <button type="submit"  class="btn btn-primary btn-sm">Contacts</button>
                         </form>
                         <!-- <form id="group" action="/contactsFilter" method="post">
                             <input type="hidden" name="limit" value="0">
-                            <button type="submit"  class="btn btn-primary btn-sm">Group</button>
+                            <button type="submit"  class="btn btn-primary btn-sm">Groups</button>
                         </form> -->
                     </div>
                  
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="text-md-right dataTables_filter" id="dataTable_filter">
                             <form action="/searchContacts" method="POST" id="search" class="d-flex">
                             <input type="search" name="term" class="form-control form-control-sm"
@@ -118,7 +117,7 @@
                                 </select></div>
                     </div>
             
-                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <div class="table-responsive table mt-4" id="dataTable" role="grid" aria-describedby="dataTable_info">
                     <table class="table dataTable my-0" id="dataTable">
                         <thead>
                             <tr>
