@@ -147,6 +147,7 @@ function showResponse(data) {
 
   let row = '';
   filterBody.innerHTML = row;
+  
 
   for (let m = 0; m < data.length; m++) {
     if (title == 'contacts') {
@@ -169,8 +170,7 @@ function showResponse(data) {
       </td>';
       row += '</tr>';
       filterBody.innerHTML += row;
-      let u = new Update();
-      u.editListen(filterBody.firstChild)
+    
 
     } else if (title == 'messages') {
       row = '<tr><td class="flex start-left flex-wrap pt-0">'
@@ -217,7 +217,9 @@ function showResponse(data) {
   
   
   }
-  
+
+  let u = new Update();
+  u.editAllListen()
   // let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
   // let numberInputs = document.querySelectorAll('#numbers-input span');
 
