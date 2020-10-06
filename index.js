@@ -1,3 +1,5 @@
+const { Http2ServerResponse } = require('http2');
+const { resolve } = require('path');
 
 async function start() {
   const express = require('express');
@@ -66,7 +68,7 @@ async function start() {
 
     let allProm = new Promise((resolve, reject) => {
       for (let i = 0; i < numbers.length; i++) {
-        const number = numbers[i].replace(/^27/g, '0');
+        const number = numbers[i].replace(/^\+?27/g, '0');
 
         let contact = { name: '', number: number }
 
@@ -137,6 +139,36 @@ async function start() {
   //       });
   //     });
   //   })
+
+  // (opt-in/opt-out) POST watch request
+    app.post('/getMessage', (req,res) =>{
+
+          let number = req.body.From;
+          number = number.replace(/^\+?27/g, '0');
+        
+        // Find contact by number:
+        let sender = {name: '', id:'', number: number};
+        let promise = Contacts.findContact({number: number}).then(c => {
+          sender.name = c.name;
+          sender.id = c._id;
+          return sender;
+        }).catch(err => console.log(err))
+
+        Promise.resolve(promise).then(()=>{
+        // Toggle opt-in/out:
+          if(req.body.Body.match(/STOP/i)){
+          // Opt-out
+          Contacts.updateEntity(sender.id, {optIn: false})
+          }
+          else if(req.body.Body.match(/START/i)){
+            // Opt-in
+            Contacts.updateEntity(sender.id, {optIn: true})
+          }
+          res.status(204).send();
+        }).catch(err => {
+          res.send({ error: err})
+        });
+  });
 
   app.post('/login', (req, res, next) => {
     passport.authenticate('local', function (err, user, info) {
