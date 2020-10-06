@@ -114,6 +114,24 @@ const removePreloader = () => {
   }
 }
 
+function tagListen(checkbox) {
+  let numberInputs = document.querySelectorAll('#numbers-input span');
+
+  for (let j = 0; j < numberInputs.length; j++) {
+    if(checkbox.id == numberInputs[j].innerText) {
+      checkbox.checked = true; //checks input if already selected
+    }
+  }
+    checkbox.addEventListener("click", function () {
+      if (this.checked) {
+          input.add(this.id)
+      } else {
+          input.remove(this.id);
+      }
+  });
+
+}
+
 function showResponse(data) {
 
   if(data === true) {
@@ -129,6 +147,7 @@ function showResponse(data) {
 
   let row = '';
   filterBody.innerHTML = row;
+  
 
   for (let m = 0; m < data.length; m++) {
     if (title == 'contacts') {
@@ -150,6 +169,8 @@ function showResponse(data) {
               </form>\
       </td>';
       row += '</tr>';
+      filterBody.innerHTML += row;
+    
 
     } else if (title == 'messages') {
       row = '<tr><td class="flex start-left flex-wrap pt-0">'
@@ -170,6 +191,9 @@ function showResponse(data) {
         </form>\
         </td>'
       row += '</tr>';
+      
+      filterBody.innerHTML += row;
+     
 
     } else if (title == 'Send SMS') {
 
@@ -187,49 +211,34 @@ function showResponse(data) {
             </div>\
         </div>\
     </li>';
-
-
-      // filterBody.innerHTML += row;
-
-      // let checkBox = document.getElementById(data[m].number)
-      // checkBox.addEventListener("click", function () {
-      //   if (this.checked) {
-      //     input.add(this.id)
-      //   } else {
-      //     input.remove(this.id);
-      //   }
-      // });
-      // continue;
+    filterBody.innerHTML += row;
+    tagListen(filterBody.firstChild.querySelector('.custom-control-input'))
     }
   
-
-    filterBody.innerHTML += row;
-  }
-
-  let u = new Update()
-
-  u.editAllListen();
-
   
-  let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
-  let numberInputs = document.querySelectorAll('#numbers-input span');
-
-  for (let i = 0; i < contactItems.length; i++) {
-    //Check if number is already tagged
-    for (let j = 0; j < numberInputs.length; j++) {
-      if(contactItems[i].id == numberInputs[j].innerText) {
-        contactItems[i].checked = true; //checks input if already selected
-      }
-      
-    }   
-     contactItems[i].addEventListener("click", function () {
-          if (this.checked) {
-              input.add(this.id)
-          } else {
-              input.remove(this.id);
-          }
-      });
   }
+
+  let u = new Update();
+  u.editAllListen()
+  // let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
+  // let numberInputs = document.querySelectorAll('#numbers-input span');
+
+  // for (let i = 0; i < contactItems.length; i++) {
+  //   //Check if number is already tagged
+  //   for (let j = 0; j < numberInputs.length; j++) {
+  //     if(contactItems[i].id == numberInputs[j].innerText) {
+  //       contactItems[i].checked = true; //checks input if already selected
+  //     }
+      
+  //   }   
+  //    contactItems[i].addEventListener("click", function () {
+  //         if (this.checked) {
+  //             input.add(this.id)
+  //         } else {
+  //             input.remove(this.id);
+  //         }
+  //     });
+  // }
 
 
   filterBody.classList.add('fadeIn')
@@ -246,10 +255,25 @@ class Filter {
     for (let i = 0; i < this.cols.length; i++) {
       this.order.push(-1)
     }
-    this.amount = document.getElementById('filterAmount');
+    this.amount = document.getElementById('filterAmount') ? document.getElementById('filterAmount') : 0;
     this.filter = { limit: -1, sort: {} };
 
   }
+
+  startListen() {
+
+    if(this.amount === 0) {
+      this.searchListen();
+    } else {
+      this.searchListen();
+      this.sortListen();
+      this.allListen();
+      this.amountListen();
+    }
+
+  }
+
+  //Setter Function
 
   setFilter(index) {
 
@@ -266,7 +290,9 @@ class Filter {
     this.filter.async = true;
   }
 
-  startListen() {
+  //Listener functions
+
+  sortListen() {
     for (let i = 0; i < this.cols.length; i++) {
 
       this.cols[i].addEventListener('click', e => {
@@ -279,8 +305,11 @@ class Filter {
       })
 
     }
+  }
 
-    try {
+  allListen() {
+
+ 
       let all = document.getElementById('all')
 
       all.addEventListener('submit', (e) => {
@@ -295,10 +324,10 @@ class Filter {
         asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
 
       })
-    } catch (error) {
 
-    }
+  }
 
+  searchListen() {
 
     let search = document.getElementById("search");
 
@@ -311,6 +340,9 @@ class Filter {
       asyncReq('/search' + this.type, 'post', this.filter, showResponse)
 
     })
+  }
+
+  amountListen() {
 
 
     this.amount.addEventListener('change', (e) => {
@@ -321,8 +353,9 @@ class Filter {
       asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
       // messageFilter(filter)
     })
-
   }
 
 }
+
+
 
