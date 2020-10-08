@@ -222,7 +222,7 @@ function contactAdd(inputArr) {
     row += '<td>' + data.company + '</td>';
     row += '<td>' + data.number + '</td>';
     row += '<td>' + data.email + '</td>';
-    row += '<td><input type="checkbox" name="optIn" checked="true" disabled="" readonly=""></input></td>';
+    row += '<td><input type="checkbox" name="optIn" checked disabled></input></td>';
     row+= '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
               <form action="/deleteContact" method="post" class="right">  \

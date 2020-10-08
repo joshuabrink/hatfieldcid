@@ -156,11 +156,11 @@ function showResponse(d) {
       row += '<td>' + data[m].company + '</td>';
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
-      row += '<td><input type="checkbox" name="optIn" checked= '
-        + data[m].optIn +
-        ' disabled="" readonly=""></input></td>';
-
-      row += '<td class="editDelete d-flex justify-content-around">\
+      row += '<td><input type="checkbox" name="optIn" ';
+      row+= data[m].optIn? "checked":"";
+      row+= ' disabled></input></td>';
+      
+      row+= '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
               <form action="/deleteContact" method="post" class="right">  \
                   <input type="hidden" name="_id" value="'+ data[m]._id + '">\
