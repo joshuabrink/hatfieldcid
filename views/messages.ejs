@@ -7,15 +7,15 @@
             <div class="card shadow">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-1 text-center">
+                        <div class="col-md-2 d-flex">
                             <form id="all" action="/messagesFilter" method="post">
                                 <input type="hidden" name="limit" value="0">
                                 <button type="submit"  class="btn btn-primary btn-sm">All</button>
                             </form>
                          
                         </div>
-                        <div class="col-md-9">
-                            <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                        <div class="col-md-8">
+                            <div class="text-md-right">
                                 <form action="/searchMessages" method="POST" id="search" class="d-flex">
                                
                                     
@@ -28,8 +28,8 @@
                                     </form>
                                     </div>
                         </div>
-                        <div class="col-md-2 text-nowrap">
-                            <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                        <div class="col-md-2 text-nowrap d-flex justify-content-end">
+                            <div aria-controls="dataTable">
 
                                 <select
                                         class="form-control form-control-sm custom-select custom-select-sm"
@@ -44,11 +44,27 @@
 
                             </div>
                         </div>
-                       
-             
-                  
-                      
+                        <div class="col-md-6 mt-4">
+                            <nav class="d-lg-flex align-self-center">
+                                <ul class="pagination">
+                                    <% for( let i = 0; i < messages.total/25; i++ ) { %>
+                                        <% if (i == 0) { %>
+                                            <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                        <% } else { %>
+                                            <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                       <% } %>
+                                     
+                                    <% } %>
+
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-md-6 mt-4 d-flex flex-row-reverse">
+                            <p role="status" aria-live="polite"><span id="lower">1</span> to
+                               <span id="upper">25</span> of <span id="total"><%= messages.total %> </span></p>
+                        </div>
                     </div>
+
                     <div class="table-responsive table mt-4" id="dataTable" role="grid"
                         aria-describedby="dataTable_info">
                         <table class="table dataTable my-0" id="dataTable">
@@ -61,21 +77,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (typeof messages != 'undefined') { %>
-                                <% for( let index = 0; index < messages.length; index++ ) { %>
+                                <% if (messages && messages.data) { %>
+                                <% for( let index = 0; index < messages.data.length; index++ ) { %>
                                     
                                 <tr>
-                                    <% if (typeof messages[index] != 'undefined') { %>
+                                    <% if (typeof messages.data[index] != 'undefined') { %>
 
-                                    <% if (typeof messages[index].contact != 'undefined') { %>
+                                    <% if (typeof messages.data[index].contact != 'undefined') { %>
                                     <td class="flex start-left flex-wrap pt-0">
-                                        <% for( let c = 0; c <  messages[index].contact.length; c++ ) { %>
-                                        <% if (messages[index].contact[c]) { %>
+                                        <% for( let c = 0; c <  messages.data[index].contact.length; c++ ) { %>
+                                        <% if (messages.data[index].contact[c]) { %>
                                         <div class='cross-fade c-tag'>
                                             <div class="top">
-                                                <%= messages[index].contact[c].name ? messages[index].contact[c].name : '' %>
+                                                <%= messages.data[index].contact[c].name ? messages.data[index].contact[c].name : '' %>
                                             </div>
-                                            <div class="under"> <%= messages[index].contact[c].number %> </div>
+                                            <div class="under"> <%= messages.data[index].contact[c].number %> </div>
                                         </div>
                                         <% } %>
                                         <% } %>
@@ -83,11 +99,11 @@
                                         <% } %>
                                     </td>
 
-                                    <td><%= messages[index].message %> </td>
-                                    <td><%= messages[index].date %></td>
+                                    <td><%= messages.data[index].message %> </td>
+                                    <td><%= messages.data[index].date %></td>
                                     <td>
                                     <form action="/deleteMessage" method="post" class="delete">  
-                                        <input type="hidden" name="_id" value="<%= messages[index]._id %>">
+                                        <input type="hidden" name="_id" value="<%= messages.data[index]._id %>">
                                         <input type="hidden" name="async" value="false">
                                         <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
                                     </form>
