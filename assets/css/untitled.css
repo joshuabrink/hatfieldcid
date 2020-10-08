@@ -82,7 +82,7 @@
   
   p {
     margin-top: 10px;
-    font-size: 10px;
+    font-size: 14px;
     font-weight: bold;
     color: #4e73df;
     text-align: center;
@@ -222,6 +222,8 @@
   #filterAmount {
     border-radius: 20px;
     width: 80%;
+    
+    min-width: 100px;
   }
 
   .btn {
@@ -371,4 +373,8 @@
 
   .new-contact-header { 
     background-color: #4e73df;
+  }
+
+  .pagination {
+    margin: 0;
   }
