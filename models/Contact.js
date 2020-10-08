@@ -19,9 +19,9 @@ class Contact {
     return foundContact;
   }
 
-  async find(filter, lim, sort) {
+  async find(filter, lim, sort = 0, skip = 0) {
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
-    const foundContacts = await this.collection.find(filter).limit(lim).sort(sort).toArray();
+    const foundContacts = await this.collection.find(filter).limit(lim).sort(sort).skip(skip).toArray();
     return foundContacts;
 
   }
@@ -43,6 +43,10 @@ class Contact {
     var objId = new ObjectID(id);
     const foundContact = await this.collection.findOne({_id: objId});
     return foundContact;
+  }
+
+  async getSize(filter = {}) {
+    return await this.collection.countDocuments(filter);
   }
 }
 module.exports = Contact;

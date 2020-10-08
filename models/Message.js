@@ -25,9 +25,9 @@ class Message {
 
   }
 
-  async find(filter, lim, sort) {
+  async find(filter, lim, sort = 0, skip = 0) {
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
-    const foundMessages = await this.collection.find(filter).limit(lim).sort(sort).toArray();
+    const foundMessages = await this.collection.find(filter).limit(lim).sort(sort).skip(skip).toArray();
     return foundMessages;
 
   }
@@ -43,6 +43,10 @@ class Message {
     var objId = new ObjectID(id);
     const foundMessage = await this.collection.findOne({_id: objId});
     return foundMessage;
+  }
+
+  async getSize() {
+    return await this.collection.countDocuments({});
   }
 }
 module.exports = Message;
