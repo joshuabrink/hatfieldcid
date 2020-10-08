@@ -49,8 +49,8 @@
 })(jQuery); // End of use strict
 
 
-const asyncReq = (action, method, body, callback) => {
-  fetch(action, {
+const asyncReq = async (action, method, body, callback) => {
+  return await fetch(action, {
     method: method,
     headers: {
       'Content-type': 'application/json'
@@ -118,36 +118,36 @@ function tagListen(checkbox) {
   let numberInputs = document.querySelectorAll('#numbers-input span');
 
   for (let j = 0; j < numberInputs.length; j++) {
-    if(checkbox.id == numberInputs[j].innerText) {
+    if (checkbox.id == numberInputs[j].innerText) {
       checkbox.checked = true; //checks input if already selected
     }
   }
-    checkbox.addEventListener("click", function () {
-      if (this.checked) {
-          input.add(this.id)
-      } else {
-          input.remove(this.id);
-      }
+  checkbox.addEventListener("click", function () {
+    if (this.checked) {
+      input.add(this.id)
+    } else {
+      input.remove(this.id);
+    }
   });
 
 }
 
-function showResponse(data) {
+function showResponse(d) {
 
-  if(data === true) {
+  let data = d.data;
+
+  if (data === true) {
     return;
   }
 
   removePreloader();
-
-  // setTimeout(() => {
 
   filterBody.classList.remove('fadeIn')
   void filterBody.offsetWidth;
 
   let row = '';
   filterBody.innerHTML = row;
-  
+
 
   for (let m = 0; m < data.length; m++) {
     if (title == 'contacts') {
@@ -157,20 +157,20 @@ function showResponse(data) {
       row += '<td>' + data[m].number + '</td>';
       row += '<td>' + data[m].email + '</td>';
       row += '<td><input type="checkbox" name="optIn" checked= '
-      +data[m].optIn+
-      ' disabled="" readonly=""></input></td>';
-      
-      row+= '<td class="editDelete d-flex justify-content-around">\
+        + data[m].optIn +
+        ' disabled="" readonly=""></input></td>';
+
+      row += '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
               <form action="/deleteContact" method="post" class="right">  \
-                  <input type="hidden" name="_id" value="'+data[m]._id+'">\
+                  <input type="hidden" name="_id" value="'+ data[m]._id + '">\
                   <input type="hidden" name="async" value="false">\
                   <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
               </form>\
       </td>';
       row += '</tr>';
       filterBody.innerHTML += row;
-    
+
 
     } else if (title == 'messages') {
       row = '<tr><td class="flex start-left flex-wrap pt-0">'
@@ -191,9 +191,9 @@ function showResponse(data) {
         </form>\
         </td>'
       row += '</tr>';
-      
+
       filterBody.innerHTML += row;
-     
+
 
     } else if (title == 'Send SMS') {
 
@@ -211,39 +211,22 @@ function showResponse(data) {
             </div>\
         </div>\
     </li>';
-    filterBody.innerHTML += row;
-    tagListen(filterBody.firstChild.querySelector('.custom-control-input'))
+      filterBody.innerHTML += row;
+      tagListen(filterBody.firstChild.querySelector('.custom-control-input'))
     }
-  
-  
   }
 
   let u = new Update();
   u.editAllListen()
-  // let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
-  // let numberInputs = document.querySelectorAll('#numbers-input span');
-
-  // for (let i = 0; i < contactItems.length; i++) {
-  //   //Check if number is already tagged
-  //   for (let j = 0; j < numberInputs.length; j++) {
-  //     if(contactItems[i].id == numberInputs[j].innerText) {
-  //       contactItems[i].checked = true; //checks input if already selected
-  //     }
-      
-  //   }   
-  //    contactItems[i].addEventListener("click", function () {
-  //         if (this.checked) {
-  //             input.add(this.id)
-  //         } else {
-  //             input.remove(this.id);
-  //         }
-  //     });
-  // }
 
 
   filterBody.classList.add('fadeIn')
-  // }, 1000);
+
+  return d;
+
 }
+
+
 
 
 class Filter {
@@ -253,18 +236,20 @@ class Filter {
     this.cols = Array.from(document.querySelectorAll('.col-sort'));
 
     for (let i = 0; i < this.cols.length; i++) {
-      this.order.push(-1)
+      this.order.push(1)
     }
     this.amount = document.getElementById('filterAmount') ? document.getElementById('filterAmount') : 0;
+    this.page = document.querySelector('.page-item.active') ? parseInt(document.querySelector('.page-item.active').innerText) : 0;
     this.filter = { limit: -1, sort: {} };
 
   }
 
   startListen() {
 
-    if(this.amount === 0) {
+    if (this.amount === 0) {
       this.searchListen();
     } else {
+      this.pageListen();
       this.searchListen();
       this.sortListen();
       this.allListen();
@@ -275,18 +260,20 @@ class Filter {
 
   //Setter Function
 
-  setFilter(index) {
+  setFilter(index = -1) {
 
-    this.filter.sort = {};
+    // 
+    this.filter.page = 0;
 
-    if (typeof index !== 'undefined') {
+    if (index != -1) {
       let key = this.cols[index].id.replace('-sort', '');
+      this.filter.sort = {};
       this.filter.sort = { ...this.filter.sort, [key]: this.order[index] }
       this.order[index] = this.order[index] == -1 ? 1 : -1;
     }
 
     this.filter.term = search.querySelector('input[type="search"]').value;
-    this.filter.limit = parseInt(this.amount.value);
+    this.filter.limit = this.amount == 0 ? 0 : parseInt(this.amount.value);
     this.filter.async = true;
   }
 
@@ -301,7 +288,9 @@ class Filter {
         showPreloader(filterBody)
         this.setFilter(i);
 
-        asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
+        asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse).then((data)=> {
+          this.setPages(0, data.total);
+        })
       })
 
     }
@@ -309,21 +298,21 @@ class Filter {
 
   allListen() {
 
- 
-      let all = document.getElementById('all')
 
-      all.addEventListener('submit', (e) => {
-        e.preventDefault();
-        let limit = all.querySelector('input[type="hidden"]').value;
-        this.filter.limit = parseInt(limit);
-        this.filter.async = true;
-        this.filter.term = '';
-        search.querySelector('input[type="search"]').value = '';
+    let all = document.getElementById('all')
+
+    all.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // let limit = all.querySelector('input[type="hidden"]').value;
+      // this.filter.limit = parseInt(limit);
+      this.filter.async = true;
+      this.filter.term = '';
+      search.querySelector('input[type="search"]').value = '';
 
 
-        asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
+      asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
 
-      })
+    })
 
   }
 
@@ -335,9 +324,13 @@ class Filter {
       e.preventDefault();
       showPreloader(filterBody)
       this.setFilter();
+     
+      // this.setPages()
       // let searchTerm = search.querySelector('input[type="search"]').value;
 
-      asyncReq('/search' + this.type, 'post', this.filter, showResponse)
+      asyncReq('/search' + this.type, 'post', this.filter, showResponse).then((data)=> {
+        this.setPages(0, data.total);
+      })
 
     })
   }
@@ -349,10 +342,60 @@ class Filter {
       // let filter = { amount: parseInt(e.target.value) };
       showPreloader(filterBody)
       this.setFilter();
+      // this.setPages();
 
-      asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse)
+      asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse).then((data)=> {
+        this.setPages(0, data.total);
+      })
       // messageFilter(filter)
     })
+  }
+
+  setPages(index, total) {
+
+    let pageCon = document.querySelector('.pagination');
+    let limit = document.getElementById('filterAmount').value;
+   
+    let pages = total / limit;
+
+    document.getElementById('total').innerText = total;
+
+    pageCon.innerHTML = '';
+    for (let i = 0; i < pages; i++) {
+      pageCon.innerHTML += '<li class="page-item "><a class="page-link" href="#">' + (i + 1) + '</a></li>';
+      if(index == i) {
+        pageCon.children[i].classList.add('active');
+        document.getElementById('upper').innerText = (limit * (i+1)) < total ? (limit * (i+1)) : total;
+        document.getElementById('lower').innerText = (limit * i) + 1;
+        
+      }
+      
+    }
+
+    this.pageListen()
+
+  }
+
+
+  pageListen() {
+  
+    // this.skip = document.querySelector('.pagination .active').value;
+    let pageBtns = document.querySelectorAll('.page-item');
+    for (let i = 0; i < pageBtns.length; i++) {
+      pageBtns[i].addEventListener('click', e => {
+        e.preventDefault();
+
+       
+        this.setFilter();
+        this.filter.page = i;
+        let current = e.currentTarget;
+       
+        asyncReq('/' + this.type + 'Filter', 'post', this.filter, showResponse).then((data)=> {
+          this.setPages(parseInt(current.innerText) -1, data.total);
+        })
+      })
+
+    }
   }
 
 }
