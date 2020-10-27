@@ -66,7 +66,6 @@ const TagsInput = function (element) {
 
     });
 
-    // TODO Edit this to do the number behind name thing
     this.add = function (tag) {
         let clientNum = tag.lastElementChild.innerText;
         clientNum = clientNum.replace(initCharPattern, '');
