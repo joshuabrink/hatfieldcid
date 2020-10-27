@@ -61,7 +61,7 @@
                         </div>
                         <div class="col-md-6 mt-4 d-flex flex-row-reverse">
                             <p role="status" aria-live="polite"><span id="lower">1</span> to
-                               <span id="upper">25</span> of <span id="total"><%= messages.total %> </span></p>
+                               <span id="upper"><%=messages.total<25?messages.total:25%></span> of <span id="total"><%= messages.total %> </span></p>
                         </div>
                     </div>
 
