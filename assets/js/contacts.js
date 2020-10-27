@@ -218,10 +218,11 @@ function contactAdd(inputArr) {
 
   asyncReq('/addContact', 'post', contact, (data)=> {
 
-   let row = '<tr><td>' + data.name + '</td>'
-    row += '<td>' + data.company + '</td>';
-    row += '<td>' + data.number + '</td>';
-    row += '<td>' + data.email + '</td>';
+   let row = '<tr><td>' + data.data.group + '</td>';
+    row += '<td>' + data.data.name + '</td>';
+    row += '<td>' + data.data.company + '</td>';
+    row += '<td>' + data.data.number + '</td>';
+    row += '<td>' + data.data.email + '</td>';
     row += '<td><input type="checkbox" name="optIn" checked disabled></input></td>';
     row+= '<td class="editDelete d-flex justify-content-around">\
               <a class="left btn btn-primary" href="/editContact"><i class="fa fa-edit"></i></a>\
