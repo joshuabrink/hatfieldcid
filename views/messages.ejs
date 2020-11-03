@@ -5,10 +5,10 @@
         <div class="container-fluid">
             <h3 class="text-center text-danger mb-5 mt-5"><i class="fa fa-envelope"></i>&nbsp; Messages</h3>
             <div class="card shadow">
-                <div class="card-body">
+                <div class="card-body filterContainer">
                     <div class="row">
                         <div class="col-md-2 d-flex">
-                            <form id="all" action="/messagesFilter" method="post">
+                            <form class="all" action="/messagesFilter" method="post">
                                 <input type="hidden" name="limit" value="0">
                                 <button type="submit"  class="btn btn-primary btn-sm">All</button>
                             </form>
@@ -16,7 +16,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="text-md-right">
-                                <form action="/searchMessages" method="POST" id="search" class="d-flex">
+                                <form action="/searchMessages" method="POST"  class="d-flex search">
                                
                                     
                                         <input type="search" name="term" class="form-control form-control-sm"
@@ -31,9 +31,7 @@
                         <div class="col-md-2 text-nowrap d-flex justify-content-end">
                             <div aria-controls="dataTable">
 
-                                <select
-                                        class="form-control form-control-sm custom-select custom-select-sm"
-                                        id="filterAmount">
+                                <select class="form-control form-control-sm custom-select custom-select-sm filterAmount">
                                         <!-- <option value="1">1</option> -->
                                         <option value="10">10</option>
                                         <option value="25" selected>25</option>
@@ -60,8 +58,8 @@
                             </nav>
                         </div>
                         <div class="col-md-6 mt-4 d-flex flex-row-reverse">
-                            <p role="status" aria-live="polite"><span id="lower">1</span> to
-                               <span id="upper">25</span> of <span id="total"><%= messages.total %> </span></p>
+                            <p role="status" aria-live="polite"><span class="lower">1</span> to
+                               <span class="upper">25</span> of <span class="total"><%= messages.total %> </span></p>
                         </div>
                     </div>
 
@@ -76,7 +74,7 @@
                                     <th class="w-5"></th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="filterBody">
                                 <% if (messages && messages.data) { %>
                                 <% for( let index = 0; index < messages.data.length; index++ ) { %>
                                     

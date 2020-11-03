@@ -1,0 +1,146 @@
+<%- include ('./partials/navbar.ejs') %>
+
+<div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+
+            <div class="row mb-5 mt-5">
+                <div class="col-4 offset-4 head-container">
+                    <h1 class="text-center text-primary"><i class="fa fa-group"></i>&nbsp; Groups</h1>
+                </div>
+                <div class="col-4">
+                    <a data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-1"
+                        href="#accordion-1 .item-1" class="new-contact-btn btn btn-primary" role="tab">
+                        <h4 class="mb-0"><i class="fa fa-plus"></i></h4>
+                    </a>
+                </div>
+            </div>
+
+
+            <div role="tablist" id="accordion-1">
+                <div class="card">
+
+                    <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
+                        <div class="card-body">
+                           
+                                <input type="hidden" name="async" value="false">
+                                <div class="row">
+                                    <div class="col-6 mb-3">
+                                        <form method="POST" action="/addGroup" id='group-form'>
+                                            <div class="form-group">
+                                                <label for="name">Group Name:</label>
+                                                <input class="form-control" type="text" name="name" required>
+                                            </div>
+                                       
+                                        <div class="form-group">
+                                            <label for="numbers-input">Contacts to add:</label>
+                                            <div id="numbers-input" class="tags-input"></div>
+                                        </div>
+                                     
+
+                                            <div class="form-group text-center mt-5">
+                                                <button class="btn btn-primary" type="submit"><i
+                                                        class="fas fa-plus"></i>&nbsp;Add Group</button>
+                                            </div>
+                                        
+                                    </form>
+                                    </div>
+                                    <div class="col-6 mb-3" id="contact-list-parent">
+                                                <div class="card shadow mb-4">
+                                                    <div class="card-header py-3">
+                                                        <div class="row ">
+                                                         
+                                                            <div class="col-12 mb-4 ">
+                                                                <form action="/searchContacts" method="POST" class="d-flex search">
+                                                                    <input type="search" name="term" class="form-control form-control-sm"
+                                                                        aria-controls="dataTable" placeholder="Search">
+                                                                    <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                                                            class="fas fa-search"></i></button>
+                                                                    
+                                    
+                                                                </form>
+                                                            </div>
+
+                                                         
+                                                        </div>
+                                                    </div>
+                                                  
+                                                        <table class="table dataTable my-0 customScroll" style="    height: 350px;
+                                                        overflow: auto;
+                                                        display: block;" >
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-10 add-col" style="padding-left: 40px;">Add </th>
+                                                                    <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i
+                                                                                class="fa fa-sort"></i></a></th>
+                                                                
+                                                                    <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i
+                                                                                class="fa fa-sort"></i></a></th>
+                                                                    
+                                                                   
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="contact-list" class="" style=" overflow-y: scroll;height: 350px; ">
+                                 
+                                                                <% let contacts = [] %>
+                                                                <% if(groups && groups.data) { %>
+                                                                <% groups.data.forEach(g => { contacts = contacts.concat(g.contacts) }) %>
+                                                                <% if (typeof contacts != 'undefined') { %>
+                                                                <% for( let index = 0; index < contacts.length; index++ ) { %>
+                                                               
+                                                                     <tr class="editRow">
+                                                                         <td style="padding-left: 45px;"> <div class="custom-control custom-checkbox">
+                                                                            <input class="custom-control-input" type="checkbox"
+                                                                                id="<%=contacts[index].number %>">
+                                                                            <label class="custom-control-label"
+                                                                                for="<%= contacts[index].number %>"></label>
+                                                                        </div></td>
+                                                                        <td><%= contacts[index].name %></td>
+                                                                        <!-- <td><%= contacts[index].company %></td> -->
+                                                                        <td><%= contacts[index].number %></td>
+                                                                    
+                                                                    </tr>
+                                                   
+                                                                <% } %>
+                                                                <% } %>
+                                                                <% } %>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                
+                                                                    <th class="w-30">Name </th>
+                                                                   
+                                                                    <th class="w-10">Number </th>
+                                                            
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                                                    
+                                                
+
+                                                </div>
+                                
+                                    
+
+                                   
+                                    </div>
+
+                        <!-- <div class="form-group flex-grow-1 mr-3">
+                                                    <select name="position" class="form-control">
+                                                        <optgroup label="Position">
+                                                            <option value="Student" selected="">Student</option>
+                                                            <option value="Employee">Employee</option>
+                                                            <option value="Client">Client</option></optgroup>
+                                                        </select>
+                                                    </div> -->
+
+                       
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+        <%- include ('./partials/footer.ejs') %>

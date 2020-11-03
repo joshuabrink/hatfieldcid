@@ -39,6 +39,11 @@
                             <i class="fas fa-table"></i><span>Contacts</span>
                         </a>
                         </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link <%= typeof title != 'undefined' && title == 'Groups' ? 'active' : '' %>" href="/groups">
+                                <i class="fa fa-group " ></i><span>Groups</span>
+                            </a>
+                            </li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="/logout"><i class="fas fa-external-link-alt"></i><span>Logout</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>

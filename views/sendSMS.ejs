@@ -78,14 +78,14 @@
                         </form>
                     </div>
                 </div>
-                <div class="col-lg-6 mb-4">
+                <div class="col-lg-6 mb-4 filterContainer">
                     <div class="p-5">
                         <div class="text-center">
                             <h4 class="mb-4 text-primary"><i class="fa fa-address-book"></i>&nbsp; Contact List</h4>
                         </div>
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <div class="row">
+                                <div class="row ">
                                     <!-- <div class="col-md-4 text-nowrap">
                                         <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
                                             <label>Show&nbsp;<select id="filterAmount" style="width: 80%;"
@@ -97,22 +97,64 @@
                                                 </select>&nbsp;</label></div>
                                     </div> -->
                                     <div class="col-12 mb-4">
-                                        <form action="/searchContacts" method="POST" id="search" class="d-flex">
+                                        <form action="/searchContacts" method="POST" class="d-flex search"">
+                                             
                                             <input type="search" name="term" class="form-control form-control-sm"
                                             aria-controls="dataTable" placeholder="Search">
                                             <button class="btn btn-primary d-inline py-0" type="submit"><i
                                                 class="fas fa-search"></i></button>
                                         </form>
                                     </div>
-                                    <div class="col-8">
-                                        <h6 style="margin-bottom: 0px;">Add to SMS</h6>
-                                    </div>
-                                    <div class="col text-center">
-                                        <h6 style="margin-bottom: 0px;">Details</h6>
-                                    </div>
+                                   
                                 </div>
                             </div>
-                            <ul id="contact-list" class="list-group list-group-flush customScroll"
+                            <table class="table dataTable my-0 customScroll " style="height: 350px;overflow: auto;display: block;" >
+
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="w-10 add-col" style="padding-left: 40px;">Add </th>
+                                                                    <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i
+                                                                                class="fa fa-sort"></i></a></th>
+                                                                
+                                                                    <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i
+                                                                                class="fa fa-sort"></i></a></th>
+                                                                    
+                                                                   
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="contact-list" class="filterBody" style=" overflow-y: scroll;height: 350px; ">
+                                 
+                                                                <% if (typeof contacts != 'undefined') { %>
+                                                                <% for( let index = 0; index < contacts.length; index++ ) { %>
+                                                               
+                                                                     <tr>
+                                                                         <td style="padding-left: 45px;"> <div class="custom-control custom-checkbox">
+                                                                            <input class="custom-control-input" type="checkbox"
+                                                                                id="<%=contacts[index].number %>">
+                                                                            <label class="custom-control-label"
+                                                                                for="<%= contacts[index].number %>"></label>
+                                                                        </div></td>
+                                                                        <td><%= contacts[index].name %></td>
+                                                                        <!-- <td><%= contacts[index].company %></td> -->
+                                                                        <td><%= contacts[index].number %></td>
+                                                                    
+                                                                    </tr>
+                                                   
+                                                                <% } %>
+                                                                <% } %>
+                                                               
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                
+                                                                    <th class="w-30">Name </th>
+                                                                   
+                                                                    <th class="w-10">Number </th>
+                                                            
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
+                            <!-- <ul id="contact-list" class="list-group list-group-flush customScroll filterBody"
                                 style="overflow-y: scroll;height: 350px;">
                                 <% if (typeof contacts != 'undefined') { %>
                                 <% for( let index = 0; index < contacts.length; index++ ) { %>
@@ -136,7 +178,7 @@
                                 <% } %>
                                 <% } %>
 
-                            </ul>
+                            </ul> -->
                         </div>
                     </div>
                 </div>
