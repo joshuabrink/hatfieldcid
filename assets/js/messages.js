@@ -1,8 +1,8 @@
 
-
-const filterBody = document.querySelector('tbody');
+const parent = document.querySelector('.filterContainer');
+const filterBody = document.querySelector('.filterBody');
 const title = document.title
-let f = new Filter(title)
+let f = new Filter(title, parent, filterBody)
 
 
 

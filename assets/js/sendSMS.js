@@ -116,9 +116,10 @@ const numberInput = document.getElementById('numbers-input'),
     button = document.getElementById('send'),
     response = document.querySelector('.response');
 
-const filterBody = document.querySelector('#contact-list');
+const parent = document.querySelector('.filterContainer');
+const filterBody = document.querySelector('.filterBody');
 const title = document.title;
-let f = new Filter("contacts")
+let f = new Filter("contacts", parent, filterBody)
 
 
 f.setFilter();
