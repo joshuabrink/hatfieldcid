@@ -26,7 +26,7 @@
   color: #4e73df;
 }
 
-.customScroll .list-group-item {
+.customScroll .list-group-item,td,thead,label {
   color: #888;
 }
 
@@ -46,6 +46,10 @@
     -webkit-box-pack: center;
             justify-content: center;
     font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  }
+
+  .w-80 {
+    width: 80%;
   }
 
   .w-45 {
@@ -161,9 +165,31 @@
     border-radius: 53px;
     padding: 12px 15px;
   }
+
   .new-contact-btn h4 {
     line-height: 0;
     
+  }
+
+  #group-form {
+    height: 100%;
+  }
+
+  .group-contact-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dropdown-item button {
+    background: none;
+    border: none;
+    padding: 0;
+  }
+
+  .group-btn {
+    margin: 15px 0;
   }
 
   .c-tag {
