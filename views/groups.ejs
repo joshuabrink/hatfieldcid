@@ -217,7 +217,7 @@
                                         <td><span class="badge badge-pill badge-primary"><%= groups.data[index].contacts.length %></span></td>
                                         <td>   
                                             <div class="editDelete">
-                                                  <form action="/deleteGroup" method="post" class="delete">  
+                                                  <form action="/deleteGroup" method="post" class="deleteGroup">  
                                                         <input type="hidden" name="_id" value="<%= groups.data[index]._id %>">
                                                         <input type="hidden" name="async" value="false">
                                                         <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
