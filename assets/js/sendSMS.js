@@ -38,7 +38,7 @@ const TagsInput = function (element) {
                 var tags = {};
                 for (var i = 0; i < elements.length; i++) {
                     element = elements[i]
-                    tags[element.innerText] = element;
+                    tags[element.lastElementChild.innerText] = element;
                 }
 
                 return tags;
@@ -67,15 +67,29 @@ const TagsInput = function (element) {
     });
 
     this.add = function (tag) {
-        tag = tag.replace(initCharPattern, '');
-        tag = tag.replace(/^\s+/, '').replace(/\s+$/, ''); //replace one or more white spaces and newlines
+        let clientNum = tag.lastElementChild.innerText;
+        clientNum = clientNum.replace(initCharPattern, '');
+        clientNum = clientNum.replace(/^\s+/, '').replace(/\s+$/, ''); //replace one or more white spaces and newlines
         // tag = tag.replace(/^0/, '27'); //replace 0 with 27 if number begins with 0
-        tag = tag[0].toUpperCase() + tag.toLowerCase().slice(1);
-        if (tag != '' && this.tags[tag] === undefined) {
+        clientNum = clientNum[0].toUpperCase() + clientNum.toLowerCase().slice(1);
+        if (clientNum != '' && this.tags[clientNum] === undefined) {
             var element = document.createElement('span');
-            element.appendChild(document.createTextNode(tag));
+            // let childDiv = document.createElement('div');
+            // childDiv.classList.add('cross-fade', 'c-tag');
+                
+                let cName = document.createElement('div');
+                cName.classList.add('top');
+                cName.appendChild(document.createTextNode(tag.firstElementChild.innerText));
+                element.appendChild(cName);
+
+                let cNum = document.createElement('div');
+                cNum.classList.add('under', 'number');
+                cNum.appendChild(document.createTextNode(clientNum));
+                element.appendChild(cNum);
+            
+            // element.appendChild(childDiv);
             element.setAttribute('contenteditable', 'false');
-            element.classList.add('number')
+            element.classList.add('cross-fade', 'c-tag')
 
             insert(element);
         }
@@ -98,7 +112,8 @@ let contactItems = document.querySelectorAll('#contact-list .custom-control-inpu
 for (let i = 0; i < contactItems.length; i++) {
     contactItems[i].addEventListener("click", function () {
         if (this.checked) {
-            input.add(this.id)
+            let cont = this.parentNode.parentNode.nextElementSibling;
+            input.add(cont)
         } else {
             input.remove(this.id);
         }

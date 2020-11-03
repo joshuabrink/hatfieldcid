@@ -35,8 +35,8 @@ function contactAdd(inputArr) {
     data = data;
 
 
-   let row = '<tr><td>' + data.group + '</td>\
-   <td>' + data.name + '</td>';
+   let row = '<tr><td>' + data.group + '</td>';
+    row += '<td>' + data.name + '</td>';
     row += '<td>' + data.company + '</td>';
     row += '<td>' + data.number + '</td>';
     row += '<td>' + data.email + '</td>';
