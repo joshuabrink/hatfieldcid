@@ -7,7 +7,7 @@ const routeUtil = require('../lib/routeUtility')
 
 // const {get, filter, deleteEntity} = require('../lib/routeUtility')
 
-const {get, filter, deleteEntity,ensureAuthenticated} = new routeUtil(Messages);
+const {get, filter, deleteEntity,ensureAuthenticated, cacheData} = new routeUtil(Messages);
 
 
 
@@ -122,12 +122,12 @@ const {get, filter, deleteEntity,ensureAuthenticated} = new routeUtil(Messages);
 // }
 
 
-router.get('/messages', ensureAuthenticated, get)
+router.get('/messages', ensureAuthenticated,cacheData, get)
 
-router.post('/searchMessages', ensureAuthenticated, filter, get)
+router.post('/searchMessages', ensureAuthenticated, filter,cacheData, get)
 
 router.post('/deleteMessage', ensureAuthenticated, deleteEntity,get)
 
-router.post('/messagesFilter', ensureAuthenticated, filter, get)
+router.post('/messagesFilter', ensureAuthenticated, filter,cacheData, get)
 
 module.exports = router;

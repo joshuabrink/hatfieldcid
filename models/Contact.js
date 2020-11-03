@@ -19,9 +19,22 @@ class Contact {
     return foundContact;
   }
 
+  async findProjection(filter, projection) {
+    const foundContacts = await this.collection.find(filter).project(projection).toArray();
+    return foundContacts;
+
+  }
+
   async find(filter, lim, sort = 0, skip = 0) {
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
     const foundContacts = await this.collection.find(filter).limit(lim).sort(sort).skip(skip).toArray();
+    return foundContacts;
+
+  }
+
+
+  async findDistinct(field) {
+    const foundContacts = await this.collection.distinct(field, {});
     return foundContacts;
 
   }
