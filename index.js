@@ -12,13 +12,18 @@ async function start() {
   const session = require('express-session');
   const bcrypt = require('bcryptjs');
   const { ensureAuthenticated } = require('./lib/auth');
+ 
 
   //Awaits promise of connection to mongodb database
   await mongo.init();
+
+  // mongo.populateGroups();
+  // mongo.createIndex();
   //require contacts api for getting data from db
   const { Contacts } = require('./lib/mongoUtil');
   const { Users } = require('./lib/mongoUtil');
   const { Messages } = require('./lib/mongoUtil');
+
 
   //  const xlsx = require('./lib/loadDb')
 
@@ -90,7 +95,7 @@ async function start() {
     Promise.resolve(allProm).then(cList => {
       msg.contact = cList;
 
-      Messages.addMessage(msg).then((message) => {
+      Messages.addEntity(msg).then((message) => {
 
         res.send({ numbers: numbers })
         
@@ -199,6 +204,7 @@ async function start() {
 
 
   app.use('/', require('./routes/contacts.js'));
+  app.use('/', require('./routes/groups.js'));
   app.use('/', require('./routes/messages.js'));
 
 

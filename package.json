@@ -20,6 +20,7 @@
     "mongodb": "^3.5.7",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "redis": "^3.0.2",
     "twilio": "^3.43.1",
     "xlsx": "^0.16.5"
   }
