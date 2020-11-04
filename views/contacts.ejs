@@ -32,8 +32,8 @@
                                     </div>
                                     <div class="col-6  mb-3">
 
-                                                <input class="form-control" type="text" placeholder="Phone Number"
-                                                    name="number" required>
+                                        <input class="form-control" type="text" placeholder="Phone Number" name="number"
+                                            required>
 
                                     </div>
 
@@ -105,9 +105,8 @@
                     </div>
                     <div class="col-md-2 text-nowrap d-flex justify-content-end">
                         <div aria-controls="dataTable">
-                            <select
-                                class="filterAmount form-control form-control-sm custom-select custom-select-sm">
-                                <option value="10" >10</option>
+                            <select class="filterAmount form-control form-control-sm custom-select custom-select-sm">
+                                <option value="10">10</option>
                                 <option value="25" selected="">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -117,21 +116,22 @@
                         <nav class="d-lg-flex align-self-center">
                             <ul class="pagination">
                                 <% for( let i = 0; i < contacts.total/25; i++ ) { %>
-                                    <% if (i == 0) { %>
-                                        <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                    <% } else { %>
-                                        <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                   <% } %>
-                                 
+                                <% if (i == 0) { %>
+                                <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                <% } else { %>
+                                <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                <% } %>
+
                                 <% } %>
                             </ul>
                         </nav>
                     </div>
                     <div class="col-md-6 mt-4 d-flex flex-row-reverse">
                         <p role="status" aria-live="polite"><span class="lower">1</span> to
-                           <span class="upper"><%=contacts.total<25?contacts.total:25%></span> of <span class="total"><%= contacts.total %> </span></p>
+                            <span class="upper"><%=contacts.total<25?contacts.total:25%></span> of <span
+                                class="total"><%= contacts.total %> </span></p>
                     </div>
-                  
+
 
                     <div class="table-responsive table mt-4" id="dataTable" role="grid"
                         aria-describedby="dataTable_info">
@@ -155,7 +155,7 @@
 
 
                             <tbody>
-                               
+
                                 <% if (contacts && contacts.data) { %>
                                 <% for( let index = 0; index < contacts.data.length; index++ ) { %>
                                 <tr class="editRow">
@@ -169,22 +169,24 @@
                                     </td>
                                     <td class="editDelete">
                                         <div class="dropdown">
-                                            
-                                            <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>
-                                            
+
+                                            <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton"
+                                                data-toggle="dropdown"></i>
+
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>
+                                                <a class="left dropdown-item" href="/editContact"><i
+                                                        class="fa fa-edit"></i> Edit</a>
                                                 <form action="/deleteContact" method="post" class="right dropdown-item">
-                                                    <input type="hidden" name="_id" value="<%= contacts.data[index]._id %>">
+                                                    <input type="hidden" name="_id"
+                                                        value="<%= contacts.data[index]._id %>">
                                                     <input type="hidden" name="async" value="false">
-                                                    <a type="submit"><i
-                                                            class="fa fa-trash"> Delete</i></a>
+                                                    <a type="submit"><i class="fa fa-trash"> Delete</i></a>
                                                 </form>
-                                            
+
                                             </div>
-                                          </div>
+                                        </div>
                                         <!-- <i class="fa fa-ellipsis-v" aria-hidden="true"></i> -->
-<!-- 
+                                        <!-- 
                                         <a class="left btn btn-primary" href="/editContact"><i
                                                 class="fa fa-edit"></i></a>
 
@@ -212,9 +214,9 @@
                             </tfoot>
                         </table>
                     </div>
-                    
-                     
-                    
+
+
+
                 </div>
             </div>
         </div>

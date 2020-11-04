@@ -10,34 +10,35 @@
                         <div class="col-md-2 d-flex">
                             <form class="all" action="/messagesFilter" method="post">
                                 <input type="hidden" name="limit" value="0">
-                                <button type="submit"  class="btn btn-primary btn-sm">All</button>
+                                <button type="submit" class="btn btn-primary btn-sm">All</button>
                             </form>
-                         
+
                         </div>
                         <div class="col-md-8">
                             <div class="text-md-right">
-                                <form action="/searchMessages" method="POST"  class="d-flex search">
-                               
-                                    
-                                        <input type="search" name="term" class="form-control form-control-sm"
+                                <form action="/searchMessages" method="POST" class="d-flex search">
+
+
+                                    <input type="search" name="term" class="form-control form-control-sm"
                                         aria-controls="dataTable" placeholder="Search">
-                                        <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                    <button class="btn btn-primary d-inline py-0" type="submit"><i
                                             class="fas fa-search"></i></button>
-                                  
-                                  
-                                    </form>
-                                    </div>
+
+
+                                </form>
+                            </div>
                         </div>
                         <div class="col-md-2 text-nowrap d-flex justify-content-end">
                             <div aria-controls="dataTable">
 
-                                <select class="form-control form-control-sm custom-select custom-select-sm filterAmount">
-                                        <!-- <option value="1">1</option> -->
-                                        <option value="10">10</option>
-                                        <option value="25" selected>25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select>
+                                <select
+                                    class="form-control form-control-sm custom-select custom-select-sm filterAmount">
+                                    <!-- <option value="1">1</option> -->
+                                    <option value="10">10</option>
+                                    <option value="25" selected>25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select>
 
 
                             </div>
@@ -46,12 +47,12 @@
                             <nav class="d-lg-flex align-self-center">
                                 <ul class="pagination">
                                     <% for( let i = 0; i < messages.total/25; i++ ) { %>
-                                        <% if (i == 0) { %>
-                                            <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                        <% } else { %>
-                                            <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                       <% } %>
-                                     
+                                    <% if (i == 0) { %>
+                                    <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                    <% } else { %>
+                                    <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
+                                    <% } %>
+
                                     <% } %>
 
                                 </ul>
@@ -59,7 +60,8 @@
                         </div>
                         <div class="col-md-6 mt-4 d-flex flex-row-reverse">
                             <p role="status" aria-live="polite"><span class="lower">1</span> to
-                               <span class="upper"><%=messages.total<25?messages.total:25%></span> of <span class="total"><%= messages.total %> </span></p>
+                                <span class="upper"><%=messages.total<25?messages.total:25%></span> of <span
+                                    class="total"><%= messages.total %> </span></p>
                         </div>
                     </div>
 
@@ -69,15 +71,17 @@
                             <thead>
                                 <tr>
                                     <th class="w-45">Contact </th>
-                                    <th class="w-30">Message <a id="message-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                                    <th class="w-20">Date <a id="date-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
+                                    <th class="w-30">Message <a id="message-sort" class="col-sort" href=""><i
+                                                class="fa fa-sort"></i></a></th>
+                                    <th class="w-20">Date <a id="date-sort" class="col-sort" href=""><i
+                                                class="fa fa-sort"></i></a></th>
                                     <th class="w-5"></th>
                                 </tr>
                             </thead>
                             <tbody class="filterBody">
                                 <% if (messages && messages.data) { %>
                                 <% for( let index = 0; index < messages.data.length; index++ ) { %>
-                                    
+
                                 <tr>
                                     <% if (typeof messages.data[index] != 'undefined') { %>
 
@@ -100,16 +104,17 @@
                                     <td><%= messages.data[index].message %> </td>
                                     <td><%= messages.data[index].date %></td>
                                     <td>
-                                    <form action="/deleteMessage" method="post" class="delete">  
-                                        <input type="hidden" name="_id" value="<%= messages.data[index]._id %>">
-                                        <input type="hidden" name="async" value="false">
-                                        <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
-                                    </form>
-                                        
+                                        <form action="/deleteMessage" method="post" class="delete">
+                                            <input type="hidden" name="_id" value="<%= messages.data[index]._id %>">
+                                            <input type="hidden" name="async" value="false">
+                                            <button class="btn btn-primary" type="submit"><i
+                                                    class="fa fa-trash"></i></button>
+                                        </form>
+
                                     </td>
-                                
+
                                     <% } %>
-                              
+
                                 </tr>
                                 <% } %>
                                 <% } %>
@@ -119,7 +124,7 @@
                                     <td><strong>Contact</strong></td>
                                     <td><strong>Message</strong></td>
                                     <td><strong>Number</strong></td>
-                                   
+
                                     <td></td>
                                 </tr>
                             </tfoot>

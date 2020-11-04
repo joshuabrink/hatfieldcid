@@ -22,111 +22,114 @@
 
                     <div class="collapse item-1" role="tabpanel" data-parent="#accordion-1">
                         <div class="card-body">
-                           
-                                <input type="hidden" name="async" value="false">
-                                <div class="row">
-                                    <div class="col-6 mb-3">
-                                        <form method="POST" action="/addGroup" id='group-form'>
-                                            <div class="form-group">
-                                                <label for="name">Group Name:</label>
-                                                <input class="form-control" type="text" name="name" required>
-                                            </div>
-                                       
+
+                            <input type="hidden" name="async" value="false">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <form method="POST" action="/addGroup" id='group-form'>
+                                        <div class="form-group">
+                                            <label for="name">Group Name:</label>
+                                            <input class="form-control" type="text" name="name" required>
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="numbers-input">Contacts to add:</label>
                                             <div id="numbers-input" class="tags-input"></div>
                                         </div>
-                                     
 
-                                            <div class="form-group text-center mt-5">
-                                                <button class="btn btn-primary" type="submit"><i
-                                                        class="fas fa-plus"></i>&nbsp;Add Group</button>
-                                            </div>
-                                        
+
+                                        <div class="form-group text-center mt-5">
+                                            <button class="btn btn-primary" type="submit"><i
+                                                    class="fas fa-plus"></i>&nbsp;Add Group</button>
+                                        </div>
+
                                     </form>
-                                    </div>
-                                    <div class="col-6 mb-3" id="contact-list-parent">
-                                                <div class="card shadow mb-4">
-                                                    <div class="card-header py-3">
-                                                        <div class="row ">
-                                                         
-                                                            <div class="col-12 mb-4 ">
-                                                                <form action="/searchContacts" method="POST" class="d-flex search">
-                                                                    <input type="search" name="term" class="form-control form-control-sm"
-                                                                        aria-controls="dataTable" placeholder="Search">
-                                                                    <button class="btn btn-primary d-inline py-0" type="submit"><i
-                                                                            class="fas fa-search"></i></button>
-                                                                    
-                                    
-                                                                </form>
-                                                            </div>
+                                </div>
+                                <div class="col-6 mb-3" id="contact-list-parent">
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <div class="row ">
 
-                                                         
-                                                        </div>
-                                                    </div>
-                                                  
-                                                        <table class="table dataTable my-0 customScroll" style="    height: 350px;
-                                                        overflow: auto;
-                                                        display: block;" >
+                                                <div class="col-12 mb-4 ">
+                                                    <form action="/searchContacts" method="POST" class="d-flex search">
+                                                        <input type="search" name="term"
+                                                            class="form-control form-control-sm"
+                                                            aria-controls="dataTable" placeholder="Search">
+                                                        <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                                                class="fas fa-search"></i></button>
 
-                                                            <thead>
-                                                                <tr>
-                                                                    <th class="w-10 add-col" style="padding-left: 40px;">Add </th>
-                                                                    <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i
-                                                                                class="fa fa-sort"></i></a></th>
-                                                                
-                                                                    <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i
-                                                                                class="fa fa-sort"></i></a></th>
-                                                                    
-                                                                   
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="contact-list" class="" style=" overflow-y: scroll;height: 350px; ">
-                                 
-                                                                <% let contacts = [] %>
-                                                                <% if(groups && groups.data) { %>
-                                                                <% groups.data.forEach(g => { contacts = contacts.concat(g.contacts) }) %>
-                                                                <% if (typeof contacts != 'undefined') { %>
-                                                                <% for( let index = 0; index < contacts.length; index++ ) { %>
-                                                               
-                                                                     <tr class="editRow">
-                                                                         <td style="padding-left: 45px;"> 
-                                                                            
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input position-static" type="checkbox" name ="<%=contacts[index].number %>">
-                                                                            </div>
-                                                                        </td>
-                                                                        <td><%= contacts[index].name %></td>
-                                                                        <!-- <td><%= contacts[index].company %></td> -->
-                                                                        <td><%= contacts[index].number %></td>
-                                                                    
-                                                                    </tr>
-                                                   
-                                                                <% } %>
-                                                                <% } %>
-                                                                <% } %>
-                                                            </tbody>
-                                                            <tfoot>
-                                                                <tr>
-                                                                
-                                                                    <th class="w-30">Name </th>
-                                                                   
-                                                                    <th class="w-10">Number </th>
-                                                            
-                                                                </tr>
-                                                            </tfoot>
-                                                        </table>
-                                                    
-                                                
 
+                                                    </form>
                                                 </div>
-                                
-                                    
 
-                                   
+
+                                            </div>
+                                        </div>
+
+                                        <table class="table dataTable my-0 customScroll" style="    height: 350px;
+                                                        overflow: auto;
+                                                        display: block;">
+
+                                            <thead>
+                                                <tr>
+                                                    <th class="w-10 add-col" style="padding-left: 40px;">Add </th>
+                                                    <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i
+                                                                class="fa fa-sort"></i></a></th>
+
+                                                    <th class="w-10">Number <a id="number-sort" class="col-sort"
+                                                            href=""><i class="fa fa-sort"></i></a></th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody id="contact-list" class=""
+                                                style=" overflow-y: scroll;height: 350px; ">
+
+                                                <% let contacts = [] %>
+                                                <% if(groups && groups.data) { %>
+                                                <% groups.data.forEach(g => { contacts = contacts.concat(g.contacts) }) %>
+                                                <% if (typeof contacts != 'undefined') { %>
+                                                <% for( let index = 0; index < contacts.length; index++ ) { %>
+
+                                                <tr class="editRow">
+                                                    <td style="padding-left: 45px;">
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input position-static"
+                                                                type="checkbox" name="<%=contacts[index].number %>" value="<%=contacts[index]._id %>">
+                                                        </div>
+                                                    </td>
+                                                    <td><%= contacts[index].name %></td>
+                                                    <!-- <td><%= contacts[index].company %></td> -->
+                                                    <td><%= contacts[index].number %></td>
+
+                                                </tr>
+
+                                                <% } %>
+                                                <% } %>
+                                                <% } %>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+
+                                                    <th class="w-30">Name </th>
+
+                                                    <th class="w-10">Number </th>
+
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+
+
                                     </div>
 
-                        <!-- <div class="form-group flex-grow-1 mr-3">
+
+
+
+                                </div>
+
+                                <!-- <div class="form-group flex-grow-1 mr-3">
                                                     <select name="position" class="form-control">
                                                         <optgroup label="Position">
                                                             <option value="Student" selected="">Student</option>
@@ -135,223 +138,246 @@
                                                         </select>
                                                     </div> -->
 
-                       
-                    </div>
-                </div>
-            </div>
-            </div>
 
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <div class="row group" id="groupContainer">
-                    <div class="col-md-2 d-flex">
-                        <form class="all" action="/groupsFilter" method="post">
-                            <input type="hidden" name="limit" value="0">
-                            <button type="submit"  class="btn btn-primary btn-sm">Groups</button>
-                        </form>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="text-md-right">
-                            <form action="/searchGroups" method="POST" class="d-flex search">
-                                <input type="search" name="term" class="form-control form-control-sm"
-                                    aria-controls="dataTable" placeholder="Search">
-                                <button class="btn btn-primary d-inline py-0" type="submit"><i
-                                        class="fas fa-search"></i></button>
-
-
-                            </form>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2 text-nowrap d-flex justify-content-end">
-                        <div aria-controls="dataTable">
-                            <select class="filterAmount"
-                                class="form-control form-control-sm custom-select custom-select-sm">
-                                <option value="10" >10</option>
-                                <option value="25" selected="">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select></div>
-                    </div>
-                    <div class="col-md-6 mt-4">
-                        <nav class="d-lg-flex align-self-center">
-                            <ul class="pagination">
-                                <% for( let i = 0; i < groups.total/25; i++ ) { %>
-                                    <% if (i == 0) { %>
+                </div>
+
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row group" id="groupContainer">
+                        <div class="col-md-2 d-flex">
+                            <form class="all" action="/groupsFilter" method="post">
+                                <input type="hidden" name="limit" value="0">
+                                <button type="submit" class="btn btn-primary btn-sm">Groups</button>
+                            </form>
+                        </div>
+
+                        <div class="col-md-8">
+                            <div class="text-md-right">
+                                <form action="/searchGroups" method="POST" class="d-flex search">
+                                    <input type="search" name="term" class="form-control form-control-sm"
+                                        aria-controls="dataTable" placeholder="Search">
+                                    <button class="btn btn-primary d-inline py-0" type="submit"><i
+                                            class="fas fa-search"></i></button>
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-nowrap d-flex justify-content-end">
+                            <div aria-controls="dataTable">
+                                <select class="filterAmount"
+                                    class="form-control form-control-sm custom-select custom-select-sm">
+                                    <option value="10">10</option>
+                                    <option value="25" selected="">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                </select></div>
+                        </div>
+                        <div class="col-md-6 mt-4">
+                            <nav class="d-lg-flex align-self-center">
+                                <ul class="pagination">
+                                    
+                                    <% for( let i = 0; i < groups.total/25; i++ ) { %>
+                                        <% if (i == 0) { %>
                                         <li class="page-item active"><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                    <% } else { %>
+                                        <% } else { %>
                                         <li class="page-item "><a class="page-link" href="#"><%= i + 1 %> </a></li>
-                                   <% } %>
-                                 
-                                <% } %>
+                                        <% } %>
+                                    <% } %>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-md-6 mt-4 d-flex flex-row-reverse">
+                            <p role="status" aria-live="polite"><span class="lower">1</span> to
+                                <span class="upper">25</span> of <span class="total"><%= groups.total %> </span></p>
+                        </div>
 
 
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-md-6 mt-4 d-flex flex-row-reverse">
-                        <p role="status" aria-live="polite"><span class="lower">1</span> to
-                           <span class="upper">25</span> of <span class="total"><%= groups.total %> </span></p>
-                    </div>
-
-
-                    <table class="table dataTable my-0">
-                        <thead>
-                            <tr>
-                                <th class="w-80">Name <a id="name-sort" class="col-sort" href=""><i
-                                            class="fa fa-sort"></i></a></th>
-                                <th class="w-20">Count <a  href=""></a></th>
-                            </tr>
-                        </thead>
-                        <tbody id="groupBody">
-                            <% if (groups && groups.data) { %>
+                        <table class="table dataTable my-0">
+                            <thead>
+                                <tr>
+                                    <th class="w-80">Name <a id="name-sort" class="col-sort" href=""><i
+                                                class="fa fa-sort"></i></a></th>
+                                    <th class="w-20">Count <a href=""></a></th>
+                                </tr>
+                            </thead>
+                            <tbody id="groupBody">
+                                <% if (groups && groups.data) { %>
                                 <% for( let index = 0; index < groups.data.length; index++ ) { %>
-                                    <tr class="editRow">
-                                        <td>  
-                                            <a data-toggle="collapse" aria-expanded="false" aria-controls="<%=groups.data[index].name.replace(/\s/g,'') %> .item-1"
-                                            href="#<%=groups.data[index].name.replace(/\s/g,'') %> .item-1" class="group-btn btn btn-primary" role="tab">
-                                            <h4 class="mb-0"><%= groups.data[index].name %> <i class="fa fa-angle-down"></i></h4> 
-                                            </a>
-                                        </td>
-                                        <td><span class="badge badge-pill badge-primary"><%= groups.data[index].contacts.length %></span></td>
-                                        <td>   
-                                            <div class="editDelete">
-                                                  <form action="/deleteGroup" method="post" class="deleteGroup">  
-                                                        <input type="hidden" name="_id" value="<%= groups.data[index]._id %>">
-                                                        <input type="hidden" name="async" value="false">
-                                                        <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
-                                                    </form>
+                                <tr class="editRow">
+                                    <td>
+                                        <a data-toggle="collapse" aria-expanded="false"
+                                            aria-controls="<%=groups.data[index].name.replace(/\s/g,'') %> .item-1"
+                                            href="#<%=groups.data[index].name.replace(/\s/g,'') %> .item-1"
+                                            class="group-btn btn btn-primary" role="tab">
+                                            <h4 class="mb-0"><%= groups.data[index].name %> <i
+                                                    class="fa fa-angle-down"></i></h4>
+                                        </a>
+                                    </td>
+                                    <td><span
+                                            class="badge badge-pill badge-primary"><%= groups.data[index].contacts.length %></span>
+                                    </td>
+                                    <td>
+                                        <div class="editDelete">
+                                            <form action="/deleteGroup" method="post" class="deleteGroup">
+                                                <input type="hidden" name="_id" value="<%= groups.data[index]._id %>">
+                                                <input type="hidden" name="async" value="false">
+                                                <button class="btn btn-primary" type="submit"><i
+                                                        class="fa fa-trash"></i></button>
+                                            </form>
 
                                         </div>
-                                        </td>
-                                    </tr>
-                                     <tr id="<%=groups.data[index].name.replace(/\s/g,'')%>" data-group="<%= groups.data[index].name%>" class="filterContainer">
-                                         <td colspan="5">
+                                    </td>
+                                </tr>
+                                <tr id="<%=groups.data[index].name.replace(/\s/g,'')%>"
+                                    data-group="<%= groups.data[index].name%>" class="filterContainer">
+                                    <td colspan="5">
                                         <!-- <div id="<%=groups.data[index].name.replace(/\s/g,'')%>" data-group="<%= groups.data[index].name%>" class="filterContainer col-12"> -->
-                                        
-                                            <div class="collapse item-1" role="tabpanel" data-parent="#<%=groups.data[index].name.replace(/\s/g,'') %>">
-                                               
-                                                    <div class="row mb-4">
-                                                 
-                                    
-                                                        <div class="col-md-6">
-                                                            <div class="text-md-right">
-                                                                <form action="/searchContacts" method="POST"  class="d-flex search">
-                                                                    <input type="search" name="term" class="form-control form-control-sm"
-                                                                        aria-controls="dataTable" placeholder="Search">
-                                                                    <button class="btn btn-primary d-inline py-0" type="submit"><i
-                                                                            class="fas fa-search"></i></button>
-                                    
-                                    
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                  
-                                                   
+
+                                        <div class="collapse item-1" role="tabpanel"
+                                            data-parent="#<%=groups.data[index].name.replace(/\s/g,'') %>">
+
+                                            <div class="row mb-4">
+
+
+                                                <div class="col-md-6">
+                                                    <div class="text-md-right">
+                                                        <form action="/searchContacts" method="POST"
+                                                            class="d-flex search">
+                                                            <input type="search" name="term"
+                                                                class="form-control form-control-sm"
+                                                                aria-controls="dataTable" placeholder="Search">
+                                                            <button class="btn btn-primary d-inline py-0"
+                                                                type="submit"><i class="fas fa-search"></i></button>
+
+
+                                                        </form>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-10 group-input-list">
-                                                            <table class="table my-0" >
-    
-                                                                <thead>
-                                                                    <tr>
-                                                                      
-                                                                        <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i
-                                                                                    class="fa fa-sort"></i></a></th>
-                                                                        <th class="w-20">Company <a id="company-sort" class="col-sort" href=""><i
-                                                                                    class="fa fa-sort"></i></a></th>
-                                                                        <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i
-                                                                                    class="fa fa-sort"></i></a></th>
-                                                                        <th class="w-30">Email <a id="email-sort" class="col-sort" href=""><i
-                                                                                    class="fa fa-sort"></i></a></th>
-                                                                        <th class="w-10">Opt-In <a id="optin-sort" class="col-sort" href=""><i
-                                                                                    class="fa fa-sort"></i></a></th>
-                                                                    </tr>
-                                                                </thead>
-                                    
-                                    
-                                                                <tbody class="filterBody">
-                                     
-                                      
-                                                                    <% for( let j = 0; j < groups.data[index].contacts.length; j++ ) { %>
-                                                                         <tr class="editRow">
-                                                                            <td><%= groups.data[index].contacts[j].name %></td>
-                                                                            <td><%= groups.data[index].contacts[j].company %></td>
-                                                                            <td><%= groups.data[index].contacts[j].number %></td>
-                                                                            <td><%= groups.data[index].contacts[j].email %></td>
-                                                                            <td><input type="checkbox" name="optIn" <%= groups.data[index].contacts[j].optIn %>"checked":"" disabled></input></td>
-                                                                            <td class="editDelete">
-                                                                              
-                                                                                <div class="dropdown">
-                                                                                    
-                                                                                    <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>
-                                                                                    
-                                                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                                        <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>
-                                                                                        <form action="/deleteContact" method="post" class="right dropdown-item">
-                                                                                            <input type="hidden" name="_id" value="<%= groups.data[index].contacts[j]._id %>">
-                                                                                            <input type="hidden" name="async" value="false">
-                                                                                            <a type="submit"><i
-                                                                                                    class="fa fa-trash"> Delete</i></a>
-                                                                                        </form>
-                                                                                    
-                                                                                    </div>
-                                                                                  </div>
-                                                                         
-                                        
-                                                                            </td>
-                                                                        </tr>
-                                                       
-                                                                    <% } %>
-                                                                </tbody>
-                                                                <tfoot>
-                                                                    <tr>
-                                                                    
-                                                                        <th class="w-30">Name </th>
-                                                                        <th class="w-20">Company </th>
-                                                                        <th class="w-10">Number </th>
-                                                                        <th class="w-30">Email </th>
-                                                                        <th class="w-10">Opt-In </th>
-                                                                    </tr>
-                                                                </tfoot>
-                                                            </table>
-                                                        </div>
-                                                        <div class="col group-contact-list"><a href="/addContact" class="btn btn-primary addContact">Add Contact</a> </div>
-                                                    </div>
-                                               
+                                                </div>
+
+
                                             </div>
-                                            <!-- </div> -->
-                                     </td>
-                   
-                                    </tr> 
-                                    
-                                    
+                                            <div class="row">
+                                                <div class="col-10 group-input-list">
+                                                    <table class="table my-0">
 
-                            <% } %>
-                            <% } %>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                            
-                                <th class="w-80">Name </th>
-                                <th class="w-20">Count </th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                                                        <thead>
+                                                            <tr>
 
-     
-                  
-                     
-                    
+                                                                <th class="w-30">Name <a id="name-sort" class="col-sort"
+                                                                        href=""><i class="fa fa-sort"></i></a></th>
+                                                                <th class="w-20">Company <a id="company-sort"
+                                                                        class="col-sort" href=""><i
+                                                                            class="fa fa-sort"></i></a></th>
+                                                                <th class="w-10">Number <a id="number-sort"
+                                                                        class="col-sort" href=""><i
+                                                                            class="fa fa-sort"></i></a></th>
+                                                                <th class="w-30">Email <a id="email-sort"
+                                                                        class="col-sort" href=""><i
+                                                                            class="fa fa-sort"></i></a></th>
+                                                                <th class="w-10">Opt-In <a id="optin-sort"
+                                                                        class="col-sort" href=""><i
+                                                                            class="fa fa-sort"></i></a></th>
+                                                            </tr>
+                                                        </thead>
+
+
+                                                        <tbody class="filterBody">
+
+
+                                                            <% for( let j = 0; j < groups.data[index].contacts.length; j++ ) { %>
+                                                            <tr class="editRow">
+                                                                <td><%= groups.data[index].contacts[j].name %></td>
+                                                                <td><%= groups.data[index].contacts[j].company %></td>
+                                                                <td><%= groups.data[index].contacts[j].number %></td>
+                                                                <td><%= groups.data[index].contacts[j].email %></td>
+                                                                <td><input type="checkbox" name="optIn"
+                                                                        <%= groups.data[index].contacts[j].optIn %>"checked":""
+                                                                        disabled></input></td>
+                                                                <td class="editDelete">
+
+                                                                    <div class="dropdown">
+
+                                                                        <i class="fa fa-ellipsis-v " type="button"
+                                                                            id="dropdownMenuButton"
+                                                                            data-toggle="dropdown"></i>
+
+                                                                        <div class="dropdown-menu"
+                                                                            aria-labelledby="dropdownMenuButton">
+                                                                            <a class="left dropdown-item"
+                                                                                href="/editContact"><i
+                                                                                    class="fa fa-edit"></i> Edit</a>
+                                                                            <form action="/deleteContact" method="post"
+                                                                                class="right dropdown-item">
+                                                                                <input type="hidden" name="_id"
+                                                                                    value="<%= groups.data[index].contacts[j]._id %>">
+                                                                                <input type="hidden" name="async"
+                                                                                    value="false">
+                                                                                <a type="submit"><i class="fa fa-trash">
+                                                                                        Delete</i></a>
+                                                                            </form>
+
+                                                                        </div>
+                                                                    </div>
+
+
+                                                                </td>
+                                                            </tr>
+
+                                                            <% } %>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+
+                                                                <th class="w-30">Name </th>
+                                                                <th class="w-20">Company </th>
+                                                                <th class="w-10">Number </th>
+                                                                <th class="w-30">Email </th>
+                                                                <th class="w-10">Opt-In </th>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                                <div class="col group-contact-list"><a href="/addContact"
+                                                        class="btn btn-primary addContact">Add Contact</a> </div>
+                                            </div>
+
+                                        </div>
+                                        <!-- </div> -->
+                                    </td>
+
+                                </tr>
+
+
+
+                                <% } %>
+                                <% } %>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+
+                                    <th class="w-80">Name </th>
+                                    <th class="w-20">Count </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+
+
+
+                    </div>
                 </div>
             </div>
-        </div>
 
         </div>
-</div>
+    </div>
 
-        
-        
 
-        <%- include ('./partials/footer.ejs') %>
+
+
+    <%- include ('./partials/footer.ejs') %>
