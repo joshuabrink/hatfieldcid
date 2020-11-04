@@ -93,14 +93,14 @@ const TagsInput = function (element) {
 let input = new TagsInput('#numbers-input');
 
 //Select the contact's from the Contact List as the inputs for the numbers input
-let contactItems = document.querySelectorAll('#contact-list .custom-control-input');
+let contactItems = document.querySelectorAll('#contact-list .form-check-input');
 
 for (let i = 0; i < contactItems.length; i++) {
     contactItems[i].addEventListener("click", function () {
         if (this.checked) {
-            input.add(this.id)
+            input.add(this.name)
         } else {
-            input.remove(this.id);
+            input.remove(this.name);
         }
     });
 }
@@ -157,16 +157,16 @@ const showSMSResponse = (parent, data) => {
     setTimeout(() => {
         parent.classList.remove('fadeIn')
         void parent.offsetWidth;
-  
+
         parent.innerHTML = '<h5>Text message sent to: ';
         data.numbers.forEach(number => {
             parent.innerHTML += number + ' '
         });
         parent.innerHTML += '</h5>';
-  
+
         parent.classList.add('fadeIn')
     }, 1000);
-  }
+}
 
 //BUTTON LISTENER
 
@@ -196,7 +196,7 @@ function sendSMS() {
     }
 
     showPreloader(response)
-    
-    asyncReq('/sendSMS', 'post', { numbers, message }, finish )
+
+    asyncReq('/sendSMS', 'post', { numbers, message }, finish)
 
 }
