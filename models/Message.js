@@ -3,6 +3,8 @@ const ObjectID = require('mongodb').ObjectID
 class Message {
   constructor(db) {
     this.collection = db.collection('messages');
+    // this.collection.createIndex({"contact.name": 1, "contact.number": 1})
+    // this.collection.createIndex({message: "text"})
   }
   async addEntity(message) {
     const newMessage = await this.collection.insertOne(message);

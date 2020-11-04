@@ -3,6 +3,8 @@ const ObjectID = require('mongodb').ObjectID
 class Contact {
   constructor(db) {
     this.collection = db.collection('contacts');
+ 
+    // this.collection.createIndex({name: "text", company:"text",email:"text"})
   }
   async addEntity(contact) {
     const newContact = await this.collection.insertOne(contact);
@@ -10,9 +12,9 @@ class Contact {
   }
   async updateEntity(id, update) {
     const objId = new ObjectID(id);
-    const updatedContact = await this.collection.updateOne({_id: objId}, {$set:update});
+    const updatedContact = await this.collection.findOneAndUpdate({_id: objId}, update);
     // const updatedContact = await this.collection.updateOne({_id: objId}, {$set:update});
-    return updatedContact;
+    return updatedContact.value;
   }
   async findContact(contact) {
     const foundContact = await this.collection.findOne(contact);

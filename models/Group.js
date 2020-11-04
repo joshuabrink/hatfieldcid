@@ -3,14 +3,26 @@ const ObjectID = require('mongodb').ObjectID
 class Group {
   constructor(db) {
     this.collection = db.collection('groups');
+    // this.collection.createIndex({"name": 1})
   }
   async addEntity(group) {
-    const newGroup = await this.collection.insertOne(group);
+    let groupCopy = {
+      name: group.name
+    }
+    groupCopy.contacts = group.contacts.map(c=>{
+    
+      return {
+        _id: new ObjectID(c._id),
+        number: c.number
+      }
+    })
+
+    const newGroup = await this.collection.insertOne(groupCopy);
     return newGroup;
   }
   async updateEntity(id, update) {
     const objId = new ObjectID(id);
-    const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
+    const updatedGroup = await this.collection.updateOne({_id: objId}, update);
     // const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
     return updatedGroup;
   }
@@ -34,8 +46,8 @@ class Group {
   async deleteEntity(id) {
     const objId = new ObjectID(id)
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
-    const delGroup = await this.collection.deleteOne({_id: objId});
-    return delGroup;
+    const delGroup = await this.collection.findOneAndDelete({_id: objId});
+    return delGroup.value;
 
   }
 
