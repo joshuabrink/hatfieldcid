@@ -31,33 +31,33 @@ function contactAdd(inputArr) {
   }
   contact.async = true;
 
-  asyncReq('/addContact', 'post', contact, (data)=> {
+  asyncReq('/addContact', 'post', contact, (data) => {
     data = data;
 
 
-   let row = '<tr><td>' + data.group + '</td>\
+    let row = '<tr><td>' + data.group + '</td>\
    <td>' + data.name + '</td>';
     row += '<td>' + data.company + '</td>';
     row += '<td>' + data.number + '</td>';
     row += '<td>' + data.email + '</td>';
     row += '<td><input type="checkbox" name="optIn" checked disabled></input></td>';
-    row+= '<td class="editDelete"><div class="dropdown">\
+    row += '<td class="editDelete"><div class="dropdown">\
           <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>\
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
               <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>\
               <form action="/deleteContact" method="post" class="right dropdown-item">\
-                  <input type="hidden" name="_id" value="'+ data._id +'">\
+                  <input type="hidden" name="_id" value="'+ data._id + '">\
                   <input type="hidden" name="async" value="false">\
                   <a type="submit"><i class="fa fa-trash"> Delete</i></a>\
               </form>\
           </div>\
         </div>\
   </td>';
-      row += '</tr>';
-    
+    row += '</tr>';
+
     filterBody.innerHTML = row + filterBody.innerHTML;
     let u = new UpdateContact(parent, filterBody)
-     row = filterBody.firstChild;
+    row = filterBody.firstChild;
 
     u.editListen(row);
   })
