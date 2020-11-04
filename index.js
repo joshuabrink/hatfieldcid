@@ -18,7 +18,7 @@ async function start() {
   await mongo.init();
 
   // mongo.populateGroups();
-  // mongo.createIndex();
+  // await mongo.createIndex();
   //require contacts api for getting data from db
   const { Contacts } = require('./lib/mongoUtil');
   const { Users } = require('./lib/mongoUtil');
