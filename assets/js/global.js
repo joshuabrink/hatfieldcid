@@ -269,16 +269,25 @@ class UpdateGroup {
     })
   }
 
-  resizeCols(row) {
+  animate(row) {
     let contactList = row.querySelector('.group-contact-list')
     let list = row.querySelector('.group-input-list')
+    let clone = document.querySelector('#contact-list-parent');
+
+    let btnContainer = contactList.querySelector('.btnContainer')
+
     if (this.open) {
+      contactList.innerHTML = contactList.innerHTML.replace(clone.innerHTML, '');
       list.classList.remove('col')
       list.classList.add('col-10')
 
       contactList.classList.remove('col-4');
       contactList.classList.add('col');
+
+      btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style="">Cancel</a>`
     } else {
+
+      contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
 
       list.classList.remove('col-10')
       list.classList.add('col')
@@ -289,30 +298,106 @@ class UpdateGroup {
 
   }
 
+  checkList(row) {
+    let checks = row.querySelectorAll('#contact-list td .form-check-input');
+    let currentContacts = row.querySelectorAll('.filterBody tr');
+
+    let currentNumbers = Array.from(currentContacts).map(c=>{return c.children[2].innerText})
+    let currCheckNumbers =  Array.from(checks).map(c=>{return c.dataset.number});
+
+    for (let j = 0; j < currCheckNumbers.length; j++) {
+      for (let i = 0; i <currentNumbers.length; i++) {
+      if(currentNumbers[i] == currCheckNumbers[j]) {
+        checks[j].checked = true;
+      }
+    }
+  }
+
+  }
+
   toggleContactList(row) {
-    let clone = document.querySelector('#contact-list-parent');
-    let contactList = row.querySelector('.group-contact-list')
+
     if (this.open) {
 
-      contactList.innerHTML = contactList.innerHTML.replace(clone.innerHTML, '');
 
-      this.resizeCols(row)
+      this.animate(row)
       this.startListen(row)
 
       this.open = false;
     } else {
 
-      contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
-
-      this.resizeCols(row)
+      this.animate(row)
       this.startListen(row)
+      this.checkList(row)
+      this.toggleContact(row);
+
       this.open = true;
     }
 
 
   }
 
-  addContact() {
+  toggleContact(row) {
+    let checks = row.querySelectorAll('#contact-list td .form-check-input');
+    let currList = row.querySelector('.filterBody')
+ 
+      for (let j = 0; j < checks.length; j++) {
+
+      checks[j].addEventListener('click', e=>{
+        
+
+        let number = e.currentTarget.dataset.number;
+
+        if(!e.currentTarget.checked) {
+          let removeRow = Array.from(currList.children).find(c=>{
+            if(c.children[2]) {
+              return c.children[2].innerText == number;
+            } 
+         
+          })
+          removeRow.remove()
+        } else {
+          asyncReq("/contactsFilter", "post", { term: number , async: true }, (data) => {
+
+            let newRow = ''
+            data = data.data[0]
+            newRow += 
+            "<tr class='editRow'><td>" + data.name + "</td>";
+            newRow += "<td>" + data.company + "</td>";
+            newRow += "<td>" + data.number + "</td>";
+            newRow += "<td>" + data.email + "</td>";
+            newRow += '<td><input type="checkbox" name="optIn" ';
+            newRow += data.optIn ? "checked" : "";
+            newRow += " disabled></input></td>";
+  
+            newRow +=
+              '<td class="editDelete"><div class="dropdown">\
+                <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>\
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
+                    <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>\
+                    <form action="/deleteContact" method="post" class="right dropdown-item">\
+                        <input type="hidden" name="_id" value="' +
+              data._id +
+              '">\
+                            <input type="hidden" name="async" value="false">\
+                            <a type="submit"><i class="fa fa-trash"> Delete</i></a>\
+                        </form>\
+                    </div>\
+                  </div>\
+            </td><tr>'
+           
+            currList.innerHTML = newRow + currList.innerHTML
+          })
+        }
+      })
+    
+    }
+
+  
+
+
+
+
 
   }
 }
@@ -380,7 +465,7 @@ function tagListen(checkbox) {
   let numberInputs = document.querySelectorAll("#numbers-input span");
 
   for (let j = 0; j < numberInputs.length; j++) {
-    if (checkbox.name == numberInputs[j].innerText) {
+    if (checkbox.name == numberInputs[j].innerText.split('\n')[0]) {
       checkbox.checked = true; //checks input if already selected
     }
   }
@@ -624,6 +709,16 @@ class Filter {
 
       }
       else if (this.type == "groups") {
+        if (this.tagList) {
+          row += '<td style="padding-left:45px;"><div class="form-check"><input class="form-check-input position-static" type="checkbox" name="' + data[m].number + '">\</div></td>'
+
+          // row += '<td><div class="custom-control custom-checkbox">\
+          // <input class="custom-control-input" type="checkbox" id="'+ data[m].number +'">\
+          // <label class="custom-control-label" for="'+ data[m].number +'"></label></div></td>';
+          row += '<td>' + data[m].name + '</td><td>' + data[m].contacts.length + '</td>';
+
+
+        } else {
 
         row = '<tr class="editRow">\
         <td>\
@@ -727,6 +822,7 @@ class Filter {
             </div>\
     </div>\
     </div></td></tr>';
+      }
 
       }
 
