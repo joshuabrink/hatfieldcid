@@ -96,7 +96,8 @@
 
                                                         <div class="form-check">
                                                             <input class="form-check-input position-static"
-                                                                type="checkbox" name="<%=contacts[index].number %>" value="<%=contacts[index]._id %>">
+                                                                type="checkbox" name="<%=contacts[index].name %>" 
+                                                                value="<%=contacts[index]._id %>" data-number="<%= contacts[index].number %>">
                                                         </div>
                                                     </td>
                                                     <td><%= contacts[index].name %></td>
@@ -109,7 +110,7 @@
                                                 <% } %>
                                                 <% } %>
                                             </tbody>
-                                            <tfoot>
+                                            <!-- <tfoot>
                                                 <tr>
 
                                                     <th class="w-30">Name </th>
@@ -117,7 +118,7 @@
                                                     <th class="w-10">Number </th>
 
                                                 </tr>
-                                            </tfoot>
+                                            </tfoot> -->
                                         </table>
 
 
@@ -296,7 +297,7 @@
                                                                 <td><%= groups.data[index].contacts[j].number %></td>
                                                                 <td><%= groups.data[index].contacts[j].email %></td>
                                                                 <td><input type="checkbox" name="optIn"
-                                                                        <%= groups.data[index].contacts[j].optIn %>"checked":""
+                                                                        <%= groups.data[index].contacts[j].optIn ? "checked":"" %> 
                                                                         disabled></input></td>
                                                                 <td class="editDelete">
 
@@ -330,7 +331,7 @@
 
                                                             <% } %>
                                                         </tbody>
-                                                        <tfoot>
+                                                        <!-- <tfoot>
                                                             <tr>
 
                                                                 <th class="w-30">Name </th>
@@ -339,11 +340,15 @@
                                                                 <th class="w-30">Email </th>
                                                                 <th class="w-10">Opt-In </th>
                                                             </tr>
-                                                        </tfoot>
+                                                        </tfoot> -->
                                                     </table>
                                                 </div>
-                                                <div class="col group-contact-list"><a href="/addContact"
-                                                        class="btn btn-primary addContact">Add Contact</a> </div>
+                                                
+                                                <div class="col group-contact-list">
+                                                    <div class="row btnContainer">
+                                                    <a href="/addContact" class="btn btn-primary addContact"><i class="fa fa-edit"></i> Edit Contacts</a>
+                                                </div> 
+                                            </div>
                                             </div>
 
                                         </div>
@@ -357,13 +362,13 @@
                                 <% } %>
                                 <% } %>
                             </tbody>
-                            <tfoot>
+                            <!-- <tfoot>
                                 <tr>
 
                                     <th class="w-80">Name </th>
                                     <th class="w-20">Count </th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
 
 

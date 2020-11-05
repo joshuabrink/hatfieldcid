@@ -2,7 +2,16 @@
 
 <div class="d-flex flex-column" id="content-wrapper">
     <div class="d-flex align-items-center" id="content">
+
         <div class="container-fluid">
+            <div class="row mb-5 mt-5">
+                <div class="col-4 offset-4 head-container">
+                    <h2 class="text-center text-danger"><i class="fa fa-envelope"></i>&nbsp; Send SMS</h2>
+                </div>
+            </div>
+
+
+
             <div class="row d-flex">
                 <!-- <div class="col-12">
                             <main>
@@ -13,7 +22,7 @@
                 <div class="col-lg-6">
                     <div class="p-5">
                         <div class="text-center">
-                            <h4 class="mb-4 text-danger"><i class="fa fa-envelope"></i>&nbsp; Send SMS</h4>
+                            <h4 class="mb-4 text-danger"><i class="fa fa-envelope"></i>&nbsp; Message</h4>
                         </div>
                         <form class="user">
                             <div class="form-group">
@@ -55,40 +64,28 @@
 
                                 </div>
                             </div>
-
-                            <!-- <a id="send" class="btn btn-primary btn-block text-white btn-user btn-danger"
-                                role="button"><i class="far fa-paper-plane"></i>&nbsp; Send</a> -->
                             <hr>
-                            <!-- <div id="preload" class="preloader">
-                                <div class="sk-folding-cube">
-                                <div class="sk-cube1 sk-cube"></div>
-                                <div class="sk-cube2 sk-cube"></div>
-                                <div class="sk-cube4 sk-cube"></div>
-                                <div class="sk-cube3 sk-cube"></div>
-                                </div> </div> -->
-                            <div class="response">
-                                <!-- <svg id='preloader' viewBox="0 0 120 120" width="120px" height="120px">
-                                    <circle class="inner" cx="60" cy="60" r="32"/>
-                                    <circle class="middle" cx="60" cy="60" r="38"/>
-                                    <circle class="outer" cx="60" cy="60" r="44"/>
-                                </svg> -->
-                                <!-- <div id='preloader' class="preloader loading">
-                                    <span class="slice"></span>
-                                    <span class="slice"></span>
-                                    <span class="slice"></span>
-                                    <span class="slice"></span>
-                                    <span class="slice"></span>
-                                    <span class="slice"></span>
-                                  </div> -->
+                            <div class="response text-primary">
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="col-lg-6 mb-4 filterContainer">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h4 class="mb-4 text-primary"><i class="fa fa-address-book"></i>&nbsp; Contact List</h4>
+                    <div class="p-5 text-primary">
+
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h4>
+                                    <span class="toggle-title"><i class="fa fa-address-book"></i> Contacts</span>
+                                </h4>
+                            </div>
+                            <div class="col-3 offset-9 mb-2"><button class="btn btn-sm btn-primary ml-3 toggle-btn">Groups</button>
+                                </div>
                         </div>
+                      
+                            <!-- <h2><i class="fa fa-address-book"></i></h2> -->
+                         
+                        
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <div class="row ">
@@ -138,7 +135,7 @@
                                         <td style="padding-left: 45px;">
                                             <div class="form-check">
                                                 <input class="form-check-input position-static" type="checkbox"
-                                                    name="<%= contacts[index].number %>">
+                                                    name="<%= contacts[index].name %>" data-number="<%= contacts[index].number %>">
                                             </div>
                                         </td>
                                         <td><%= contacts[index].name %></td>
@@ -151,7 +148,7 @@
                                     <% } %>
 
                                 </tbody>
-                                <tfoot>
+                                <!-- <tfoot>
                                     <tr>
 
                                         <th class="w-10" style="padding-left: 40px;">Add </th>
@@ -160,7 +157,7 @@
                                         <th class="w-10">Number</th>
 
                                     </tr>
-                                </tfoot>
+                                </tfoot> -->
                             </table>
                             <!-- <ul id="contact-list" class="list-group list-group-flush customScroll filterBody"
                                 style="overflow-y: scroll;height: 350px;">

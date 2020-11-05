@@ -70,7 +70,8 @@
                         <table class="table dataTable my-0" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th class="w-45">Contact </th>
+                                    <th class="w-20">Contacts </th>
+                                    <th class="w-20">Groups </th>
                                     <th class="w-30">Message <a id="message-sort" class="col-sort" href=""><i
                                                 class="fa fa-sort"></i></a></th>
                                     <th class="w-20">Date <a id="date-sort" class="col-sort" href=""><i
@@ -85,22 +86,41 @@
                                 <tr>
                                     <% if (typeof messages.data[index] != 'undefined') { %>
 
-                                    <% if (typeof messages.data[index].contact != 'undefined') { %>
+                                    <% if (typeof messages.data[index].contacts != 'undefined') { %>
                                     <td class="flex start-left flex-wrap pt-0">
-                                        <% for( let c = 0; c <  messages.data[index].contact.length; c++ ) { %>
-                                        <% if (messages.data[index].contact[c]) { %>
+                                        <% for( let c = 0; c <  messages.data[index].contacts.length; c++ ) { %>
+                                        <% if (messages.data[index].contacts[c]) { %>
                                         <div class='cross-fade c-tag'>
                                             <div class="top">
-                                                <%= messages.data[index].contact[c].name ? messages.data[index].contact[c].name : '' %>
+                                                <%= messages.data[index].contacts[c].name ? messages.data[index].contacts[c].name : '' %>
                                             </div>
-                                            <div class="under"> <%= messages.data[index].contact[c].number %> </div>
+                                            <div class="under"> <%= messages.data[index].contacts[c].number %> </div>
                                         </div>
                                         <% } %>
                                         <% } %>
-
-                                        <% } %>
                                     </td>
+                                    <% } else { %>
+                                        <td></td>
+                                        <% } %>
+                                   
 
+                                 
+                                        <% if (typeof messages.data[index].groups != 'undefined') { %>
+                                            <td>
+                                                <% for( let c = 0; c <  messages.data[index].groups.length; c++ ) { %>
+                                                <% if (messages.data[index].groups[c]) { %>
+                                                <div class='c-tag'>
+                                                    <div class="top">
+                                                        <%= messages.data[index].groups[c] %>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <% } %>
+                                                <% } %>
+                                            </td>
+                                            <% } else { %>
+                                                <td></td>
+                                                <% } %>
                                     <td><%= messages.data[index].message %> </td>
                                     <td><%= messages.data[index].date %></td>
                                     <td>
@@ -119,7 +139,7 @@
                                 <% } %>
                                 <% } %>
                             </tbody>
-                            <tfoot>
+                            <!-- <tfoot>
                                 <tr>
                                     <td><strong>Contact</strong></td>
                                     <td><strong>Message</strong></td>
@@ -127,7 +147,7 @@
 
                                     <td></td>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>
