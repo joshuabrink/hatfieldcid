@@ -62,57 +62,57 @@ async function start() {
 
   })
 
-  app.post('/sendSMS', ensureAuthenticated, async (req, res) => {
+  // app.post('/sendSMS', ensureAuthenticated, async (req, res) => {
 
-    const { numbers, message } = req.body;
+  //   const { numbers, message } = req.body;
 
-    const date = new Date(Date.now()).toISOString();
-    let msg = { message: message, date: date };
-    let contactList = [];
+  //   const date = new Date(Date.now()).toISOString();
+  //   let msg = { message: message, date: date };
+  //   let contactList = [];
 
 
-    let allProm = new Promise((resolve, reject) => {
-      for (let i = 0; i < numbers.length; i++) {
-        const number = numbers[i].replace(/^\+?27/g, '0');
+  //   let allProm = new Promise((resolve, reject) => {
+  //     for (let i = 0; i < numbers.length; i++) {
+  //       const number = numbers[i].replace(/^\+?27/g, '0');
 
-        let contact = { name: '', number: number }
+  //       let contact = { name: '', number: number }
 
-        let promise = Contacts.findContact({ number: number }).then(c => {
-          contact.name = c.name;
-          return contact;
-        }).catch(err => console.log(err))
+  //       let promise = Contacts.findContact({ number: number }).then(c => {
+  //         contact.name = c.name;
+  //         return contact;
+  //       }).catch(err => console.log(err))
 
-        Promise.resolve(promise).then(contact => {
-          contactList.push(contact)
-          if (contactList.length == numbers.length) {
-            resolve(contactList);
-          }
+  //       Promise.resolve(promise).then(contact => {
+  //         contactList.push(contact)
+  //         if (contactList.length == numbers.length) {
+  //           resolve(contactList);
+  //         }
 
-        })
-      }
-    })
+  //       })
+  //     }
+  //   })
 
-    Promise.resolve(allProm).then(cList => {
-      msg.contact = cList;
+  //   Promise.resolve(allProm).then(cList => {
+  //     msg.contact = cList;
 
-      Messages.addEntity(msg).then((message) => {
+  //     Messages.addEntity(msg).then((message) => {
 
-        res.send({ numbers: numbers })
+  //       res.send({ numbers: numbers })
         
-      }).catch(err => {
-        res.send({ error: err})
+  //     }).catch(err => {
+  //       res.send({ error: err})
     
-      });
+  //     });
       
-    })
+  //   })
 
 
 
-    //  await SMS.sendBulk(numbers, message).then(response => {
-    //   io.emit('smsStatus', response);
-    // });   
+  //   //  await SMS.sendBulk(numbers, message).then(response => {
+  //   //   io.emit('smsStatus', response);
+  //   // });   
 
-  })
+  // })
 
   // app.get('/messages', ensureAuthenticated, (req, res) => {
   //   Messages.findContacts({}).then((contacts) => {
