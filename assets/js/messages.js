@@ -11,9 +11,9 @@ f.startListen();
 
 
 
-function deleteListen(type) {
+function msgDeleteListen() {
 
-  let delForms = Array.from(document.querySelectorAll('.delete'));
+  let delForms = Array.from(document.querySelectorAll('.deleteMessage'));
   let rows = Array.from(document.querySelectorAll('tbody tr'))
 
   for (let i = 0; i < delForms.length; i++) {
@@ -21,7 +21,7 @@ function deleteListen(type) {
       e.preventDefault();
       let id = delForms[i].querySelector('input[name="_id"]').value
 
-      asyncReq('/delete' + type, 'post', { _id: id, async: true }, (data) => {
+      asyncReq('/deleteMessage', 'post', { _id: id, async: true }, (data) => {
         if (data.msg != "error") {
           rows[i].remove();
         }
@@ -32,6 +32,6 @@ function deleteListen(type) {
 
 }
 
-deleteListen("Message");
+msgDeleteListen();
 
 
