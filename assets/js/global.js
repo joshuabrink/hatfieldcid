@@ -299,7 +299,7 @@ class UpdateGroup {
           }
         }
         
-      })
+      }).filter(n => n)
 
       let delForm = header.querySelector('.deleteGroup');
       let id = delForm.querySelector('input[name="_id"]').value
@@ -577,9 +577,6 @@ class Filter {
   }
 
   startListen() {
-    // if (this.amount === 0) {
-    //   this.searchListen();
-    // } else {
     try {
       this.searchListen();
       this.sortListen();
@@ -589,9 +586,6 @@ class Filter {
     } catch (error) {
       console.log(error);
     }
-
-    // this.groupListen();
-    // }
   }
 
   //Setter Function
@@ -725,8 +719,8 @@ class Filter {
 
       } else if (this.type == "messages") {
         row = '<tr><td class="flex start-left flex-wrap pt-0">';
-        for (let c = 0; c < data[m].contact.length; c++) {
-          let contact = data[m].contact[c];
+        for (let c = 0; c < data[m].contacts.length; c++) {
+          let contact = data[m].contacts[c];
           row +=
             '<div class="cross-fade c-tag">\
               <div class="top">' +
@@ -736,13 +730,29 @@ class Filter {
             contact.number +
             "</div></div>";
         }
+
+        
+        if(data[m].groups) {
+          row += '<td>'
+          for (let c = 0; c < data[m].groups.length; c++) {
+            let group = data[m].groups[c];
+            row +=
+              '<div class="c-tag">\
+                <div class="top">' +
+                group +
+              '</div></div>';
+          }
+          row += '</td>'
+        } else {
+          row += '<td></td>'
+        }
         row += "</td><td>" + data[m].message + "</td>";
         row += "<td>" + data[m].date + "</td>";
+
+  
         row +=
           '<td>\
-          <form action="/delete"' +
-          this.type +
-          '" method="post" class="delete">  \
+          <form action="/deleteMessage" method="post" class="deleteMessage">  \
               <input type="hidden" name="_id" value="' +
           data[m]._id +
           '">\
@@ -752,17 +762,11 @@ class Filter {
           </td>';
         row += "</tr>";
 
-
       }
       else if (this.type == "groups") {
         if (this.tagList) {
           row += '<td style="padding-left:45px;"><div class="form-check"><input class="form-check-input position-static" type="checkbox" name="' + data[m].number + '">\</div></td>'
-
-          // row += '<td><div class="custom-control custom-checkbox">\
-          // <input class="custom-control-input" type="checkbox" id="'+ data[m].number +'">\
-          // <label class="custom-control-label" for="'+ data[m].number +'"></label></div></td>';
           row += '<td>' + data[m].name + '</td><td>' + data[m].contacts.length + '</td>';
-
 
         } else {
 
@@ -784,28 +788,23 @@ class Filter {
           '</span></td>\
         <td>\
           <div class="editDelete">\
-            <div class="dropleft">\
-            <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>\
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
-                  <a class="left dropdown-item" href="/editGroup"><i class="fa fa-edit"></i> Edit Group</a>\
-                  <form action="/deleteGroup" method="post" class="right dropdown-item">\
-                      <input type="hidden" name="_id" value="'+ data[m].name + '">\
-                      <input type="hidden" name="async" value="false">\
-                      <a type="submit"><i class="fa fa-trash"> Delete Group</i></a>\
-                  </form>\
-              </div>\
-            </div>\
-          </div>\
+            <form action="/deleteGroup" method="post" class="deleteGroup">\
+                <input type="hidden" name="_id" value="'+data[m]._id+'">\
+                <input type="hidden" name="async" value="false">\
+                <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
+            </form>\
+        </div>\
         </td>\
-    </tr>\
-     <tr>\
-         <td>\
+    </tr>';
+
+     row += '<tr>\
+         <td colspan="5">\
          <div id="' +
           data[m].name.replace(/\s/g, "") +
           '" data-group="' +
           data[m].name.replace(/\s/g, "") +
           '" class="filterContainer col-12">\
-            <div class="collapse item-1" role="tabpanel" data-parent="' +
+            <div class="collapse item-1" role="tabpanel" data-parent="#' +
           data[m].name.replace(/\s/g, "") +
           '">\
                     <div class="row mb-4">\
@@ -818,7 +817,9 @@ class Filter {
                             </div>\
                         </div>\
                     </div>\
-                <table class="table dataTable my-0" >\
+                    <div class="row">\
+                    <div class="col-10 group-input-list">\
+                <table class="table my-0" >\
                     <thead>\
                         <tr>\
                             <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
@@ -837,7 +838,7 @@ class Filter {
                 <td>' + data[m].contacts[j].company + '</td>\
                 <td>' + data[m].contacts[j].number + '</td>\
                 <td>' + data[m].contacts[j].email + '</td>\
-                <td><input type="checkbox" name="optIn" '+ data[m].contacts[j].optIn + '"checked":"" disabled></input></td>\
+                <td><input type="checkbox" name="optIn" '+ (data[m].contacts[j].optIn ? "checked": "") + ' disabled></input></td>\
                 <td class="editDelete">\
                     <div class="dropdown">\
                         <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>\
@@ -855,55 +856,49 @@ class Filter {
         }
         row +=
           ' </tbody>\
-                    <tfoot>\
-                        <tr>\
-                            <th class="w-30">Name </th>\
-                            <th class="w-20">Company </th>\
-                            <th class="w-10">Number </th>\
-                            <th class="w-30">Email </th>\
-                            <th class="w-10">Opt-In </th>\
-                        </tr>\
-                    </tfoot>\
                 </table>\
             </div>\
+            <div class="col group-contact-list">\
+            <div class="row btnContainer">\
+            <a href="/addContact" class="btn btn-primary addContact"><i class="fa fa-edit"></i> Edit Contacts</a>\
+        </div>\
     </div>\
     </div></td></tr>';
       }
 
       }
-
-
       this.body.innerHTML += row;
     }
 
-    if (!this.tagList) {
-
-
-      if (!this.groupCol) {
-        // let u = new UpdateGroup(this.parent, this.body);
-        // u.editAllListen();
-        let rows = Array.from(this.body.children).filter(c => !c.classList.contains("editRow"));
-        for (let i = 0; i < rows.length; i++) {
-          u = new UpdateContact(rows[i].querySelector('.filterContainer'), rows[i].querySelector('tbody'));
+    if( this.type != "messages") {
+      if (!this.tagList) {
+        if (!this.groupCol) {
+          let u = new UpdateGroup(this.body);
+          u.startListenAll();
+          let rows = Array.from(this.body.children).filter(c => !c.classList.contains("editRow"));
+          for (let i = 0; i < rows.length; i++) {
+            let c = new UpdateContact(rows[i].querySelector('.filterContainer'), rows[i].querySelector('tbody'));
+            c.editAllListen();
+            // tagListen(rows[i].querySelector(".custom-control-input"));
+  
+          }
+        } else {
+          let u = new UpdateContact(this.parent, this.body);
           u.editAllListen();
-          // tagListen(rows[i].querySelector(".custom-control-input"));
-
         }
+  
+  
       } else {
-        let u = new UpdateContact(this.parent, this.body);
-        u.editAllListen();
+        let rows = this.body.children;
+        for (let i = 0; i < rows.length; i++) {
+          tagListen(rows[i].querySelector(".form-check-input"));
+  
+        }
       }
-
-
     } else {
-      let rows = this.body.children;
-      for (let i = 0; i < rows.length; i++) {
-        tagListen(rows[i].querySelector(".form-check-input"));
-
-      }
+      
+      msgDeleteListen();
     }
-
-
 
     this.body.classList.add("fadeIn");
 
