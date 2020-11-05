@@ -37,7 +37,7 @@ class Group {
 
     const updatedGroup = await this.collection.findOneAndUpdate({_id: objId}, groupCopy);
     // const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
-    return updatedGroup;
+    return updatedGroup.value;
   }
   async findGroup(group) {
     const foundGroup = await this.collection.findOne(group);

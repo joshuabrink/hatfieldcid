@@ -124,7 +124,7 @@
                                     <td><%= messages.data[index].message %> </td>
                                     <td><%= messages.data[index].date %></td>
                                     <td>
-                                        <form action="/deleteMessage" method="post" class="delete">
+                                        <form action="/deleteMessage" method="post" class="deleteMessage">
                                             <input type="hidden" name="_id" value="<%= messages.data[index]._id %>">
                                             <input type="hidden" name="async" value="false">
                                             <button class="btn btn-primary" type="submit"><i
