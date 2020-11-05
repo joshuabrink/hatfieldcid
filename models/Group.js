@@ -22,7 +22,20 @@ class Group {
   }
   async updateEntity(id, update) {
     const objId = new ObjectID(id);
-    const updatedGroup = await this.collection.updateOne({_id: objId}, update);
+    let groupCopy = {};
+    if(update["$set"]) {
+      groupCopy = {$set:{
+        name: update["$set"].name.trim()
+      }}
+      groupCopy["$set"].contacts = update["$set"].contacts.map(c=>{
+        return {
+          _id: new ObjectID(c._id),
+          number: c.number
+        }
+      })
+    }
+
+    const updatedGroup = await this.collection.findOneAndUpdate({_id: objId}, groupCopy);
     // const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
     return updatedGroup;
   }

@@ -7,7 +7,7 @@ const routeUtil = require('../lib/routeUtility')
 
 // const {get, filter, deleteEntity} = require('../lib/routeUtility')
 
-const {get, filter, deleteEntity,ensureAuthenticated, cacheData} = new routeUtil(Messages);
+const {get, filter,addEntity, deleteEntity,ensureAuthenticated, cacheData} = new routeUtil(Messages);
 
 
 
@@ -125,7 +125,7 @@ const {get, filter, deleteEntity,ensureAuthenticated, cacheData} = new routeUtil
 router.get('/messages', ensureAuthenticated,cacheData, get)
 
 router.post('/searchMessages', ensureAuthenticated, filter,cacheData, get)
-
+router.post('/addMessage', ensureAuthenticated, addEntity,get)
 router.post('/deleteMessage', ensureAuthenticated, deleteEntity,get)
 
 router.post('/messagesFilter', ensureAuthenticated, filter,cacheData, get)
