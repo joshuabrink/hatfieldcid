@@ -221,76 +221,102 @@ function groupAdd() {
   
     asyncReq('/addGroup', 'post', group, (data) => {
 
-      let row = `<tr class="editRow">
-        <td>
-            <a data-toggle="collapse" aria-expanded="true" aria-controls="${data.name} .item-1" href="#${data.name} .item-1" class="group-btn btn btn-primary" role="tab" style="">
-                <h4 class="mb-0">${data.name} <i class="fa fa-angle-down"></i></h4>
-            </a>
-        </td>
-        <td><span class="badge badge-pill badge-primary">2</span>
-        </td>
-        <td>
-            <div class="editDelete">
-                <form action="/deleteGroup" method="post" class="deleteGroup">
-                    <input type="hidden" name="_id" value="${data._id}">
-                    <input type="hidden" name="async" value="false">\
-                    <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>
-                </form>
-            </div>
-        </td>
-    </tr>`;
+      let row = '<tr class="editRow">\
+      <td>\
+      <a data-toggle="collapse" aria-expanded="false" aria-controls="' +
+        data.name.replace(/\s/g, "") +
+        ' .item-1"\
+            href="#' +
+        data.name.replace(/\s/g, "") +
+        ' .item-1" class="group-btn btn btn-primary" role="tab">\
+            <h4 class="mb-0">' +
+        data.name +
+        ' <i class="fa fa-angle-down"></i></h4> \
+            </a>\
+      </td>\
+      <td><span class="badge badge-pill badge-primary">' +
+        data.contacts.length +
+        '</span></td>\
+      <td>\
+        <div class="editDelete">\
+          <form action="/deleteGroup" method="post" class="deleteGroup">\
+              <input type="hidden" name="_id" value="'+data._id+'">\
+              <input type="hidden" name="async" value="false">\
+              <button class="btn btn-primary" type="submit"><i class="fa fa-trash"></i></button>\
+          </form>\
+      </div>\
+      </td>\
+  </tr>';
 
-    row += `<tr id="${data.name}" data-group="${data.name}" class="filterContainer">
-    <td colspan="5">
-        <div class="item-1 collapse show" role="tabpanel" data-parent="#${data.name}" style="">
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <div class="text-md-right">
-                        <form action="/searchContacts" method="POST" class="d-flex search">
-                            <input type="search" name="term" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search">
-                            <button class="btn btn-primary d-inline py-0" type="submit"><i class="fas fa-search"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10 group-input-list">
-                    <table class="table my-0">
-                        <thead>
-                            <tr>
-                                <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                                <th class="w-20">Company <a id="company-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                                <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                                <th class="w-30">Email <a id="email-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                                <th class="w-10">Opt-In <a id="optin-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>
-                            </tr>
-                        </thead>
-                        <tbody class="filterBody">`
-                        for (let i = 0; i < data.contacts.length; i++) {
-                            row += `<tr class="editRow">
-                            <td>${data.contacts[i].group}</td>
-                            <td>${data.contacts[i].company}</td>
-                            <td>${data.contacts[i].number}</td>
-                            <td>${data.contacts[i].email}</td>
-                            <td><input type="checkbox" name="optIn" "checked":""="" disabled=""></td>
-                            <td class="editDelete">
-                                <div class="dropdown">
-                                    <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>
-                                        <form action="/deleteContact" method="post" class="right dropdown-item">
-                                            <input type="hidden" name="_id" value="${data.contacts[i]._id}">
-                                            <input type="hidden" name="async" value="false">
-                                            <a type="submit"><i class="fa fa-trash"> Delete</i></a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>`;
-                            
-                        }
+   row += '<tr>\
+       <td colspan="5">\
+       <div id="' +
+        data.name.replace(/\s/g, "") +
+        '" data-group="' +
+        data.name.replace(/\s/g, "") +
+        '" class="filterContainer col-12">\
+          <div class="collapse item-1" role="tabpanel" data-parent="#' +
+        data.name.replace(/\s/g, "") +
+        '">\
+                  <div class="row mb-4">\
+                      <div class="col-md-6">\
+                          <div class="text-md-right">\
+                              <form action="/searchContacts" method="POST"  class="d-flex search">\
+                                  <input type="search" name="term" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search">\
+                                  <button class="btn btn-primary d-inline py-0" type="submit"><i class="fas fa-search"></i></button>\
+                              </form>\
+                          </div>\
+                      </div>\
+                  </div>\
+                  <div class="row">\
+                  <div class="col-10 group-input-list">\
+              <table class="table my-0" >\
+                  <thead>\
+                      <tr>\
+                          <th class="w-30">Name <a id="name-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
+                          <th class="w-20">Company <a id="company-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
+                          <th class="w-10">Number <a id="number-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
+                          <th class="w-30">Email <a id="email-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
+                          <th class="w-10">Opt-In <a id="optin-sort" class="col-sort" href=""><i class="fa fa-sort"></i></a></th>\
+                      </tr>\
+                  </thead>\
+                  <tbody class="filterBody">';
 
-  
+      for (let j = 0; j < data.contacts.length; j++) {
+        row +=
+          '<tr class="editRow">\
+              <td>' + data.contacts[j].name + '</td>\
+              <td>' + data.contacts[j].company + '</td>\
+              <td>' + data.contacts[j].number + '</td>\
+              <td>' + data.contacts[j].email + '</td>\
+              <td><input type="checkbox" name="optIn" '+ (data.contacts[j].optIn ? "checked": "") + ' disabled></input></td>\
+              <td class="editDelete">\
+                  <div class="dropdown">\
+                      <i class="fa fa-ellipsis-v " type="button" id="dropdownMenuButton" data-toggle="dropdown"></i>\
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">\
+                          <a class="left dropdown-item" href="/editContact"><i class="fa fa-edit"></i> Edit</a>\
+                          <form action="/deleteContact" method="post" class="right dropdown-item">\
+                              <input type="hidden" name="_id" value="'+ data.contacts[j]._id + '">\
+                              <input type="hidden" name="async" value="false">\
+                              <a type="submit"><i class="fa fa-trash"> Delete</i></a>\
+                          </form>\
+                      </div>\
+                    </div>\
+              </td>\
+              </tr>';
+      }
+      row +=
+        ' </tbody>\
+              </table>\
+          </div>\
+          <div class="col group-contact-list">\
+          <div class="row btnContainer">\
+          <a href="/addContact" class="btn btn-primary addContact"><i class="fa fa-edit"></i> Edit Contacts</a>\
+      </div>\
+  </div>\
+  </div></td></tr>';
+    
+
         groupBody.innerHTML = row + groupBody.innerHTML;
       let u = new UpdateGroup( groupBody)
       row = groupBody.firstChild;
