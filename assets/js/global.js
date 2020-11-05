@@ -236,20 +236,20 @@ class UpdateGroup {
     this.rows = Array.from(body.children).filter(c => !c.classList.contains("editRow"));
     this.open = false;
   }
-  startListen(row) {
+  startListen(row, header) {
 
     let addBtn = row.querySelector('.addContact');
 
     addBtn.addEventListener('click', e => {
       e.preventDefault();
-      this.toggleContactList(row);
+      this.toggleContactList(row, header);
     })
   }
 
   startListenAll() {
 
     for (let i = 0; i < this.rows.length; i++) {
-      this.startListen(this.rows[i])
+      this.startListen(this.rows[i], this.headers[i])
       this.deleteListen(this.rows[i], this.headers[i])
     }
   }
@@ -269,12 +269,56 @@ class UpdateGroup {
     })
   }
 
+  confirmListen(row, header) {
+    let btnContainer = row.querySelector('.btnContainer')
+    btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style="">Cancel</a>`
+
+    let cancelButton = btnContainer.querySelector('.cancelUpdate')
+    let confirmButton =  btnContainer.querySelector('.addContact')
+
+    confirmButton.innerText = 'Confirm'
+
+
+    
+    cancelButton.addEventListener('click', e => {
+      e.preventDefault();
+      confirmButton.innerText = 'Add Contacts'
+      cancelButton.remove()
+      this.toggleContactList(row);
+      // btnContainer.innerHTML.replace(cancelButton
+    })
+
+    confirmButton.addEventListener('click', e=> {
+      e.preventDefault();
+      let currentContacts = row.querySelectorAll('.filterBody tr');
+      let currentNumbers = Array.from(currentContacts).map(c=>{
+        if(c.children[2]) {
+          return {
+            _id:c.querySelector('input[name="_id"]').value,
+            number:c.children[2].innerText
+          }
+        }
+        
+      })
+
+      let delForm = header.querySelector('.deleteGroup');
+      let id = delForm.querySelector('input[name="_id"]').value
+
+      let name = header.querySelector('.group-btn h4').innerText;
+
+      asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
+        btnContainer.innerHTML += `${data}`
+
+      })
+    })
+  }
+
   animate(row) {
     let contactList = row.querySelector('.group-contact-list')
     let list = row.querySelector('.group-input-list')
     let clone = document.querySelector('#contact-list-parent');
 
-    let btnContainer = contactList.querySelector('.btnContainer')
+    
 
     if (this.open) {
       contactList.innerHTML = contactList.innerHTML.replace(clone.innerHTML, '');
@@ -284,7 +328,6 @@ class UpdateGroup {
       contactList.classList.remove('col-4');
       contactList.classList.add('col');
 
-      btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style="">Cancel</a>`
     } else {
 
       contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
@@ -294,6 +337,8 @@ class UpdateGroup {
 
       contactList.classList.remove('col');
       contactList.classList.add('col-4');
+
+     
     }
 
   }
@@ -315,21 +360,22 @@ class UpdateGroup {
 
   }
 
-  toggleContactList(row) {
+  toggleContactList(row, header) {
 
     if (this.open) {
 
 
       this.animate(row)
-      this.startListen(row)
+      this.startListen(row, header)
 
       this.open = false;
     } else {
 
       this.animate(row)
-      this.startListen(row)
+      this.startListen(row, header)
       this.checkList(row)
       this.toggleContact(row);
+      this.confirmListen(row, header)
 
       this.open = true;
     }
@@ -353,9 +399,9 @@ class UpdateGroup {
             if(c.children[2]) {
               return c.children[2].innerText == number;
             } 
-         
           })
-          removeRow.remove()
+      
+          currList.removeChild(removeRow)
         } else {
           asyncReq("/contactsFilter", "post", { term: number , async: true }, (data) => {
 

@@ -1,3 +1,4 @@
+
 //***** FRONT END DYNAMIC INPUT *******//
 
 //Contact list to Number Input class
@@ -38,7 +39,7 @@ const TagsInput = function (element) {
                 var tags = {};
                 for (var i = 0; i < elements.length; i++) {
                     element = elements[i]
-                    tags[element.innerText] = element;
+                    tags[element.innerText.split('\n')[0]] = element;
                 }
 
                 return tags;
@@ -70,13 +71,30 @@ const TagsInput = function (element) {
         tag = tag.replace(initCharPattern, '');
         tag = tag.replace(/^\s+/, '').replace(/\s+$/, ''); //replace one or more white spaces and newlines
         // tag = tag.replace(/^0/, '27'); //replace 0 with 27 if number begins with 0
-        tag = tag[0].toUpperCase() + tag.toLowerCase().slice(1);
+        // tag = tag[0].toUpperCase() + tag.toLowerCase().slice(1);
         if (tag != '' && this.tags[tag] === undefined) {
             var element = document.createElement('span');
-            element.setAttribute('value', document.querySelector(`#contact-list input[name="${tag}"`).value)
-            element.appendChild(document.createTextNode(tag));
+            // element.appendChild(document.createTextNode(tag));
             element.setAttribute('contenteditable', 'false');
-            element.classList.add('number')
+            // element.classList.add('number')
+
+            element.setAttribute('value', document.querySelector(`#contact-list input[name="${tag}"`).value)
+            var top = document.createElement('div')
+            top.classList.add('top')
+            top.appendChild(document.createTextNode(tag))
+            var under = document.createElement('div')
+            under.classList.add('under');
+
+            let number = document.querySelector(`input[name="${tag}"]`).dataset.number;
+            if(number.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g)) {
+                element.classList.add('cross-fade','c-tag')
+            } else {
+                element.classList.add('cross-fade','g-tag')
+            }
+
+            under.appendChild(document.createTextNode(number))
+            element.appendChild(top);
+            element.appendChild(under);
 
             insert(element);
         }
@@ -188,7 +206,8 @@ function groupAdd() {
             // return num.innerText
             return {
                 _id: num.getAttribute('value'),
-                number: num.innerText
+                name: num.innerText.split('\n')[0],
+                number: num.innerText.split('\n')[1]
             }
         })
 
