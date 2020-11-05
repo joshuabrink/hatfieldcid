@@ -30,6 +30,10 @@
   color: #888;
 }
 
+/* .customScroll i {
+  color: #4e73df;
+} */
+
 .customScroll::-webkit-scrollbar-thumb:hover {
   color: #4e73df;
 }
@@ -178,7 +182,7 @@
   .group-contact-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
   }
 
@@ -192,12 +196,12 @@
     margin: 15px 0;
   }
 
-  .c-tag {
+  .c-tag,.g-tag {
     width: fit-content;
     min-width: 120px;
     background: #5a7cde;
     color: white;
-    padding: 5px 20px;
+    padding: 5px 20px !important;
     border-radius: 16px;
     text-align: center;
     cursor: pointer;
@@ -207,11 +211,11 @@
     filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.3));
   }
 
-  .c-tag .top {
+  .c-tag .top,.g-tag .top {
     font-size: 12px;
   }
 
-  .c-tag .under {
+  .c-tag .under,.g-tag .under {
     top: 6px;
     font-size: 13px;
   }
