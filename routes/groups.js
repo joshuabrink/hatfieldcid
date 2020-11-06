@@ -19,5 +19,12 @@ router.post('/groupsFilter', ensureAuthenticated, filter,cacheData, get)
 
 router.post('/updateGroup', ensureAuthenticated, updateEntity, get)
 
+router.post('/findDistinctGroups', ensureAuthenticated, (req,res,next)=>{
+   
+    Groups.findDistinct("name").then(found => {
+        res.send(found);
+    })
+})
+
 
 module.exports = router;

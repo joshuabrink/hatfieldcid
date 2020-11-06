@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {Contacts} = require('../lib/mongoUtil');
 const routeUtil = require('../lib/routeUtility')
-const {get, filter, deleteEntity, updateEntity, addEntity, cacheData} = new routeUtil(Contacts);
+const {get, filter,find, deleteEntity, updateEntity, addEntity, cacheData} = new routeUtil(Contacts);
 
 
 const { ensureAuthenticated } = require('../lib/auth');
@@ -20,6 +20,8 @@ router.post('/deleteContact', ensureAuthenticated, deleteEntity,get)
 router.post('/contactsFilter', ensureAuthenticated, filter,cacheData, get)
 
 router.post('/updateContact', ensureAuthenticated, updateEntity, get)
+
+router.post('/findContact', ensureAuthenticated, find, get)
 
 // router.get('/contacts',  ensureAuthenticated, (req, res) => {
 //     Contacts.findContacts({}).then((contacts) => {
