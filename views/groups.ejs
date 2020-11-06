@@ -110,36 +110,12 @@
                                                 <% } %>
                                                 <% } %>
                                             </tbody>
-                                            <!-- <tfoot>
-                                                <tr>
-
-                                                    <th class="w-30">Name </th>
-
-                                                    <th class="w-10">Number </th>
-
-                                                </tr>
-                                            </tfoot> -->
+                            
                                         </table>
-
-
 
                                     </div>
 
-
-
-
                                 </div>
-
-                                <!-- <div class="form-group flex-grow-1 mr-3">
-                                                    <select name="position" class="form-control">
-                                                        <optgroup label="Position">
-                                                            <option value="Student" selected="">Student</option>
-                                                            <option value="Employee">Employee</option>
-                                                            <option value="Client">Client</option></optgroup>
-                                                        </select>
-                                                    </div> -->
-
-
                             </div>
                         </div>
                     </div>
@@ -152,7 +128,7 @@
                         <div class="col-md-2 d-flex">
                             <form class="all" action="/groupsFilter" method="post">
                                 <input type="hidden" name="limit" value="0">
-                                <button type="submit" class="btn btn-primary btn-sm">Groups</button>
+                                <button type="submit" class="btn btn-primary btn-sm">All</button>
                             </form>
                         </div>
 
@@ -215,8 +191,8 @@
                                             aria-controls="<%=groups.data[index].name.replace(/\s/g,'') %> .item-1"
                                             href="#<%=groups.data[index].name.replace(/\s/g,'') %> .item-1"
                                             class="group-btn btn btn-primary" role="tab">
-                                            <h4 class="mb-0"><%= groups.data[index].name %> <i
-                                                    class="fa fa-angle-down"></i></h4>
+                                            <h5 class="mb-0"><%= groups.data[index].name %> <i
+                                                    class="fa fa-angle-down"></i></h5>
                                         </a>
                                     </td>
                                     <td><span
@@ -236,7 +212,7 @@
                                 </tr>
                                 <tr id="<%=groups.data[index].name.replace(/\s/g,'')%>"
                                     data-group="<%= groups.data[index].name%>" class="filterContainer">
-                                    <td colspan="5">
+                                    <td class="pt-0 pb-0" colspan="5">
                                         <!-- <div id="<%=groups.data[index].name.replace(/\s/g,'')%>" data-group="<%= groups.data[index].name%>" class="filterContainer col-12"> -->
 
                                         <div class="collapse item-1" role="tabpanel"
