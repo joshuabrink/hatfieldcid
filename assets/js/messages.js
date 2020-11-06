@@ -1,7 +1,7 @@
 
 const parent = document.querySelector('.filterContainer');
 const filterBody = document.querySelector('.filterBody');
-const title = "groups"
+const title = "messages"
 let f = new Filter(title, parent, filterBody)
 
 
