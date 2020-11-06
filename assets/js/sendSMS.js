@@ -136,7 +136,7 @@ const numberInput = document.getElementById('numbers-input'),
 
 const parent = document.querySelector('.filterContainer');
 const filterBody = document.querySelector('.filterBody');
-const title = document.title;
+const title = "Send SMS";
 let f = new Filter("contacts", parent, filterBody)
 
 
@@ -205,6 +205,22 @@ try {
 } catch (error) {
 
 }
+
+function addAll() {
+    let allBtn = document.querySelector('.add-all')
+
+    allBtn.addEventListener('click', e=> {
+        e.preventDefault();
+
+        let checkList = document.querySelectorAll('#contact-list .form-check-input');
+
+        for (let i = 0; i < checkList.length; i++) {
+            checkList[i].click();     
+        }
+    })
+}
+
+addAll()
 
 
 // MAIN SMS SEND FUNCTION

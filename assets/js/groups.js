@@ -136,7 +136,7 @@ const numberInput = document.getElementById('numbers-input')
 // response = document.querySelector('.response');
 let filterContainer = document.querySelector('#contact-list-parent');
 let filterBody = document.querySelector('#contact-list');
-const title = document.title;
+const title = "groups";
 let f = new Filter("contacts", filterContainer, filterBody)
 
 
@@ -195,7 +195,21 @@ function groupContactListener() {
 
 groupContactListener();
 
+function addAll(container) {
+    let allBtn = container.querySelector('.add-all')
 
+    allBtn.addEventListener('click', e=> {
+        e.preventDefault();
+
+        let checkList = container.querySelectorAll('#contact-list .form-check-input');
+
+        for (let i = 0; i < checkList.length; i++) {
+            checkList[i].click();     
+        }
+    })
+}
+
+addAll(document)
 
 
 function groupAdd() {

@@ -1,6 +1,6 @@
 const parent = document.querySelector('.parentContainer');
 const filterBody = parent.querySelector('tbody');
-const title = document.title
+const title = "contacts"
 let f = new Filter(title, parent, filterBody)
 
 
