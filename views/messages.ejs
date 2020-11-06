@@ -87,7 +87,9 @@
                                     <% if (typeof messages.data[index] != 'undefined') { %>
 
                                     <% if (typeof messages.data[index].contacts != 'undefined') { %>
-                                    <td class="flex start-left flex-wrap pt-0">
+                                      
+                                    <td class="pt-0">
+                                        <div class="flex start-left flex-wrap">
                                         <% for( let c = 0; c <  messages.data[index].contacts.length; c++ ) { %>
                                         <% if (messages.data[index].contacts[c]) { %>
                                         <div class='cross-fade c-tag'>
@@ -98,15 +100,14 @@
                                         </div>
                                         <% } %>
                                         <% } %>
+                                    </div>
                                     </td>
-                                    <% } else { %>
-                                        <td></td>
-                                        <% } %>
-                                   
-
-                                 
+                                    <% } {%>
+  
+                                      <% }  %>
                                         <% if (typeof messages.data[index].groups != 'undefined') { %>
-                                            <td>
+                                            <td class="pt-0">
+                                                <div class="flex start-left flex-wrap">
                                                 <% for( let c = 0; c <  messages.data[index].groups.length; c++ ) { %>
                                                 <% if (messages.data[index].groups[c]) { %>
                                                 <div class='c-tag'>
@@ -117,7 +118,9 @@
                                                 </div>
                                                 <% } %>
                                                 <% } %>
+                                            </div>
                                             </td>
+
                                             <% } else { %>
                                                 <td></td>
                                                 <% } %>

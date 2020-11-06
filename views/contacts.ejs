@@ -26,36 +26,40 @@
                                 <input type="hidden" name="async" value="false">
                                 <div class="row">
                                     <div class="col-6 mb-3">
+                                        <label for="contact-name">Name</label>
 
-                                        <input class="form-control" type="text" placeholder="Name" name="name" required>
+                                        <input id="contact-name" class="form-control" type="text" name="name" required>
 
                                     </div>
                                     <div class="col-6  mb-3">
-
-                                        <input class="form-control" type="text" placeholder="Phone Number" name="number"
+                                        <label for="contact-number">Number</label>
+                                        <input id="contact-number" class="form-control" type="text" name="number"
                                             required>
 
                                     </div>
 
                                     <div class="col-6">
-                                        <input class="form-control mb-3" type="email" placeholder="Email" name="email">
+                                        <label for="contact-email">Email</label>
+                                        <input id="contact-email" class="form-control mb-3" type="email" name="email" required>
 
                                     </div>
+                                  
                                     <div class="col-6">
+                                        <label for="contact-company">Company</label>
+                                        <input id="contact-company" class="form-control mb-3" type="text" 
+                                            name="company" required>
 
-                                        <input class="form-control mb-3" type="text" placeholder="Group" name="group">
+
+
                                     </div>
+
                                     <div class="col-12">
-
-                                        <input class="form-control mb-3" type="text" placeholder="Company"
-                                            name="company">
-
-
-
+                                        <label for="contact-group">Group</label>
+                                        <input id="contact-group" class="form-control mb-3" type="text"  name="group" required>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                <div class="col-12 mt-4">
 
                                     <div class="form-group text-center">
                                         <button class="btn btn-primary" type="submit"><i
