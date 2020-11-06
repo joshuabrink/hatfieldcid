@@ -134,9 +134,9 @@
     justify-content: start;
   }
 
-  .pt-0 {
-    padding-top: 0;
-  }
+  /* .pt-0 {
+    padding-top: 0 !important;
+  } */
 
   .flex .c-tag {
     margin-top: 0.75rem;
@@ -327,6 +327,7 @@
   .response {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     opacity: 0;
   }
 
