@@ -77,9 +77,12 @@ class UpdateContact {
 
       let rowArr = Array.from(row.children);
       let inputType = "text";
+      let j = 0
+      if(rowArr.length == 7) {
+        j =1;
+      }
 
-
-      for (let j = 1; j < rowArr.length; j++) {
+      for (j; j < rowArr.length; j++) {
     
         if (numberFormat.test(rowArr[j].innerText)) {
           inputType = "number";
@@ -154,7 +157,12 @@ class UpdateContact {
   }
   revertRow(row) {
     let rowArr = Array.from(row.children);
-    for (let c = 1; c < rowArr.length; c++) {
+    let c = 0
+    if(rowArr.length == 7) {
+      c = 1;
+    }
+
+    for ( c ; c < rowArr.length; c++) {
       if (rowArr[c].classList.contains("editDelete")
         || (rowArr[c].children[0] && rowArr[c].children[0].classList.contains("editDelete"))) {
         this.changeBtns(row, false);
@@ -272,20 +280,20 @@ class UpdateGroup {
 
   confirmListen(row, header) {
     let btnContainer = row.querySelector('.btnContainer')
-    btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style="">Cancel</a>`
+    btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style=""><i class="fa fa-times"></i> Cancel</a>`
 
     let cancelButton = btnContainer.querySelector('.cancelUpdate')
     let confirmButton =  btnContainer.querySelector('.addContact')
 
-    confirmButton.innerText = 'Confirm'
+    confirmButton.innerHTML = '<i class="fa fa-check"></i> Confirm'
 
 
     
     cancelButton.addEventListener('click', e => {
       e.preventDefault();
-      confirmButton.innerText = 'Add Contacts'
+      confirmButton.innerHTML = '<i class="fa fa-edit"></i> Edit Contacts'
       cancelButton.remove()
-      this.toggleContactList(row);
+      this.toggleContactList(row, header);
       // btnContainer.innerHTML.replace(cancelButton
     })
 
@@ -323,6 +331,7 @@ class UpdateGroup {
 
     if (this.open) {
       contactList.innerHTML = contactList.innerHTML.replace(clone.innerHTML, '');
+      list.querySelector('.filterBody').innerHTML = this.backupList;
       list.classList.remove('col')
       list.classList.add('col-10')
 
@@ -371,6 +380,8 @@ class UpdateGroup {
 
       this.open = false;
     } else {
+
+     this.backupList = row.querySelector('.filterBody').innerHTML;
 
       this.animate(row)
       this.startListen(row, header)
@@ -442,12 +453,6 @@ class UpdateGroup {
       })
     
     }
-
-  
-
-
-
-
 
   }
 }
@@ -737,7 +742,7 @@ class Filter {
 
         
         if(data[m].groups) {
-          row += '<td>'
+          row += '<td><div class="flex start-left flex-wrap">'
           for (let c = 0; c < data[m].groups.length; c++) {
             let group = data[m].groups[c];
             row +=
@@ -746,7 +751,7 @@ class Filter {
                 group +
               '</div></div>';
           }
-          row += '</td>'
+          row += '</div></td>'
         } else {
           row += '<td></td>'
         }
@@ -782,9 +787,9 @@ class Filter {
               href="#' +
           data[m].name.replace(/\s/g, "") +
           ' .item-1" class="group-btn btn btn-primary" role="tab">\
-              <h4 class="mb-0">' +
+              <h5 class="mb-0">' +
           data[m].name +
-          ' <i class="fa fa-angle-down"></i></h4> \
+          ' <i class="fa fa-angle-down"></i></h5> \
               </a>\
         </td>\
         <td><span class="badge badge-pill badge-primary">' +
@@ -802,7 +807,7 @@ class Filter {
     </tr>';
 
      row += '<tr>\
-         <td colspan="5">\
+         <td class="pt-0 pb-0" colspan="5">\
          <div id="' +
           data[m].name.replace(/\s/g, "") +
           '" data-group="' +
