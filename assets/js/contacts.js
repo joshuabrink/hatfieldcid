@@ -59,10 +59,27 @@ function contactAdd(inputArr) {
     let u = new UpdateContact(parent, filterBody)
     row = filterBody.firstChild;
 
+    resetFields()
+
     u.editListen(row);
   })
 
 }
+
+function resetFields() {
+  let contactForm = document.querySelectorAll('#contact-form input');
+
+  for (let i = 0; i < contactForm.length; i++) {
+    contactForm[i].value = ''
+    
+  }
+
+  $('#accordion-1 .item-1').collapse('hide')
+
+}
+
+
+
 
 let contactFrom = document.getElementById('contact-form');
 
@@ -71,6 +88,27 @@ let inputs = contactFrom.querySelectorAll('input');
 contactFrom.addEventListener('submit', e => {
   e.preventDefault();
   contactAdd(inputs);
+})
+
+let contactCollapse = document.querySelector('.new-contact-btn')
+
+contactCollapse.addEventListener('click', e => {
+  let groupInput = contactFrom.querySelector('input[name="group"]').parentNode
+
+  asyncReq("/findDistinctGroups", "post", {}, (data) => {
+    let select =   `<label for="groupSelect">Group</label>
+    <select id="groupSelect" class="form-control" name="group" required>`
+    select += `<option selected></option>`
+    for (let i = 0; i < data.length; i++) {
+    select += `<option>${data[i]}</option>`
+      
+    }
+
+    select += `</select>`
+    groupInput.innerHTML = select
+
+  })
+
 })
 
 

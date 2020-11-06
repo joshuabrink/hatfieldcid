@@ -147,29 +147,29 @@ f.startListen();
 
 //HELPER FUNCTIONS
 
-const resetFields = (data) => {
+// const resetFields = (data) => {
 
-    numberInput.innerHTML = '';
+//     numberInput.innerHTML = '';
 
-    const textInput = document.getElementById('msg')
-    textInput.value = '';
-
-
-    var contactInput = document.querySelectorAll('#contact-list .form-check-input ');
-
-    for (let i = 0; i < contactInput.length; i++) {
-        contactInput[i].checked = false;
-    }
-
-    if (data.error) {
-        response.innerHTML = '<h5>' + data.error + '</h5>';
-    } else {
-
-        removePreloader();
+//     const textInput = document.getElementById('msg')
+//     textInput.value = '';
 
 
-    }
-}
+//     var contactInput = document.querySelectorAll('#contact-list .form-check-input ');
+
+//     for (let i = 0; i < contactInput.length; i++) {
+//         contactInput[i].checked = false;
+//     }
+
+//     if (data.error) {
+//         response.innerHTML = '<h5>' + data.error + '</h5>';
+//     } else {
+
+//         removePreloader();
+
+
+//     }
+// }
 
 
 const groupContiner = document.querySelector('#groupContainer');
@@ -199,6 +199,7 @@ groupContactListener();
 
 
 function groupAdd() {
+
     let groupForm = document.getElementById('group-form')
 
     let contacts = Array.from(groupForm.querySelectorAll('#numbers-input span')).map(num=>
@@ -319,12 +320,48 @@ function groupAdd() {
 
         groupBody.innerHTML = row + groupBody.innerHTML;
       let u = new UpdateGroup( groupBody)
-      row = groupBody.firstChild;
-  
-      u.editListen(row);
+
+    //   let rows = Array.from(groupBody).filter(c => !c.classList.contains("editRow"));
+    //   for (let i = 0; i < rows.length; i++) {
+        let c = new UpdateContact(groupBody.children[1], groupBody.children[1].querySelector('.filterBody'));
+        c.editAllListen();
+        // tagListen(rows[i].querySelector(".custom-control-input"));
+
+    //   }
+
+      
+      let newHeader = groupBody.children[0];
+      let newRow = groupBody.children[1];
+      u.startListen(newRow, newHeader);
+
+      resetFields()
     })
   
-  }
+}
+
+function resetFields() {
+    let groupForm = document.querySelector('#group-form');
+
+
+    let groupName = groupForm.querySelector('input[name="name"]')
+
+    groupName.value = ''
+
+    let contacts = groupForm.querySelector('#numbers-input');
+
+    contacts.innerHTML = ''
+
+    let checkList = document.querySelectorAll('#contact-list-parent .form-check-input');
+
+    for (let i = 0; i < checkList.length; i++) {
+        checkList[i].checked = false;
+    }
+
+    $('#group-collapse .item-1').collapse('hide')
+
+}
+
+
   
   let groupFrom = document.getElementById('group-form');
   

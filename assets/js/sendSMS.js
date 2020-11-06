@@ -155,7 +155,7 @@ const resetFields = (data) => {
     textInput.value = '';
 
 
-    var contactInput = document.querySelectorAll('#contact-list .custom-control-input');
+    var contactInput = document.querySelectorAll('#contact-list .form-check-input');
 
     for (let i = 0; i < contactInput.length; i++) {
         contactInput[i].checked = false;
@@ -175,20 +175,24 @@ const showSMSResponse = (parent, data) => {
     setTimeout(() => {
         parent.classList.remove('fadeIn')
         void parent.offsetWidth;
-
-        parent.innerHTML = '<h5>Text message sent to: ';
+        let res = '';
+        res = '<h5>Text message sent to: </h5>';
+        res += '<div class="tags-input">'
         for (let i = 0; i < data.contacts.length; i++) {
-            parent.innerHTML += data.contacts[i].name + ' '
-            
+            res += `<span class="cross-fade c-tag">
+                <div class="top">${data.contacts[i].name}</div><div class="under">${data.contacts[i].number}</div>
+            </span>`
         }
-        parent.innerHTML += '</h5>';
-
-        parent.innerHTML += '<h5>';
         for (let i = 0; i < data.groups.length; i++) {
-            parent.innerHTML += data.groups[i] + ' '
-            
+            res += `<span class=" c-tag">
+                <div class="top">${data.groups[i]}</div>
+            </span>`
+         
         }
-        parent.innerHTML += '</h5>';
+        res += '</div>'
+
+        parent.innerHTML = res;
+        
         parent.classList.add('fadeIn')
     }, 1000);
 }

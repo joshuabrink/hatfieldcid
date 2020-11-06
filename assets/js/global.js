@@ -79,7 +79,8 @@ class UpdateContact {
       let inputType = "text";
 
 
-      for (let j = 0; j < rowArr.length; j++) {
+      for (let j = 1; j < rowArr.length; j++) {
+    
         if (numberFormat.test(rowArr[j].innerText)) {
           inputType = "number";
         } else if (emailFormat.test(rowArr[j].innerText.toLowerCase())) {
@@ -153,9 +154,9 @@ class UpdateContact {
   }
   revertRow(row) {
     let rowArr = Array.from(row.children);
-    for (let c = 0; c < rowArr.length; c++) {
+    for (let c = 1; c < rowArr.length; c++) {
       if (rowArr[c].classList.contains("editDelete")
-        || rowArr[c].children[0].classList.contains("editDelete")) {
+        || (rowArr[c].children[0] && rowArr[c].children[0].classList.contains("editDelete"))) {
         this.changeBtns(row, false);
       } else if (checkFormat.test(rowArr[c].innerHTML)) {
         rowArr[c].querySelector("input").disabled = true;
@@ -239,7 +240,7 @@ class UpdateGroup {
   startListen(row, header) {
 
     let addBtn = row.querySelector('.addContact');
-
+    this.deleteListen(row, header)
     addBtn.addEventListener('click', e => {
       e.preventDefault();
       this.toggleContactList(row, header);
@@ -250,7 +251,7 @@ class UpdateGroup {
 
     for (let i = 0; i < this.rows.length; i++) {
       this.startListen(this.rows[i], this.headers[i])
-      this.deleteListen(this.rows[i], this.headers[i])
+      // this.deleteListen(this.rows[i], this.headers[i])
     }
   }
 
@@ -400,13 +401,16 @@ class UpdateGroup {
               return c.children[2].innerText == number;
             } 
           })
+          if(removeRow) {
+            currList.removeChild(removeRow)
+          }
       
-          currList.removeChild(removeRow)
+        
         } else {
-          asyncReq("/contactsFilter", "post", { term: number , async: true }, (data) => {
+          asyncReq("/findContact", "post", { number: number , async: true }, (data) => {
 
             let newRow = ''
-            data = data.data[0]
+            data = data[0]
             newRow += 
             "<tr class='editRow'><td>" + data.name + "</td>";
             newRow += "<td>" + data.company + "</td>";
