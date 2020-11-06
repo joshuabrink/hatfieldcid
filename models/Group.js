@@ -18,7 +18,7 @@ class Group {
     })
 
     const newGroup = await this.collection.insertOne(groupCopy);
-    return newGroup;
+    return newGroup.ops[0];
   }
   async updateEntity(id, update) {
     const objId = new ObjectID(id);
@@ -47,6 +47,12 @@ class Group {
   async find(filter, lim, sort = 0, skip = 0) {
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
     const foundGroups = await this.collection.find(filter).limit(lim).sort(sort).skip(skip).toArray();
+    return foundGroups;
+
+  }
+
+  async findDistinct(field) {
+    const foundGroups = await this.collection.distinct(field, {});
     return foundGroups;
 
   }
