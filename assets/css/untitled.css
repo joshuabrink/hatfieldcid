@@ -1,4 +1,6 @@
-
+.nav-item.active {
+  font-weight: bold;
+}
 
 .customScroll::-webkit-scrollbar {
 	width: 14px;

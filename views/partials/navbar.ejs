@@ -22,26 +22,26 @@
 </head>
 
 <body id="page-top" class="customScroll">
-    <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+    <div id="wrapper" class="flex-column">
+        <!-- <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0"><a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#"><img class="img-fluid" src="img/logo-image-small.png"></a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Send SMS' ? 'active' : '' %>" href="/">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Send SMS | HatfieldCID' ? 'active' : '' %>" href="/">
                          <i class="far fa-paper-plane"></i><span>Send SMS</span></a>
                         </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Messages' ? 'active' : '' %>" href="/messages">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Messages | HatfieldCID' ? 'active' : '' %>" href="/messages">
                         <i class="far fa-envelope"></i><span>Messages</span></a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Contacts' ? 'active' : '' %>" href="/contacts">
+                        <a class="nav-link <%= typeof title != 'undefined' && title == 'Contacts | HatfieldCID' ? 'active' : '' %>" href="/contacts">
                             <i class="fas fa-table"></i><span>Contacts</span>
                         </a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link <%= typeof title != 'undefined' && title == 'Groups' ? 'active' : '' %>" href="/groups">
+                            <a class="nav-link <%= typeof title != 'undefined' && title == 'Groups | HatfieldCID' ? 'active' : '' %>" href="/groups">
                                 <i class="fa fa-group " ></i><span>Groups</span>
                             </a>
                             </li>
@@ -49,4 +49,38 @@
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
-        </nav>
+        </nav> -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/"><img class="img-fluid" src="img/logo-image-small-blue.png"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navDropdown" aria-controls="navDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navDropdown">
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item <%= typeof title != 'undefined' && title == 'Send SMS | HatfieldCID' ? 'active' : '' %>">
+                    <a class="nav-link text-primary" href="/">
+                        <i class="far fa-paper-plane"></i><span> Send SMS</span></a>
+                </li>
+                <li class="nav-item <%= typeof title != 'undefined' && title == 'Messages | HatfieldCID' ? 'active' : '' %>">
+                    <a class="nav-link text-primary " href="/messages">
+                        <i class="far fa-envelope"></i><span> Messages</span></a>
+                </li>
+                <li class="nav-item <%= typeof title != 'undefined' && title == 'Contacts | HatfieldCID' ? 'active' : '' %>">
+                    <a class="nav-link text-primary" href="/contacts">
+                        <i class="fas fa-table"></i><span> Contacts</span>
+                    </a>
+                </li>
+                <li class="nav-item <%= typeof title != 'undefined' && title == 'Groups | HatfieldCID' ? 'active' : '' %>">
+                    <a class="nav-link text-primary" href="/groups">
+                        <i class="fa fa-group " ></i><span> Groups</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="/logout"><i class="fas fa-external-link-alt"></i><span> Logout</span></a>
+                </li>
+             
+              </ul>
+           
+            </div>
+          </nav>
