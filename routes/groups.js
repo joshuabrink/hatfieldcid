@@ -21,7 +21,7 @@ router.post('/updateGroup', ensureAuthenticated, updateEntity, get)
 
 router.post('/findDistinctGroups', ensureAuthenticated, (req,res,next)=>{
    
-    Groups.findDistinct("name").then(found => {
+    Groups.findProjection({}, {_id:1, name: 1}).then(found => {
         res.send(found);
     })
 })

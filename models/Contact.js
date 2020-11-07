@@ -8,7 +8,7 @@ class Contact {
   }
   async addEntity(contact) {
     const newContact = await this.collection.insertOne(contact);
-    return newContact;
+    return newContact.ops[0];
   }
   async updateEntity(id, update) {
     const objId = new ObjectID(id);
@@ -49,8 +49,8 @@ class Contact {
   async deleteEntity(id) {
     const objId = new ObjectID(id)
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
-    const delContact = await this.collection.deleteOne({_id: objId});
-    return delContact;
+    const delContact = await this.collection.findOneAndDelete({_id: objId});
+    return delContact.value;
 
   }
 

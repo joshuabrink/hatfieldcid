@@ -39,6 +39,14 @@ class Group {
     // const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
     return updatedGroup.value;
   }
+  async updateGroup(name, update) {
+
+    const updatedGroup = await this.collection.findOneAndUpdate({name: name}, update);
+    // const updatedGroup = await this.collection.updateOne({_id: objId}, {$set:update});
+    return updatedGroup.value;
+  }
+
+
   async findGroup(group) {
     const foundGroup = await this.collection.findOne(group);
     return foundGroup;
@@ -48,6 +56,12 @@ class Group {
     // const foundMessages = await this.collection.aggregate([{$match: filter}]).toArray();
     const foundGroups = await this.collection.find(filter).limit(lim).sort(sort).skip(skip).toArray();
     return foundGroups;
+
+  }
+
+  async findProjection(filter, projection) {
+    const foundContacts = await this.collection.find(filter).project(projection).toArray();
+    return foundContacts;
 
   }
 
