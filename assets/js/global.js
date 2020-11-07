@@ -185,11 +185,14 @@ class UpdateContact {
     let value = "";
 
     for (let i = 0; i < rowArr.length; i++) {
-      key = rowArr[i].firstChild.name;
-      value = rowArr[i].firstChild.value;
-      if (key && value) {
-        contact = { ...contact, [key.trim()]: value };
+      if(rowArr[i].firstChild && rowArr[i].firstChild) {
+        key = rowArr[i].firstChild.name;
+        value = rowArr[i].firstChild.value;
+        if (key && value) {
+          contact = { ...contact, [key.trim()]: value };
+        }
       }
+  
     }
 
     let currentNumber = contact.number
@@ -338,7 +341,16 @@ class UpdateGroup {
       let name = header.querySelector('.group-btn h5').innerText;
 
       asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
-        btnContainer.innerHTML += `${data}`
+        let response = document.createElement('div')
+        response.classList.add('response','text-center','text-primary', 'mt-4') 
+        response.style.opacity = '1'
+        response.innerHTML = `<h5>Successfully Updated</h5>`
+        
+        let currResponse = btnContainer.parentElement.querySelector('.response')
+        if(!currResponse) {
+          btnContainer.parentElement.appendChild(response)
+        } 
+        
 
       })
     })
