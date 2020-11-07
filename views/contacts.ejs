@@ -66,6 +66,8 @@
                                                 class="fas fa-plus"></i>&nbsp;Add Contact</button>
                                     </div>
                                 </div>
+                                <div class="response text-center mt-4">
+                                </div>
                         </div>
 
                         <!-- <div class="form-group flex-grow-1 mr-3">
@@ -116,7 +118,7 @@
                                 <option value="100">100</option>
                             </select></div>
                     </div>
-                    <div class="col-md-6 mt-4">
+                    <div class="col-md-4 mt-4">
                         <nav class="d-lg-flex align-self-center">
                             <ul class="pagination">
                                 <% for( let i = 0; i < contacts.total/25; i++ ) { %>
@@ -130,7 +132,10 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="col-md-6 mt-4 d-flex flex-row-reverse">
+                    <div id="updateResponse" class="col-5 response mt-4">
+
+                    </div>
+                    <div class="col-md-3 mt-4 d-flex flex-row-reverse">
                         <p role="status" aria-live="polite"><span class="lower">1</span> to
                             <span class="upper"><%=contacts.total<25?contacts.total:25%></span> of <span
                                 class="total"><%= contacts.total %> </span></p>
