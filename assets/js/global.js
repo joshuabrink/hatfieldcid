@@ -77,7 +77,9 @@ class UpdateContact {
 
       let rowArr = Array.from(row.children);
       let inputType = "text";
-      let j = 0
+      let j = 0;
+
+      this.number = row.children[3].innerText
       if(rowArr.length == 7) {
         j =1;
       }
@@ -190,10 +192,30 @@ class UpdateContact {
       }
     }
 
+    let currentNumber = contact.number
+
+    if(this.number == currentNumber) {
+      delete contact["number"]
+    }
+
     contact.id = row.querySelector('input[name="_id"]').value;
     contact.async = true;
 
-    asyncReq("/updateContact", "post", contact);
+    asyncReq("/updateContact", "post", contact, (data)=> {
+      let response = document.querySelector('#updateResponse')
+      if(data.err) {
+        response.innerHTML =  `<h5>${data.err} <i class="fa fa-times"></i></h5>`;
+        response.style.opacity = '1'
+        response.classList.remove('text-primary')
+        response.classList.add('text-danger')
+      } else {
+        response.innerHTML =  `<h5>Successfully updated contact</h5>`;
+        response.style.opacity = '1'
+        response.classList.add('text-primary')
+        response.classList.remove('text-danger')
+      }
+     
+    });
   }
   confirmListen(row, type = "edit") {
     let links = row.querySelectorAll("a, button");
@@ -313,7 +335,7 @@ class UpdateGroup {
       let delForm = header.querySelector('.deleteGroup');
       let id = delForm.querySelector('input[name="_id"]').value
 
-      let name = header.querySelector('.group-btn h4').innerText;
+      let name = header.querySelector('.group-btn h5').innerText;
 
       asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
         btnContainer.innerHTML += `${data}`
@@ -340,7 +362,9 @@ class UpdateGroup {
 
     } else {
 
-      contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
+      contactList.innerHTML = clone.innerHTML.replace('<div class="col-2">\
+      <button class="btn btn-sm btn-primary add-all">Add All</button>\
+  </div>', '') + contactList.innerHTML;
 
       list.classList.remove('col-10')
       list.classList.add('col')
@@ -901,7 +925,7 @@ class Filter {
         let rows = this.body.children;
         for (let i = 0; i < rows.length; i++) {
           tagListen(rows[i].querySelector(".form-check-input"));
-  
+          
         }
       }
     } else {

@@ -266,7 +266,7 @@ function toggleTagList(container) {
     toggleBtn.addEventListener('click', e => {
         e.preventDefault();
         let changeTo = toggleBtn.innerText.toLowerCase();
-        asyncReq(`/${changeTo}Filter`, 'post', { async: true }, (data)=> {
+        asyncReq(`/${changeTo}Filter`, 'post', { limit:0, async: true }, (data)=> {
 
             data = data.data;
 
