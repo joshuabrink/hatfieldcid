@@ -336,10 +336,12 @@ class UpdateGroup {
       this.toggleContactList(row, header);
       // btnContainer.innerHTML.replace(cancelButton
     })
+    let _this = this;
 
     function confirmEvent(e) {
       
         e.preventDefault();
+        
         let currentContacts = row.querySelectorAll('.filterBody tr');
         let currentNumbers = Array.from(currentContacts).map(c=>{
           if(c.children[2]) {
@@ -355,12 +357,15 @@ class UpdateGroup {
         let id = delForm.querySelector('input[name="_id"]').value
   
         let name = header.querySelector('.group-btn h5').innerText;
-  
+        let currentList =  row.querySelector('.filterBody').innerHTML
+        _this.backupList = currentList;
         asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
           // let response = document.createElement('div')
           // response.classList.add('response','text-center','text-primary', 'mt-4') 
           // response.style.opacity = '1'
           // response.innerHTML = `<h5>Successully Updated Group</h5>`
+
+         
           
           let currResponse = row.querySelector('.updateGroupResponse')
           currResponse.style.opacity = '1'
@@ -379,9 +384,7 @@ class UpdateGroup {
   animate(row) {
     let contactList = row.querySelector('.group-contact-list')
     let list = row.querySelector('.group-input-list')
-    
-   
-    
+
 
     if (this.open) {
       contactList.removeChild(contactList.children[0])
@@ -394,12 +397,7 @@ class UpdateGroup {
 
     } else {
 
-      // contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
-
-      // let currResponse = contactList.querySelector('.updateGroupResponse')
-
       contactList.innerHTML =  this.clone.innerHTML + contactList.innerHTML
-
       // currResponse.parentNode.insertBefore(clone.children[0], currResponse.nextSibling);
       this.searchListen(contactList, contactList.querySelector('#contact-list'))
 

@@ -176,7 +176,7 @@ const resetFields = (data) => {
 }
 
 const showSMSResponse = (parent, data) => {
-    setTimeout(() => {
+ 
         parent.classList.remove('fadeIn')
         void parent.offsetWidth;
         let res = '';
@@ -198,7 +198,7 @@ const showSMSResponse = (parent, data) => {
         parent.innerHTML = res;
         
         parent.classList.add('fadeIn')
-    }, 1000);
+   
 }
 
 //BUTTON LISTENER
