@@ -137,13 +137,13 @@ const numberInput = document.getElementById('numbers-input')
 // button = document.getElementById('send'),
 // response = document.querySelector('.response');
 let filterContainer = document.querySelector('#contact-list-parent');
-let filterBody = document.querySelector('#contact-list');
+let filterBody = filterContainer.querySelector('#contact-list');
 const title = "groups";
-// let f = new Filter("contacts", filterContainer, filterBody)
+let f = new Filter("contacts", filterContainer, filterBody)
 
 
-// f.setFilter();
-// f.startListen();
+f.setFilter();
+f.startListen();
 
 
 
