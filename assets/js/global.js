@@ -342,6 +342,7 @@ class UpdateGroup {
       
         e.preventDefault();
         
+        
         let currentContacts = row.querySelectorAll('.filterBody tr');
         let currentNumbers = Array.from(currentContacts).map(c=>{
           if(c.children[2]) {
@@ -350,8 +351,13 @@ class UpdateGroup {
               number:c.children[2].innerText
             }
           }
-          
         }).filter(n => n)
+
+        let count = currentNumbers.length
+
+        let countBadge = header.querySelector('.badge')
+
+        countBadge.innerText = count;
   
         let delForm = header.querySelector('.deleteGroup');
         let id = delForm.querySelector('input[name="_id"]').value
