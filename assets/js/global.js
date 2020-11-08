@@ -207,7 +207,7 @@ class UpdateContact {
     contact.async = true;
 
     asyncReq("/updateContact", "post", contact, (data)=> {
-      let response = this.parent.querySelector('.updateResponse')
+      let response = this.parent.querySelector('.updateContactResponse')
       if(data.err) {
         response.innerHTML =  `<h5>${data.err} <i class="fa fa-times"></i></h5>`;
         response.style.opacity = '1'
