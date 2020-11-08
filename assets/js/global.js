@@ -327,10 +327,6 @@ class UpdateGroup {
 
     confirmButton.innerHTML = '<i class="fa fa-check"></i> Confirm'
 
-    let _this = this;
-
-
-    
     cancelButton.addEventListener('click', e => {
       e.preventDefault();
       confirmButton.innerHTML = '<i class="fa fa-edit"></i> Edit Contacts'
@@ -363,11 +359,11 @@ class UpdateGroup {
           // let response = document.createElement('div')
           // response.classList.add('response','text-center','text-primary', 'mt-4') 
           // response.style.opacity = '1'
-          // response.innerHTML = `<h5>Successfully Updated Group</h5>`
+          // response.innerHTML = `<h5>Successully Updated Group</h5>`
           
-          let currResponse = _this.body.querySelector('.updateGroupResponse')
+          let currResponse = row.querySelector('.updateGroupResponse')
           currResponse.style.opacity = '1'
-          currResponse.innerHTML = `<h5>Successfully Updated Group</h5>`
+          currResponse.innerHTML = `<h5>Successfully updated group</h5>`
           // if(!currResponse) {
           //   btnContainer.parentElement.appendChild(response)
           // } 
@@ -586,14 +582,26 @@ const removePreloader = () => {
   }
 };
 
-function tagListen(checkbox) {
-  let numberInputs = document.querySelectorAll("#numbers-input span");
+function tagListen(checkbox, customList) {
 
-  for (let j = 0; j < numberInputs.length; j++) {
-    if (checkbox.name == numberInputs[j].innerText.split('\n')[0]) {
-      checkbox.checked = true; //checks input if already selected
+
+  if(customList) {
+    for (let i = 0; i < customList.length; i++) {
+      if(customList[i] == checkbox.dataset.number) {
+        checkbox.checked = true; //checks input if already selected
+      }
+      
+    }
+  } else {
+    let numberInputs = document.querySelectorAll("#numbers-input span");
+    for (let j = 0; j < numberInputs.length; j++) {
+      if (checkbox.name == numberInputs[j].innerText.split('\n')[0]) {
+        checkbox.checked = true; //checks input if already selected
+      }
     }
   }
+
+
   checkbox.addEventListener("click", function () {
     if (this.checked) {
       input.add(this.dataset.number);
@@ -970,8 +978,14 @@ class Filter {
   
       } else {
         let rows = this.body.children;
+       
         for (let i = 0; i < rows.length; i++) {
-          tagListen(rows[i].querySelector(".form-check-input"));
+          if(!this.groupCol) {
+            let customList = Array.from(this.parent.parentNode.querySelectorAll('.group-input-list tbody tr')).map(n=>n.children[2].innerText)
+            tagListen(rows[i].querySelector(".form-check-input"), customList);
+          } else {
+            tagListen(rows[i].querySelector(".form-check-input"));
+          }
           
         }
       }
