@@ -270,7 +270,7 @@ class UpdateGroup {
   constructor(body) {
     this.headers = Array.from(body.children).filter(c => c.classList.contains("editRow"));;
     this.rows = Array.from(body.children).filter(c => !c.classList.contains("editRow"));
-    this.open = false;
+    // this.open = false;
     this.body = body;
     this.clone = document.querySelector('#contact-list-parent').cloneNode(true);
   }
@@ -392,7 +392,7 @@ class UpdateGroup {
     let list = row.querySelector('.group-input-list')
 
 
-    if (this.open) {
+    if (row.open) {
       contactList.removeChild(contactList.children[0])
       list.querySelector('.filterBody').innerHTML = this.backupList;
       list.classList.remove('col')
@@ -445,13 +445,13 @@ class UpdateGroup {
 
   toggleContactList(row, header) {
 
-    if (this.open) {
+    if (row.open) {
 
 
       this.animate(row)
       this.startListen(row, header)
 
-      this.open = false;
+      row.open = false;
     } else {
 
      this.backupList = row.querySelector('.filterBody').innerHTML;
@@ -462,7 +462,7 @@ class UpdateGroup {
       this.toggleContact(row);
       this.confirmListen(row, header)
 
-      this.open = true;
+      row.open = true;
     }
 
 
