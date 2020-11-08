@@ -272,6 +272,7 @@ class UpdateGroup {
     this.rows = Array.from(body.children).filter(c => !c.classList.contains("editRow"));
     this.open = false;
     this.body = body;
+    this.clone = document.querySelector('#contact-list-parent').cloneNode(true);
   }
 
 
@@ -320,7 +321,7 @@ class UpdateGroup {
 
   confirmListen(row, header) {
     let btnContainer = row.querySelector('.btnContainer')
-    btnContainer.innerHTML += `<a href="#" class="btn btn-danger cancelUpdate" style=""><i class="fa fa-times"></i> Cancel</a>`
+    btnContainer.innerHTML += `<a href="#" class="btn btn-dark cancelUpdate" style=""><i class="fa fa-times"></i> Close</a>`
 
     let cancelButton = btnContainer.querySelector('.cancelUpdate')
     let confirmButton =  btnContainer.querySelector('.addContact')
@@ -378,12 +379,12 @@ class UpdateGroup {
   animate(row) {
     let contactList = row.querySelector('.group-contact-list')
     let list = row.querySelector('.group-input-list')
-    let clone = document.querySelector('#contact-list-parent').cloneNode(true);
+    
    
     
 
     if (this.open) {
-      contactList.removeChild(contactList.children[1])
+      contactList.removeChild(contactList.children[0])
       list.querySelector('.filterBody').innerHTML = this.backupList;
       list.classList.remove('col')
       list.classList.add('col-10')
@@ -395,9 +396,11 @@ class UpdateGroup {
 
       // contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
 
-      let currResponse = contactList.querySelector('.updateGroupResponse')
+      // let currResponse = contactList.querySelector('.updateGroupResponse')
 
-      currResponse.parentNode.insertBefore(clone.children[0], currResponse.nextSibling);
+      contactList.innerHTML =  this.clone.innerHTML + contactList.innerHTML
+
+      // currResponse.parentNode.insertBefore(clone.children[0], currResponse.nextSibling);
       this.searchListen(contactList, contactList.querySelector('#contact-list'))
 
       let currHeader = contactList.querySelector('.card-header .row')
@@ -853,7 +856,9 @@ class Filter {
       }
       else if (this.type == "groups") {
         if (this.tagList) {
-          row += '<td style="padding-left:45px;"><div class="form-check"><input class="form-check-input position-static" type="checkbox" name="' + data[m].number + '">\</div></td>'
+         
+          row += `<td style="padding-left:45px;"> 
+          <input class="form-check-input position-static" type="checkbox" value="${data[m]._id}" data-number="${data[m].number}" name="${data[m].name}"></div></td>`
           row += '<td>' + data[m].name + '</td><td>' + data[m].contacts.length + '</td>';
 
         } else {
@@ -943,15 +948,21 @@ class Filter {
                 </tr>';
         }
         row +=
-          ' </tbody>\
-                </table>\
-            </div>\
-            <div class="col group-contact-list">\
-            <div class="row btnContainer">\
-            <a href="/addContact" class="btn btn-primary addContact"><i class="fa fa-edit"></i> Edit Contacts</a>\
-        </div>\
-    </div>\
-    </div></td></tr>';
+          `</tbody>       
+          </table>
+      </div>
+      <div class="col group-contact-list">
+          
+          <div class="row btnContainer">
+          <a href="/addContact" class="btn btn-primary addContact"><i class="fa fa-edit"></i> Edit Contacts</a>
+      </div> 
+      <div class="response mt-4 text-center text-primary updateGroupResponse">
+      </div>
+  </div>
+  </div>
+</div>
+</td>
+</tr>`;
       }
 
       }
