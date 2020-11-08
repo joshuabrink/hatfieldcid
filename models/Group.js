@@ -6,18 +6,9 @@ class Group {
     // this.collection.createIndex({"name": 1})
   }
   async addEntity(group) {
-    let groupCopy = {
-      name: group.name
-    }
-    groupCopy.contacts = group.contacts.map(c=>{
-    
-      return {
-        _id: new ObjectID(c._id),
-        number: c.number
-      }
-    })
+ 
 
-    const newGroup = await this.collection.insertOne(groupCopy);
+    const newGroup = await this.collection.insertOne(group);
     return newGroup.ops[0];
   }
   async updateEntity(id, update) {
