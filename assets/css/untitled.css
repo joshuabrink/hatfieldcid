@@ -167,6 +167,12 @@
   .head-container h1 {
     margin: 0;
   }
+
+  .btnContainer {
+    width: 80%;
+    justify-content: space-evenly;
+  }
+
   .btn.new-contact-btn {
     border-radius: 53px;
     padding: 12px 15px;
