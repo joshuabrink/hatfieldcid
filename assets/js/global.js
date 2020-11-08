@@ -63,6 +63,7 @@ class UpdateContact {
     let bodyChildren = Array.from(body.children).filter(c => c.classList.contains("editRow"));
     this.rows = bodyChildren;
     this.headers = Array.from(parent.querySelector("thead").querySelectorAll("tr th"));
+    this.parent = parent;
     // this.type = type[0].charAt(0).toUpperCase() + type.slice(1, type.length -1);
   }
 
@@ -79,7 +80,7 @@ class UpdateContact {
       let inputType = "text";
       let j = 0;
 
-      this.number = row.children[3].innerText
+     
       if(rowArr.length == 7) {
         j =1;
       }
@@ -87,6 +88,7 @@ class UpdateContact {
       for (j; j < rowArr.length; j++) {
     
         if (numberFormat.test(rowArr[j].innerText)) {
+          this.number = rowArr[j].innerText
           inputType = "number";
         } else if (emailFormat.test(rowArr[j].innerText.toLowerCase())) {
           inputType = "email";
@@ -205,7 +207,7 @@ class UpdateContact {
     contact.async = true;
 
     asyncReq("/updateContact", "post", contact, (data)=> {
-      let response = document.querySelector('#updateResponse')
+      let response = this.parent.querySelector('.updateResponse')
       if(data.err) {
         response.innerHTML =  `<h5>${data.err} <i class="fa fa-times"></i></h5>`;
         response.style.opacity = '1'
@@ -269,15 +271,22 @@ class UpdateGroup {
     this.headers = Array.from(body.children).filter(c => c.classList.contains("editRow"));;
     this.rows = Array.from(body.children).filter(c => !c.classList.contains("editRow"));
     this.open = false;
+    this.body = body;
   }
+
+
   startListen(row, header) {
 
     let addBtn = row.querySelector('.addContact');
     this.deleteListen(row, header)
-    addBtn.addEventListener('click', e => {
+
+    function startToggle(e) {
       e.preventDefault();
       this.toggleContactList(row, header);
-    })
+    }
+
+    
+    addBtn.addEventListener('click', startToggle.bind(this))
   }
 
   startListenAll() {
@@ -286,6 +295,12 @@ class UpdateGroup {
       this.startListen(this.rows[i], this.headers[i])
       // this.deleteListen(this.rows[i], this.headers[i])
     }
+  }
+
+  searchListen(parent,body) {
+    let f = new Filter('contacts', parent, body)
+        f.setFilter();
+        f.startListen();
   }
 
   deleteListen(row, header) {
@@ -312,59 +327,67 @@ class UpdateGroup {
 
     confirmButton.innerHTML = '<i class="fa fa-check"></i> Confirm'
 
+    let _this = this;
+
 
     
     cancelButton.addEventListener('click', e => {
       e.preventDefault();
       confirmButton.innerHTML = '<i class="fa fa-edit"></i> Edit Contacts'
       cancelButton.remove()
+      confirmButton.removeEventListener('click', confirmEvent)
       this.toggleContactList(row, header);
       // btnContainer.innerHTML.replace(cancelButton
     })
 
-    confirmButton.addEventListener('click', e=> {
-      e.preventDefault();
-      let currentContacts = row.querySelectorAll('.filterBody tr');
-      let currentNumbers = Array.from(currentContacts).map(c=>{
-        if(c.children[2]) {
-          return {
-            _id:c.querySelector('input[name="_id"]').value,
-            number:c.children[2].innerText
+    function confirmEvent(e) {
+      
+        e.preventDefault();
+        let currentContacts = row.querySelectorAll('.filterBody tr');
+        let currentNumbers = Array.from(currentContacts).map(c=>{
+          if(c.children[2]) {
+            return {
+              _id:c.querySelector('input[name="_id"]').value,
+              number:c.children[2].innerText
+            }
           }
-        }
+          
+        }).filter(n => n)
+  
+        let delForm = header.querySelector('.deleteGroup');
+        let id = delForm.querySelector('input[name="_id"]').value
+  
+        let name = header.querySelector('.group-btn h5').innerText;
+  
+        asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
+          // let response = document.createElement('div')
+          // response.classList.add('response','text-center','text-primary', 'mt-4') 
+          // response.style.opacity = '1'
+          // response.innerHTML = `<h5>Successfully Updated Group</h5>`
+          
+          let currResponse = _this.body.querySelector('.updateGroupResponse')
+          currResponse.style.opacity = '1'
+          currResponse.innerHTML = `<h5>Successfully Updated Group</h5>`
+          // if(!currResponse) {
+          //   btnContainer.parentElement.appendChild(response)
+          // } 
         
-      }).filter(n => n)
+        })
+       
+    }
 
-      let delForm = header.querySelector('.deleteGroup');
-      let id = delForm.querySelector('input[name="_id"]').value
-
-      let name = header.querySelector('.group-btn h5').innerText;
-
-      asyncReq("/updateGroup", "post", {name: name, contacts: currentNumbers, id: id, async: true }, (data) => {
-        let response = document.createElement('div')
-        response.classList.add('response','text-center','text-primary', 'mt-4') 
-        response.style.opacity = '1'
-        response.innerHTML = `<h5>Successfully Updated</h5>`
-        
-        let currResponse = btnContainer.parentElement.querySelector('.response')
-        if(!currResponse) {
-          btnContainer.parentElement.appendChild(response)
-        } 
-        
-
-      })
-    })
+    confirmButton.addEventListener('click', confirmEvent)
   }
 
   animate(row) {
     let contactList = row.querySelector('.group-contact-list')
     let list = row.querySelector('.group-input-list')
-    let clone = document.querySelector('#contact-list-parent');
-
+    let clone = document.querySelector('#contact-list-parent').cloneNode(true);
+   
     
 
     if (this.open) {
-      contactList.innerHTML = contactList.innerHTML.replace(clone.innerHTML, '');
+      contactList.removeChild(contactList.children[1])
       list.querySelector('.filterBody').innerHTML = this.backupList;
       list.classList.remove('col')
       list.classList.add('col-10')
@@ -374,16 +397,27 @@ class UpdateGroup {
 
     } else {
 
-      contactList.innerHTML = clone.innerHTML.replace('<div class="col-2">\
-      <button class="btn btn-sm btn-primary add-all">Add All</button>\
-  </div>', '') + contactList.innerHTML;
+      // contactList.innerHTML = clone.innerHTML + contactList.innerHTML;
+
+      let currResponse = contactList.querySelector('.updateGroupResponse')
+
+      currResponse.parentNode.insertBefore(clone.children[0], currResponse.nextSibling);
+      this.searchListen(contactList, contactList.querySelector('#contact-list'))
+
+      let currHeader = contactList.querySelector('.card-header .row')
+      let search = currHeader.querySelector('.col-10')
+      search.classList.remove('col-10');
+      search.classList.add('col-12')
+
+      let addAll = currHeader.querySelector('.col-2')
+      currHeader.removeChild(addAll)
 
       list.classList.remove('col-10')
       list.classList.add('col')
 
       contactList.classList.remove('col');
       contactList.classList.add('col-4');
-
+      
      
     }
 
@@ -562,9 +596,9 @@ function tagListen(checkbox) {
   }
   checkbox.addEventListener("click", function () {
     if (this.checked) {
-      input.add(this.name);
+      input.add(this.dataset.number);
     } else {
-      input.remove(this.name);
+      input.remove(this.dataset.number);
     }
   });
 }
@@ -721,7 +755,8 @@ class Filter {
         // }
 
         if (this.tagList) {
-          row += '<td style="padding-left:45px;"><div class="form-check"><input class="form-check-input position-static" type="checkbox" name="' + data[m].number + '">\</div></td>'
+          row += `<td style="padding-left:45px;"><div class="form-check">
+          <input class="form-check-input position-static" type="checkbox" value="${data[m]._id}" data-number="${data[m].number}" name="${data[m].name}"></div></td>`
 
           // row += '<td><div class="custom-control custom-checkbox">\
           // <input class="custom-control-input" type="checkbox" id="'+ data[m].number +'">\

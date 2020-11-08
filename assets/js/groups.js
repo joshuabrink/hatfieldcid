@@ -39,7 +39,7 @@ const TagsInput = function (element) {
                 var tags = {};
                 for (var i = 0; i < elements.length; i++) {
                     element = elements[i]
-                    tags[element.innerText.split('\n')[0]] = element;
+                    tags[element.innerText.split('\n')[1]] = element;
                 }
 
                 return tags;
@@ -73,26 +73,28 @@ const TagsInput = function (element) {
         // tag = tag.replace(/^0/, '27'); //replace 0 with 27 if number begins with 0
         // tag = tag[0].toUpperCase() + tag.toLowerCase().slice(1);
         if (tag != '' && this.tags[tag] === undefined) {
-            var element = document.createElement('span');
+             var element = document.createElement('span');
+             let currCheck = document.querySelector(`#contact-list [data-number="${tag}"]`)
+            // let number = document.querySelector(`#contact-list input[name="${tag}]"`).dataset.number;
             // element.appendChild(document.createTextNode(tag));
             element.setAttribute('contenteditable', 'false');
             // element.classList.add('number')
 
-            element.setAttribute('value', document.querySelector(`#contact-list input[name="${tag}"`).value)
-            var top = document.createElement('div')
-            top.classList.add('top')
-            top.appendChild(document.createTextNode(tag))
-            var under = document.createElement('div')
-            under.classList.add('under');
+             element.setAttribute('value', currCheck.value)
+             var top = document.createElement('div')
+             top.classList.add('top')
+             top.appendChild(document.createTextNode(currCheck.name))
+             var under = document.createElement('div')
+             under.classList.add('under');
 
-            let number = document.querySelector(`input[name="${tag}"]`).dataset.number;
-            if(number.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g)) {
+           
+            if(tag.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g)) {
                 element.classList.add('cross-fade','c-tag')
             } else {
                 element.classList.add('cross-fade','g-tag')
             }
 
-            under.appendChild(document.createTextNode(number))
+            under.appendChild(document.createTextNode(tag))
             element.appendChild(top);
             element.appendChild(under);
 
@@ -117,9 +119,9 @@ let contactItems = document.querySelectorAll('#contact-list .form-check-input');
 for (let i = 0; i < contactItems.length; i++) {
     contactItems[i].addEventListener("click", function () {
         if (this.checked) {
-            input.add(this.name)
+            input.add(this.dataset.number)
         } else {
-            input.remove(this.name);
+            input.remove(this.dataset.number);
         }
     });
 }
@@ -137,11 +139,11 @@ const numberInput = document.getElementById('numbers-input')
 let filterContainer = document.querySelector('#contact-list-parent');
 let filterBody = document.querySelector('#contact-list');
 const title = "groups";
-let f = new Filter("contacts", filterContainer, filterBody)
+// let f = new Filter("contacts", filterContainer, filterBody)
 
 
-f.setFilter();
-f.startListen();
+// f.setFilter();
+// f.startListen();
 
 
 
@@ -221,7 +223,6 @@ function groupAdd() {
             // return num.innerText
             return {
                 _id: num.getAttribute('value'),
-                name: num.innerText.split('\n')[0],
                 number: num.innerText.split('\n')[1]
             }
         })
