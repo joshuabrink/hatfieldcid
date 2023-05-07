@@ -1,0 +1,59 @@
+# node js app to run on port 8080
+
+version: '3.9'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PACKAGES: "nano wget curl"
+    container_name: hatfield-web
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=mongodb
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+      - NODE_ENV=production
+      - APP_VERSION=1.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - hatfield-network
+
+  # mongo db to run on port 27017
+
+  mongodb:
+    image: mongo:4.2.8
+    container_name: hatfield-db
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$MONGO_USERNAME
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGO_PASSWORD
+    networks:
+      - hatfield-network
+
+  redis:
+    image: redis
+    container_name: hatfield-redis
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "6379:6379"
+    networks:
+      - hatfield-network
+
+networks:
+  hatfield-network:
+    driver: bridge
+
+# volumes:
+#   dbdata:
+#   node_modules:  
